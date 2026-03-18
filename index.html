@@ -788,7 +788,7 @@ minute:'2-digit'
 });
 
 timer.innerHTML=
-"<b>⚡ ACTIVE:</b> "+active.name+
+"<small>⚡ ACTIVE</small><b>"+active.name+"</b>"
 "<br>"+start+" - "+end;
 
 let banner=document.getElementById("activeBanner");
@@ -871,7 +871,7 @@ let h = Math.floor(diff/1000/60/60);
 let m = Math.floor((diff/1000/60)%60);
 
 el.innerHTML =
-"Next: "+next.name+
+"<small>Next</small><b>"+next.name+"</b>"
 "<br>"+h+"h "+m+"m";
 
 }
