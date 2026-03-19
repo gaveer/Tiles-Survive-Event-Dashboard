@@ -65,8 +65,12 @@ justify-content:space-between;
 align-items:center;
 padding:6px 0;
 border-bottom:1px solid #222;
-gap:10px;
+gap:6px;
 }
+
+#todayPanel .row{
+padding:4px 0;
+}  
   
 .row:last-child{
 border-bottom:none;
@@ -230,7 +234,7 @@ filter: drop-shadow(0 0 6px rgba(255,215,0,.45))
 .allianceLogo{
 display:block;
 margin:0;
-height:50px;
+height:70px;
 margin-bottom:8px;
 animation: emblemGlow 3.5s infinite ease-in-out;
 }
@@ -1243,7 +1247,7 @@ let icons = getEventIcons(t.events);
 
 html += `
 <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px;">
-<span><b>◆ Triple</b> - ${icons} ${t.task}</span>
+<span><b>◆ Triple</b> - ${t.task}</span>
 <span style="font-size:12px;opacity:.85">${status}</span>
 </div>
 `;
@@ -1278,7 +1282,7 @@ let icons = getEventIcons(t.events);
 
 html += `
 <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px;">
-<span><b>◆ Double</b> - ${icons} ${t.task}</span>
+<span><b>◆ Double</b> - ${t.task}</span>
 <span style="font-size:12px;opacity:.85">${status}</span>
 </div>
 `;
