@@ -236,6 +236,7 @@ display:block;
 margin:0;
 height:80px;
 margin-bottom:8px;
+object-fit:contain;  
 z-index:2;  
 animation: emblemGlow 3.5s infinite ease-in-out;
 }
@@ -387,17 +388,19 @@ opacity:.9;
 position:relative;
 display:flex;
 align-items:center;
-margin-bottom:10px;
+margin-bottom:5px;
 justify-content:flex-start;
-min-height:80px;  
+min-height:80px; 
+padding-top:4px;  
 }
   
 .headerText{
 position:absolute;
 left:50%;
-transform:translateX(-50%);
+top:50%;  
+transform:translate(-50%, -50%);
 text-align:center;
-width:100%;
+width:70%;
 pointer-events:none;
 }
   
