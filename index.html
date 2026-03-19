@@ -905,6 +905,7 @@ return;
 
 let task = selected.task;
 let timing = selected.timing;
+let hasPowerPlay = task.events.includes("Power Play");  
 
 if(timing.active){
 
@@ -919,7 +920,9 @@ minute:'2-digit'
 });
 
 el.innerHTML =
-"<small>🔹 ACTIVE</small><br><b>"+task.task+"</b><br>"+start+" - "+end;
+"<small>🔹 ACTIVE</small><br><b>"+task.task+"</b><br>"+
+"<small style='opacity:.7'>"+[...new Set(task.events)].join(" | ")+"</small><br>"+
+(hasPowerPlay ? (start+" - "+end) : "All Day");
 
 }else if(timing.next){
 
@@ -929,7 +932,9 @@ let h = Math.floor(diff/1000/60/60);
 let m = Math.floor((diff/1000/60)%60);
 
 el.innerHTML =
-"<small>Next</small><br><b>"+task.task+"</b> • "+h+"h "+m+"m";
+"<small>Next</small><br><b>"+task.task+"</b><br>"+
+"<small style='opacity:.7'>"+[...new Set(task.events)].join(" | ")+"</small><br>"+
+(hasPowerPlay ? (h+"h "+m+"m") : "All Day");
 
 }else{
   
