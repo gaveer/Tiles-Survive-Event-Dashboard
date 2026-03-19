@@ -1005,11 +1005,13 @@ if(timing.active){
 let start = timing.active.start.toLocaleTimeString([],{
 hour:'2-digit',
 minute:'2-digit'
+hour12: true  
 });
 
 let end = timing.active.end.toLocaleTimeString([],{
 hour:'2-digit',
 minute:'2-digit'
+hour12: true  
 });
 
 timer.innerHTML =
@@ -1108,11 +1110,13 @@ if(timing.active){
 let start = timing.active.start.toLocaleTimeString([],{
 hour:'2-digit',
 minute:'2-digit'
+hour12: true  
 });
 
 let end = timing.active.end.toLocaleTimeString([],{
 hour:'2-digit',
 minute:'2-digit'
+hour12: true  
 });
 
 el.innerHTML =
@@ -1285,10 +1289,11 @@ let m = Math.floor((remaining / 1000 / 60) % 60);
 let localTime = next.toLocaleTimeString([],{
 hour:'2-digit',
 minute:'2-digit'
+hour12: true  
 });
 
 let timerText =
-"Next Hunt<br>"+localTime+"<br><small>("+h+"h "+m+"m)</small>";
+"Next Hunt • "+localTime+" <small>("+h+"h "+m+"m)</small>";
 
 if(remaining < 30*60*1000){
 timerText =
