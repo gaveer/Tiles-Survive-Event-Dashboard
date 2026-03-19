@@ -677,7 +677,7 @@ hour12:true
   
 function renderTriple(){
 
-let {triple} = classifyTasks();
+let {triple} = getTasks();
 let container = document.getElementById("tripleList");
 
 container.innerHTML = "";
@@ -716,7 +716,7 @@ container.appendChild(row);
   
 function renderDouble(){
 
-let {double} = classifyTasks();
+let {double} = getTasks();
 let container = document.getElementById("doubleList");
 
 container.innerHTML = "";
@@ -833,7 +833,7 @@ return `<span style="color:#4dff88">starts</span> in ${h}h ${m}m`;
   
 function updateTimer(){
 
-let {triple} = classifyTasks();
+let {triple} = getTasks();
 
 let timer = document.getElementById("timer");
 
@@ -933,7 +933,7 @@ timer.innerHTML = "No upcoming tasks";
 
 function updateDoubleTimer(){
 
-let {double} = classifyTasks();
+let {double} = getTasks();
 
 let el = document.getElementById("doubleTimer");
 
