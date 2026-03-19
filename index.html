@@ -967,122 +967,92 @@ highlightTask();
   
 function updateTodayPanel(){
 
-const now = new Date();
-const today = now.getUTCDay();
-const hour = now.getUTCHours();
+let now = new Date();
+let today = now.getUTCDay();
 
-let eventText="";
-let taskText="";
+let {triple, double} = classifyTasks();
 
-switch(today){
+let container = document.getElementById("todayPanel");
 
-case 1: // Monday
-if(hour <16){
-eventText="⭐ Gear Enhancement (16:00 UTC)";
+let html = "";
+
+/* ---------- TRIPLE ---------- */
+
+let todayTriple = triple.filter(t => t.d === today);
+
+if(todayTriple.length){
+
+html += "<b>◆ Triple Stack</b><br>";
+
+todayTriple.forEach(t => {
+
+let timing = getTaskTiming(t);
+
+let status = "";
+
+if(timing.active){
+status = "⚡ ACTIVE";
 }
-else if(hour <20){
-eventText="⚡ ACTIVE: Gear Enhancement";
-}
-else{
-eventText="✔ Gear Enhancement completed";
-}
-taskText="• Complete stored Intel Missions<br><small>Tip: On other days DO NOT complete intel missions (except Venture/Triangle Maddie). Let them stack up to ~40.</small>";
-break;
-
-case 2: // Tuesday
-if(hour <4){
-eventText="⚡ ACTIVE: Construction Speed Up";
-}
-else{
-eventText="✔ Construction Speed Up completed";
-}
-taskText="<small>Tip: Do NOT complete intel missions today (except Venture/Triangle Maddie). Let them accumulate.</small>";
-break;
-
-case 3: // Wednesday
-
-let todayEvents = events.filter(e => e.d === 3);
-
-let lines = [];
-
-todayEvents.forEach(e => {
-
-let start = new Date();
-start.setUTCHours(e.h,0,0,0);
-
-let diff = e.d - start.getUTCDay();
-if(diff < 0) diff += 7;
-
-start.setUTCDate(start.getUTCDate()+diff);
-
-let end = new Date(start);
-end.setHours(end.getHours()+4);
-
-if(now >= start && now < end){
-lines.push("⚡ ACTIVE: " + e.name);
-}
-else if(now < start){
-lines.push("⭐ " + e.name + " (" + String(e.h).padStart(2,'0') + ":00 UTC)");
+else if(timing.next){
+status = "⭐ Upcoming";
 }
 else{
-lines.push("✔ " + e.name + " completed");
+status = "✔ Completed";
 }
+
+html += `
+<div class="row todayRow">
+<span>${t.task}</span>
+<span>${status}</span>
+</div>
+`;
 
 });
 
-eventText = lines.join("<br>");
-
-taskText="• Complete stored Intel Missions<br>• Spend Clash Medals<br><small>Tip: Intel missions should be saved on other days (except Venture/Triangle Maddie).</small>";
-break;
-
-case 4: // Thursday
-if(hour <12){
-eventText="⭐ Hero Fragments (12:00 UTC)";
 }
-else if(hour <16){
-eventText="⚡ ACTIVE: Hero Fragments";
+
+/* ---------- DOUBLE ---------- */
+
+let todayDouble = double.filter(t => t.d === today);
+
+if(todayDouble.length){
+
+html += "<br><b>◆ Double Stack</b><br>";
+
+todayDouble.forEach(t => {
+
+let timing = getTaskTiming(t);
+
+let status = "";
+
+if(timing.active){
+status = "🔹 ACTIVE";
+}
+else if(timing.next){
+status = "⭐ Upcoming";
 }
 else{
-eventText="✔ Hero Fragments completed";
+status = "✔ Completed";
 }
-taskText="• Recruitment<br><small>Tip: Continue saving intel missions (except Venture/Triangle Maddie).</small>";
-break;
 
-case 5: // Friday
-if(hour <12){
-eventText="⭐ Construction Speed Up (12:00 UTC)";
-}
-else if(hour <16){
-eventText="⚡ ACTIVE: Construction Speed Up";
-}
-else{
-eventText="✔ Construction Speed Up completed";
-}
-taskText="• Complete stored Intel Missions";
-break;
+html += `
+<div class="row">
+<span>${t.task}</span>
+<span>${status}</span>
+</div>
+`;
 
-case 6: // Saturday
-if(hour <16){
-eventText="⭐ Research Speed Up (16:00 UTC)";
-}
-else if(hour <20){
-eventText="⚡ ACTIVE: Research Speed Up";
-}
-else{
-eventText="✔ Research Speed Up completed";
-}
-taskText="• Enemy Kills | Eggs | Burrows<br><small>Tip: Do not complete intel missions today (except Venture/Triangle Maddie).</small>";
-break;
-
-case 0: // Sunday
-eventText="◆ Ranking stacks available";
-taskText="• Kill Infected | Fiends<br><small>Tip: Continue saving intel missions(except Venture/Triangle Maddie).</small>";
-break;
+});
 
 }
 
-document.getElementById("todayPanel").innerHTML =
-eventText+"<br>"+taskText;
+/* ---------- EMPTY CASE ---------- */
+
+if(!todayTriple.length && !todayDouble.length){
+html = "<small>No priority tasks today</small>";
+}
+
+container.innerHTML = html;
 
 }
 
