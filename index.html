@@ -1138,7 +1138,11 @@ if(hourUTC === "ALL" || hourUTC === undefined){
 return "All Day";
 }
 
+if(typeof hourUTC === "string" && hourUTC.includes(":")){
+hourUTC = Number(hourUTC.split(":")[0]);
+}else{
 hourUTC = Number(hourUTC);
+}
 
 let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 let targetDay = days.indexOf(dayStr);
@@ -1178,10 +1182,10 @@ let hasPowerPlay = t.events.includes("Power Play");
 if(hasPowerPlay){
 let h = t.times
   .map(x => String(x).trim())   // 🔥 clean values
-  .find(x => x !== "ALL" && !isNaN(x));
+  .find(x => x !== "ALL")
 
 if(h !== undefined){
-timeText = formatToLocalTime(Number(h), t.d);
+timeText = formatToLocalTime(h, t.d);
 }else{
 timeText = "All Day";
 }
@@ -1193,10 +1197,10 @@ timeText = "All Day";
 else{
 let h = t.times
   .map(x => String(x).trim())   // 🔥 clean values
-  .find(x => x !== "ALL" && !isNaN(x));
+  .find(x => x !== "ALL")
 
 if(h !== undefined){
-timeText = formatToLocalTime(Number(h), t.d);
+timeText = formatToLocalTime(h, t.d);
 }else{
 timeText = "All Day";
 }
@@ -1233,10 +1237,10 @@ let hasPowerPlay = t.events.includes("Power Play");
 if(hasPowerPlay){
 let h = t.times
   .map(x => String(x).trim())   // 🔥 clean values
-  .find(x => x !== "ALL" && !isNaN(x));
+  .find(x => x !== "ALL")
 
 if(h !== undefined){
-timeText = formatToLocalTime(Number(h), t.d);
+timeText = formatToLocalTime(h, t.d);
 }else{
 timeText = "All Day";
 }
@@ -1248,10 +1252,10 @@ timeText = "All Day";
 else{
 let h = t.times
   .map(x => String(x).trim())   // 🔥 clean values
-  .find(x => x !== "ALL" && !isNaN(x));
+  .find(x => x !== "ALL")
 
 if(h !== undefined){
-timeText = formatToLocalTime(Number(h), t.d);
+timeText = formatToLocalTime(h, t.d);
 }else{
 timeText = "All Day";
 }
@@ -1427,11 +1431,17 @@ hour12: true
 start = "All Day";
 }
 
-let end = timing.active.end.toLocaleTimeString([],{
+let end = "";
+
+if(timing.active && timing.active.end){
+end = timing.active.end.toLocaleTimeString([],{
 hour:'2-digit',
 minute:'2-digit',
 hour12: true  
 });
+}else{
+end = "All Day";
+}
 
 timer.innerHTML =
 "<small>⚡ ACTIVE</small><br><b>"+task.task+"</b><br>"+start+" - "+end;
@@ -1538,11 +1548,17 @@ hour12: true
 start = "All Day";
 }
 
-let end = timing.active.end.toLocaleTimeString([],{
+let end = "";
+
+if(timing.active && timing.active.end){
+end = timing.active.end.toLocaleTimeString([],{
 hour:'2-digit',
 minute:'2-digit',
 hour12: true  
 });
+}else{
+end = "All Day";
+}
 
 el.innerHTML =
 "<small>🔹 ACTIVE</small><br><b>"+task.task+"</b><br>"+
