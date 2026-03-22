@@ -1,4 +1,21 @@
 {
+  "_instructions": {
+    "usage": "Edit 'message' for current display. Use 'templates' below as backup messages.",
+    "enabled": "true = show ticker, false = hide ticker",
+    "emergency": "Set active true/false. Use startTime and endTime in UTC format.",
+    "time_format": "Use ISO format: YYYY-MM-DDTHH:MM:SSZ (UTC time)",
+    "examples": {
+      "startTime": "2026-03-22T17:30:00Z",
+      "endTime": "2026-03-22T18:30:00Z"
+    },
+    "notes": [
+      "If both startTime and endTime are set → runs between those times",
+      "If only endTime is set → runs immediately until that time",
+      "If only startTime is set → starts at that time and stays active",
+      "If both are empty → emergency runs as long as active = true"
+    ]
+  },
+
   "enabled": true,
 
   "emergency": {
