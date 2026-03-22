@@ -603,7 +603,7 @@ rgba(255,200,0,0.2),
 transparent
 );
 
-animation: flameMove 2s linear infinite;
+animation: flameMove 4s linear infinite;
 pointer-events:none;
 }
 
@@ -985,8 +985,8 @@ if(data.state === "prep") barClass += " alert";
 
 let timerText =
 "<div class='" + barClass + "'>" +
-e.name + " • " + label + " • " + localTime +
-" • "+h+"h "+m+"m</div>";
+label + " • " + localTime +
+" • " + h + "h " + m + "m</div>";
 
 document.getElementById("ghoulionTimer").innerHTML = timerText;
 
