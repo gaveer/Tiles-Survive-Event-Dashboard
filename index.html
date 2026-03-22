@@ -33,16 +33,29 @@ animation: scrollTicker 18s linear infinite;
 
 /* 🚨 emergency mode */
 #ticker.emergency{
-background:#2a0000;
+background:linear-gradient(90deg,#3a0000,#1a0000);
 color:#ff4d4d;
-box-shadow:0 0 10px rgba(255,0,0,0.6);
+border-bottom:1px solid #ff4d4d;
+box-shadow:0 0 12px rgba(255,0,0,0.7);
 }
 
+/* faster scroll */
 #ticker.emergency .tickerText{
-animation-duration:10s;
+animation-duration:6s;
 }
 
-/* highlight helper (optional use in message) */
+/* 🔥 add pulse effect (NEW) */
+#ticker.emergency{
+animation: emergencyPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes emergencyPulse{
+0%{box-shadow:0 0 6px rgba(255,0,0,0.4);}
+50%{box-shadow:0 0 18px rgba(255,0,0,1);}
+100%{box-shadow:0 0 6px rgba(255,0,0,0.4);}
+}
+
+/* highlight helper (keep this) */
 .highlight{
 color:#4fc3f7;
 font-weight:bold;
