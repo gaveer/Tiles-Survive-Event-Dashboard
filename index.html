@@ -1178,8 +1178,8 @@ let hasPowerPlay = t.events.includes("Power Play");
 if(hasPowerPlay){
 let h = t.times.find(x => x !== "ALL");
 
-if(h !== undefined){
-timeText = formatToLocalTime(h, t.d);
+if(h !== undefined && !isNaN(Number(h))){
+timeText = formatToLocalTime(Number(h), t.d);
 }else{
 timeText = "All Day";
 }
@@ -1191,8 +1191,8 @@ timeText = "All Day";
 else{
 let h = t.times.find(x => x !== "ALL");
 
-if(h !== undefined){
-timeText = formatToLocalTime(h, t.d);
+if(h !== undefined && !isNaN(Number(h))){
+timeText = formatToLocalTime(Number(h), t.d);
 }else{
 timeText = "All Day";
 }
@@ -1229,8 +1229,8 @@ let hasPowerPlay = t.events.includes("Power Play");
 if(hasPowerPlay){
 let h = t.times.find(x => x !== "ALL");
 
-if(h !== undefined){
-timeText = formatToLocalTime(h, t.d);
+if(h !== undefined && !isNaN(Number(h))){
+timeText = formatToLocalTime(Number(h), t.d);
 }else{
 timeText = "All Day";
 }
@@ -1242,8 +1242,8 @@ timeText = "All Day";
 else{
 let h = t.times.find(x => x !== "ALL");
 
-if(h !== undefined){
-timeText = formatToLocalTime(h, t.d);
+if(h !== undefined && !isNaN(Number(h))){
+timeText = formatToLocalTime(Number(h), t.d);
 }else{
 timeText = "All Day";
 }
