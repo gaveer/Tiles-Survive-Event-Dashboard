@@ -1278,11 +1278,19 @@ let now = new Date();
 let active = null;
 let next = null;
 
+// 🔥 HANDLE ALL DAY FIRST
+if(task.times.includes("ALL")){
+return {
+active: { start: null, end: null },
+next: null
+};
+}
+
 task.times.forEach(h => {
 
-if(h === "ALL" || h === undefined) return; // ✅ safer
+if(h === undefined) return;
 
-h = Number(h);  // 🔥 CRITICAL FIX
+h = Number(h);
 
 let start = new Date();
 start.setUTCHours(h, 0, 0, 0);
