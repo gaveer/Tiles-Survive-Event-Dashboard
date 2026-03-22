@@ -60,6 +60,43 @@ animation: emergencyPulse 1.2s ease-in-out infinite;
 color:#4fc3f7;
 font-weight:bold;
 }
+
+#eventTicker{
+width:100%;
+overflow:hidden;
+white-space:nowrap;
+background:#0f0f0f;
+font-size:12px;
+border-bottom:1px solid #222;
+}
+
+.eventScroll{
+display:inline-block;
+padding-left:100%;
+animation: scrollTicker 25s linear infinite;
+}
+
+.eventItem{
+margin-right:40px;
+display:inline-flex;
+align-items:center;
+gap:6px;
+}
+
+.eventItem img{
+width:18px;
+height:18px;
+border-radius:50%;
+}
+
+.eventUrgent img{
+box-shadow:0 0 8px red;
+}
+
+.eventUrgent{
+color:#ff4d4d;
+}  
+ 
 body{
 background:#0b0b0b;
 color:white;
@@ -571,6 +608,8 @@ animation: heatPulse 1.5s ease-in-out infinite;
 <div id="ticker">
   <div class="tickerText"></div>
 </div>
+
+<div id="eventTicker"></div>
   
 <div class="headerBar">
 
@@ -693,6 +732,8 @@ animation: heatPulse 1.5s ease-in-out infinite;
 
 <script>
   
+let specialEvents = [];  
+  
 async function loadTicker(){
 
 try{
@@ -762,6 +803,177 @@ console.log("Ticker load error", e);
 }
 
 }
+
+async function loadSpecialEvents(){
+try{
+let res = await fetch("data/special.json");
+specialEvents = await res.json();
+}catch(e){
+console.log("Special events load error", e);
+}
+}  
+
+function getActiveShortEvent(){
+
+let now = new Date();
+
+let candidates = [];
+
+specialEvents.forEach(e => {
+
+if(!e.short || !e.active) return;
+
+let start = new Date(e.start);
+let durationMs = e.duration * 60 * 1000;
+
+let active = false;
+let prep = false;
+let cooldown = false;
+
+if(e.repeat > 0){
+
+let diff = now - start;
+let cycle = Math.floor(diff / (e.repeat * 60 * 60 * 1000));
+let cycleStart = new Date(start.getTime() + cycle * e.repeat * 60 * 60 * 1000);
+let cycleEnd = new Date(cycleStart.getTime() + durationMs);
+
+let remaining = cycleEnd - now;
+
+if(now >= cycleStart && now <= cycleEnd){
+active = true;
+if(remaining <= 5 * 60 * 1000) cooldown = true;
+}else if(now < cycleStart){
+prep = true;
+}else{
+cooldown = true;
+}
+
+candidates.push({
+event:e,
+state: active ? "active" : prep ? "prep" : "cooldown",
+priority:e.priority || 999,
+start:cycleStart,
+end:cycleEnd
+});
+
+}else{
+
+// non-repeating
+let end = new Date(start.getTime() + durationMs);
+
+if(now <= end){
+let remaining = end - now;
+active = now >= start;
+
+if(remaining <= 5 * 60 * 1000) cooldown = true;
+
+candidates.push({
+event:e,
+state: active ? "active" : "prep",
+priority:e.priority || 999,
+start:start,
+end:end
+});
+}
+
+}
+
+});
+
+if(candidates.length === 0) return null;
+
+// 🔥 PRIORITY SORT
+candidates.sort((a,b)=>{
+
+let order = {active:0, prep:1, cooldown:2};
+
+if(order[a.state] !== order[b.state]){
+return order[a.state] - order[b.state];
+}
+
+return a.priority - b.priority;
+
+});
+
+return candidates[0];
+}
+
+function updateSpecialBar(){
+
+let data = getActiveShortEvent();
+
+if(!data){
+document.getElementById("ghoulionTimer").innerHTML = "";
+return;
+}
+
+let e = data.event;
+let now = new Date();
+
+let remaining = data.end - now;
+
+let h = Math.floor(remaining / 1000 / 60 / 60);
+let m = Math.floor((remaining / 1000 / 60) % 60);
+
+let localTime = data.end.toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit',
+hour12:true
+});
+
+let label = "Next";
+
+if(data.state === "active") label = "Active";
+if(data.state === "prep") label = "Next";
+if(data.state === "cooldown") label = "Wrap";
+
+let timerText =
+"<div class='ghoulionBar'>" +
+e.name + " • " + label + " • " + localTime +
+" • "+h+"h "+m+"m</div>";
+
+document.getElementById("ghoulionTimer").innerHTML = timerText;
+}
+
+function updateLongEventTicker(){
+
+let now = new Date();
+
+let longEvents = specialEvents.filter(e => !e.short && e.active);
+
+let html = "";
+
+longEvents.forEach(e => {
+
+let end = new Date(e.end);
+
+if(now > end) return;
+
+let diff = end - now;
+
+let d = Math.floor(diff / (1000*60*60*24));
+let h = Math.floor((diff / (1000*60*60)) % 24);
+let m = Math.floor((diff / (1000*60)) % 60);
+
+let urgent = diff <= 24*60*60*1000;
+
+let cls = urgent ? "eventItem eventUrgent" : "eventItem";
+
+let imgName = e.name.replace(/\s+/g,"_");
+
+html += `
+<span class="${cls}">
+<img src="images/events/${imgName}.png">
+${e.name} • ${d}d ${h}h ${m}m
+</span>
+`;
+
+});
+
+document.getElementById("eventTicker").innerHTML =
+'<div class="eventScroll">' + html + '</div>';
+}    
+  
 let cachedTasks = null;  
 
 function getTasks(){
@@ -947,29 +1159,6 @@ const rawData = [
 
 ];
   
-const events=[
-{d:1,h:16,name:"Gear Enhancement"},
-{d:2,h:0,name:"Construction Speed Up"},
-{d:3,h:4,name:"Research Speed Up"},  
-{d:3,h:12,name:"Behemoth"},
-{d:4,h:12,name:"Hero Fragments"},
-{d:5,h:12,name:"Construction Speed Up"},
-{d:6,h:16,name:"Research Speed Up"}
-];
-
-const doubleEvents=[
-{d:1,h:12,name:"Research Speed Up"},
-{d:2,h:12,name:"Gear Enhancement"},
-{d:3,h:4,name:"Research Power Up"},
-{d:5,h:0,name:"Gear Enhancement"},
-{d:5,h:12,name:"Construction Power Up"},
-{d:6,h:8,name:"Construction Speed Up"},
-{d:0,h:0,name:"Hero Fragments"},
-{d:0,h:4,name:"Construction Speed Up"},
-{d:0,h:12,name:"Research Speed Up"},
-{d:0,h:16,name:"Gear Enhancement"},
-{d:0,h:20,name:"Behemoth"}
-];
 
 function buildTaskMap(){
 
@@ -1121,22 +1310,6 @@ container.appendChild(row);
 
 }
   
-function getEventTimes(e){
-
-let eventStart=new Date();
-eventStart.setUTCHours(e.h,0,0,0);
-
-let diff=e.d-eventStart.getUTCDay();
-if(diff<0) diff+=7;
-
-eventStart.setUTCDate(eventStart.getUTCDate()+diff);
-
-let eventEnd=new Date(eventStart);
-eventEnd.setHours(eventEnd.getHours()+4);
-
-return {start:eventStart,end:eventEnd};
-
-}
  
 function getTaskTiming(task){
 
@@ -1249,7 +1422,7 @@ soonest = {task:t, timing};
 });
 
 if(!selected) selected = soonest;
-console.log(selected);  
+
 
 if(!selected){
 timer.innerHTML = "No upcoming tasks";
@@ -1353,7 +1526,7 @@ soonest = {task:t, timing};
 });
 
 if(!selected) selected = soonest;
-console.log(selected);  
+
 
 if(!selected){
 el.innerHTML = "No upcoming tasks";
@@ -1408,38 +1581,42 @@ el.innerHTML = "No upcoming tasks";
   
 }  
 }
-
-function getEventIcons(events){
-
-return [...new Set(events)].map(e => {
-let src = eventIcons[e];
-if(!src) return "";
-return `<img src="${src}" class="eventIcon">`;
-}).join("");
-
-}
   
+
+// 🔹 INITIAL RENDER (static UI)
+renderTriple();
+renderDouble();  
+
+// 🔹 LOAD DATA FIRST
+loadTicker();
+loadSpecialEvents(); 
+
+// 🔹 INITIAL UI UPDATE
+updateSpecialBar();
+updateLongEventTicker();  
+updateDoubleTimer();
+updateTodayPanel();
+
+// 🔹 1 SECOND LOOP (timers)
+setInterval(function(){
+
+updateSpecialBar();
+updateDoubleTimer();
+updateTodayPanel();
+updateLongEventTicker();  
+
+},1000);
+
+// 🔹 1 MIN LOOP (ticker fetch)
+setInterval(loadTicker, 60000);
+
+// 🔹 5 MIN LOOP (UI refresh)
 setInterval(function(){
 
 renderTriple();
 renderDouble();
 
-updateTimer();
-updateDoubleTimer();
-updateTodayPanel();
-
-},1000);
-
-renderTriple();
-renderDouble();  
-  
-updateTimer();
-updateDoubleTimer();
-
-loadTicker();  
-
-setInterval(loadTicker, 60000); // every 1 min  
- 
+}, 300000);  
   
 function updateTodayPanel(){
 
@@ -1481,7 +1658,6 @@ else{
 status = "⚡ ACTIVE";
 }
 
-let icons = getEventIcons(t.events);
 
 html += `
 <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px;">
@@ -1516,7 +1692,6 @@ else{
 status = "✔ Completed";
 }
 
-let icons = getEventIcons(t.events);
 
 html += `
 <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px;">
@@ -1538,118 +1713,6 @@ container.innerHTML = html;
 
 updateTodayPanel();
 
-const ghoulionStart = new Date("2025-07-19T12:45:00Z");
-const ghoulionInterval = 48 * 60 * 60 * 1000;
-  
-function updateGhoulion(){
-
-let now = new Date();
-
-let diff = now - ghoulionStart;
-let cycles = Math.floor(diff / ghoulionInterval);
-let currentStart = new Date(ghoulionStart.getTime() + cycles * ghoulionInterval);
-let nextStart = new Date(currentStart.getTime() + ghoulionInterval);
-
-let timeToStart = currentStart - now;
-let timeSinceStart = now - currentStart;
-
-let el = document.getElementById("ghoulionTimer");
-
-let h, m;
-let localTime;
-
-/* ---------- BEFORE START ---------- */
-
-if(timeToStart > 0){
-
-let remaining = timeToStart;
-
-h = Math.floor(remaining / 1000 / 60 / 60);
-m = Math.floor((remaining / 1000 / 60) % 60);
-
-localTime = currentStart.toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit',
-hour12:true
-});
-
-if(h === 0 && m < 30){
-el.innerHTML =
-"<div class='ghoulionBar alert'>⚠ Get Ready • "+localTime+
-" • "+h+"h "+m+"m</div>";
-}else{
-el.innerHTML =
-"<div class='ghoulionBar'>Next Hunt • "+localTime+
-" • "+h+"h "+m+"m</div>";
-}
-
-return;
-}
-
-/* ---------- ACTIVE RAID (0–25 min) ---------- */
-
-if(timeSinceStart >= 0 && timeSinceStart < 25*60*1000){
-
-let remaining = (25*60*1000) - timeSinceStart;
-
-h = Math.floor(remaining / 1000 / 60 / 60);
-m = Math.floor((remaining / 1000 / 60) % 60);
-
-el.innerHTML =
-"<div class='ghoulionBar active'>🔥 Active • "+m+"m left</div>"
-currentStart.toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit',
-hour12:true
-})+
-" • "+h+"h "+m+"m</div>";
-
-return;
-}
-
-/* ---------- WRAP PHASE (25–30 min) ---------- */
-
-if(timeSinceStart >= 25*60*1000 && timeSinceStart < 30*60*1000){
-
-let remaining = (30*60*1000) - timeSinceStart;
-
-h = Math.floor(remaining / 1000 / 60 / 60);
-m = Math.floor((remaining / 1000 / 60) % 60);
-
-el.innerHTML =
-"<div class='ghoulionBar wrap'>⏳ Wrap Up • "+m+"m left</div>"
-currentStart.toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit',
-hour12:true
-})+
-" • "+h+"h "+m+"m</div>";
-
-return;
-}
-
-/* ---------- NEXT CYCLE ---------- */
-
-let remaining = nextStart - now;
-
-h = Math.floor(remaining / 1000 / 60 / 60);
-m = Math.floor((remaining / 1000 / 60) % 60);
-
-localTime = nextStart.toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit',
-hour12:true
-});
-
-el.innerHTML =
-"<div class='ghoulionBar'>Next Hunt • "+localTime+
-" • "+h+"h "+m+"m</div>";
-
-}
-
-updateGhoulion();
-
-setInterval(updateGhoulion, 1000); 
   
 </script>
 
