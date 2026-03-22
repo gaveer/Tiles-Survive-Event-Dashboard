@@ -3,14 +3,14 @@
 
   "emergency": {
     "active": true,
+    "startTime": "2026-03-22T17:30:00Z",
     "endTime": "2026-03-22T18:30:00Z"
   },
 
-  "message": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — Rally at <span class='highlight'>Arcadia</span>",
+  "message": "<b style='color:#ff4d4d'>WAR ALERT</b> — Rally at <span class='highlight'>Arcadia</span>",
 
-  "normalMessage": "📢 Alliance Event Planner Live — Prepare for upcoming events"
-}
-{
+  "normalMessage": "📢 Alliance Event Planner Live — Prepare for upcoming events",
+
   "templates": [
     "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online",
     
