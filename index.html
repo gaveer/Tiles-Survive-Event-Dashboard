@@ -1036,6 +1036,9 @@ async function loadTasks(){
 try{
 let res = await fetch("data/tasks.json");
 rawData = await res.json();
+
+console.log("Tasks loaded:", rawData);  
+  
 }catch(e){
 console.log("Tasks load error", e);
 }
@@ -1045,6 +1048,9 @@ async function loadPrep(){
 try{
 let res = await fetch("data/prep.json");
 prepData = await res.json();
+
+console.log("Prep loaded:", prepData);
+  
 }catch(e){
 console.log("Prep load error", e);
 }
