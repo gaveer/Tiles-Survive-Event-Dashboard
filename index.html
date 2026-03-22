@@ -874,23 +874,36 @@ end:cycleEnd
 
 }else{
 
-// non-repeating
+// 🔥 non-repeating short event (fixed)
 let end = new Date(start.getTime() + durationMs);
 
-if(now <= end){
-let remaining = end - now;
-active = now >= start;
+if(now < start){
 
-if(remaining <= 5 * 60 * 1000) cooldown = true;
-
+// PREP
 candidates.push({
 event:e,
-state: active ? "active" : "prep",
+state: "prep",
 priority:e.priority || 999,
 start:start,
 end:end
 });
+
+}else if(now >= start && now <= end){
+
+// ACTIVE / COOLDOWN
+let remaining = end - now;
+
+candidates.push({
+event:e,
+state: remaining <= 5 * 60 * 1000 ? "cooldown" : "active",
+priority:e.priority || 999,
+start:start,
+end:end
+});
+
 }
+
+// after end → ignored
 
 }
 
