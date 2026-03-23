@@ -647,6 +647,13 @@ opacity:0.8;
 white-space:normal;
 word-wrap:break-word;
 line-height:1.4;
+}
+
+.prepTip{
+font-size:11px;
+opacity:0.9;
+margin-top:4px;
+white-space:pre-line;
 }  
   
 </style>
@@ -1169,6 +1176,7 @@ html += `
   <div class="prepTitle">${event}</div>
   ${p.saveItemType ? `<div class="prepItem">Save: ${p.saveItemType}</div>` : ""}
   ${p.prepComment ? `<div class="prepComment">${p.prepComment}</div>` : ""}
+${p.tip ? `<div class="prepTip">${p.tip}</div>` : ""}
 </div>
 `;
 
