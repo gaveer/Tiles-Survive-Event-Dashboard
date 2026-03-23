@@ -1370,59 +1370,10 @@ container.appendChild(row);
   
  
 function getTaskTiming(task){
-
-let now = new Date();
-
-let active = null;
-let next = null;
-
-// 🔥 HANDLE ALL DAY FIRST
-if(task.times.includes("ALL")){
-return {
-active: { start: null, end: null },
-next: null
-};
+return {active:null, next:null};
 }
 
-task.times.forEach(h => {
 
-if(h === undefined) return;
-
-if(typeof h === "string" && h.includes(":")){
-h = Number(h.split(":")[0]);
-}else{
-h = Number(h);
-}
-
-let start = new Date();
-start.setUTCHours(h, 0, 0, 0);
-
-let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-let taskDay = days.indexOf(task.d);
-
-let diff = taskDay - start.getUTCDay();
-if(diff < 0) diff += 7;
-
-start.setUTCDate(start.getUTCDate()+diff);
-
-let end = new Date(start);
-end.setUTCHours(end.getUTCHours()+4);
-
-if(now >= start && now < end){
-active = {start,end};
-}
-
-if(start > now){
-if(!next || start < next.start){
-next = {start};
-}
-}
-
-});
-
-return {active,next};
-
-}
 
 function getDayCountdown(type){
 
@@ -1447,7 +1398,6 @@ return `<span style="color:#4dff88">starts</span> in ${h}h ${m}m`;
 function updateTimer(){
 
 let {triple} = getTasks();
-
 let timer = document.getElementById("timer");
 
 if(triple.length === 0){
@@ -1457,48 +1407,38 @@ return;
 
 let selected = null;
 let soonest = null;
+let now = new Date();
 
 triple.forEach(t => {
 
-// ✅ PRIORITY 0 → POWER PLAY (timed)
-if(t.events.includes("Power Play")){
-let timing = getTaskTiming(t);
-
-if(timing.active && !selected){
-selected = {task:t, timing};
-}
-
 let nextTime = getNextOccurrence(t);
 
-if(!soonest || nextTime < soonest.time){
-soonest = {task:t, time:nextTime};
-}
-}
+// 🔥 ACTIVE detection (Power Play only)
+let isActive = false;
 
-let timing = getTaskTiming(t);
+if(t.events.includes("Power Play")){
+let start = new Date(nextTime.getTime() - 4 * 60 * 60 * 1000);
+if(now >= start && now <= nextTime){
+isActive = true;
+}
+}
 
 // PRIORITY 1 → ACTIVE
-if(timing.active && !selected){
-selected = {task:t, timing};
+if(isActive && !selected){
+selected = {task:t, time:nextTime};
+return;
 }
 
-// PRIORITY 2 → NEXT SOONEST
-let nextTime = getNextOccurrence(t);
-
+// PRIORITY 2 → NEXT
 if(!soonest || nextTime < soonest.time){
 soonest = {task:t, time:nextTime};
 }
 
 });
 
-if(!selected) selected = soonest;
-
-// 🔥 FALLBACK (ADD THIS HERE)
-if(!selected && triple.length){
-selected = {
-task: triple[0],
-timing: getTaskTiming(triple[0])
-};
+// fallback
+if(!selected && soonest){
+selected = soonest;
 }
 
 if(!selected){
@@ -1507,57 +1447,48 @@ return;
 }
 
 let task = selected.task;
-let timing = selected.timing;
-let hasPowerPlay = task.events.includes("Power Play");
+let nextTime = selected.time;
 
-if(task.times.includes("ALL") && !task.events.includes("Power Play")){
-timer.innerHTML =
-"<small>⚡ ACTIVE</small><br><b>"+task.task+"</b><br>All Day";
-return;
+// 🔥 ALL DAY
+let isAllDay = task.times.includes("ALL") && !task.events.includes("Power Play");
+
+// 🔥 ACTIVE display
+let isActive = false;
+
+if(task.events.includes("Power Play")){
+let start = new Date(nextTime.getTime() - 4 * 60 * 60 * 1000);
+if(now >= start && now <= nextTime){
+isActive = true;
 }
-  
-if(timing.active){
-
-let start = "";
-
-if(timing.active && timing.active.start){
-start = timing.active.start.toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit',
-hour12: true  
-});
-}else{
-start = "All Day";
 }
 
-let end = "";
+if(isActive){
 
-if(timing.active && timing.active.end){
-end = timing.active.end.toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit',
-hour12: true  
-});
-}else{
-end = "All Day";
-}
+let start = new Date(nextTime.getTime() - 4 * 60 * 60 * 1000);
 
 timer.innerHTML =
-"<small>⚡ ACTIVE</small><br><b>"+task.task+"</b><br>"+start+" - "+end;
+"<small>⚡ ACTIVE</small><br><b>"+task.task+"</b><br>"+
+start.toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit',
+hour12:true
+}) + " - " +
+nextTime.toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit',
+hour12:true
+});
 
-}else if(soonest){
+}else{
 
-let diff = soonest.time - new Date();
+let diff = nextTime - now;
 
 let h = Math.floor(diff/1000/60/60);
 let m = Math.floor((diff/1000/60)%60);
 
 timer.innerHTML =
-"<small>Next</small><br><b>"+task.task+"</b> • "+h+"h "+m+"m";
-
-}else{
-
-timer.innerHTML = "No upcoming tasks";
+"<small>Next</small><br><b>"+task.task+"</b><br>"+
+(isAllDay ? ("All Day • " + getDayCountdown()) : (h+"h "+m+"m"));
 
 }
 
@@ -1621,7 +1552,6 @@ return;
 let task = selected.task;
 let nextTime = selected.time;
 
-let now = new Date();
 
 // 🔥 detect ALL DAY correctly
 let isAllDay = task.times.includes("ALL") && !task.events.includes("Power Play");
@@ -1670,7 +1600,7 @@ el.innerHTML =
 (isAllDay ? ("All Day • " + getDayCountdown()) : (h+"h "+m+"m"));
 
 }
-  
+}  
 
 // 🔹 LOAD ANNOUNCEMENT (can run independently)
 loadTicker();
@@ -1728,28 +1658,32 @@ let todayTriple = triple.filter(t => t.d === today);
 
 if(todayTriple.length){
 
-let t = todayTriple[0]; // only show top priority
+let t = todayTriple[0];
 
-let timing = getTaskTiming(t);
+let nextTime = getNextOccurrence(t);
+
 let status = "";
 
-let hasPowerPlay = t.events.includes("Power Play");
+// 🔥 ACTIVE (Power Play window)
+let isActive = false;
 
-if(hasPowerPlay){
-if(timing.active){
+if(t.events.includes("Power Play")){
+let start = new Date(nextTime.getTime() - 4 * 60 * 60 * 1000);
+if(now >= start && now <= nextTime){
+isActive = true;
+}
+}
+
+// 🔥 STATUS LOGIC
+if(isActive){
 status = "⚡ ACTIVE";
 }
-else if(timing.next){
+else if(nextTime > now){
 status = "⭐ Upcoming";
 }
 else{
 status = "✔ Completed";
 }
-}
-else{
-status = "⚡ ACTIVE";
-}
-
 
 html += `
 <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px;">
@@ -1759,7 +1693,6 @@ html += `
 `;
 }
 
-
 /* ---------- DOUBLE ---------- */
 
 let todayDouble = double.filter(t => t.d === today);
@@ -1768,22 +1701,36 @@ if(todayDouble.length){
 
 let t = todayDouble[0];
 
-let timing = getTaskTiming(t);
+let nextTime = getNextOccurrence(t);
+
 let status = "";
 
-if(t.times.includes("ALL")){
+// 🔥 ALL DAY
+if(t.times.includes("ALL") && !t.events.includes("Power Play")){
 status = "🔹 ACTIVE";
 }
-else if(timing.active){
+else{
+
+let isActive = false;
+
+if(t.events.includes("Power Play")){
+let start = new Date(nextTime.getTime() - 4 * 60 * 60 * 1000);
+if(now >= start && now <= nextTime){
+isActive = true;
+}
+}
+
+if(isActive){
 status = "🔹 ACTIVE";
 }
-else if(timing.next){
+else if(nextTime > now){
 status = "⭐ Upcoming";
 }
 else{
 status = "✔ Completed";
 }
 
+}
 
 html += `
 <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px;">
@@ -1793,7 +1740,7 @@ html += `
 `;
 }
 
-/* ---------- EMPTY CASE ---------- */
+/* ---------- EMPTY ---------- */
 
 if(!todayTriple.length && !todayDouble.length){
 html = "<small>No priority tasks today</small>";
