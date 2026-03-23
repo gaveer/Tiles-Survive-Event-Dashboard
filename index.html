@@ -1048,7 +1048,12 @@ longEvents = longEvents.filter(e => e.isActive || e.timeToStart > 0);
 let activeEvents = longEvents.filter(e => e.isActive);
 
 if(activeEvents.length){
-  longEvents = activeEvents;
+
+// 🔥 SORT active events by priority
+activeEvents.sort((a,b)=> (a.priority || 999) - (b.priority || 999));
+
+// 🔥 TAKE ONLY TOP PRIORITY
+longEvents = [activeEvents[0]];
 }else{
 
 // 🔥 ONLY future events
@@ -1424,17 +1429,10 @@ let nextTime = getNextOccurrence(t);
 // 🔥 ACTIVE detection (Power Play only)
 let isActive = false;
 
-// 🔥 Power Play → 4h window
+// 🔥 ONLY Power Play has true ACTIVE window
 if(t.events.includes("Power Play")){
 let start = new Date(nextTime.getTime() - 4 * 60 * 60 * 1000);
 if(now >= start && now <= nextTime){
-isActive = true;
-}
-}
-// 🔥 NON Power Play → treat as active if today
-else{
-let sameDay = nextTime.toDateString() === now.toDateString();
-if(sameDay){
 isActive = true;
 }
 }
