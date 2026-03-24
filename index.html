@@ -148,14 +148,14 @@ margin-bottom:16px;
 
 .card{
 background:#151515;
-border-radius:12px;
-padding:10px;
-margin-top:10px;
+border-radius:10px;   /* slightly tighter */
+padding:8px;          /* was 10px */
+margin-top:8px;       /* was 10px */
 }
 
 .card h2{
-margin:0 0 10px 0;
-font-size:var(--title);
+margin:0 0 6px 0;   /* tighter */
+font-size:15px;     /* uniform */
 }
 
 .triple{border-left:5px solid gold;}
@@ -166,9 +166,9 @@ font-size:var(--title);
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:6px 0;
-border-bottom:1px solid #222;
-gap:6px;
+padding:3px 0;              /* tighter */
+border-bottom:1px solid #1a1a1a;  /* softer line */
+gap:4px;
 }
 
 #todayPanel .row{
@@ -187,17 +187,15 @@ min-width:45px;
 text-align:right;
 flex:1;
 color:#ffd54a;
-font-size:var(--main);
-white-space: nowrap;
-overflow: visible;
-text-overflow: unset;  
+font-size:13px;   /* uniform text */
+white-space:nowrap;
 }
 
 .timer{
 text-align:center;
-font-size:22px;
+font-size:18px;   /* smaller */
 color:#4da6ff;
-margin-top:6px;
+margin-top:4px;
 }
 
 button{
@@ -624,29 +622,26 @@ animation: heatPulse 1.5s ease-in-out infinite;
 }
 
 .prepRow{
-margin-bottom:10px;
-padding:8px;
-border-bottom:1px solid rgba(255,255,255,0.1);
-overflow-wrap: break-word;  
+margin-bottom:6px;
+padding:6px;
+border-bottom:1px solid rgba(255,255,255,0.06);
 }
 
 .prepTitle{
 font-weight:bold;
-font-size:13px;
-margin-bottom:4px;
+font-size:12px;
+margin-bottom:3px;
 }
 
 .prepItem{
-font-size:12px;
+font-size:11px;
 color:#4fc3f7;
 }
 
 .prepComment{
-font-size:11px;
-opacity:0.8;
-white-space:normal;
-word-wrap:break-word;
-line-height:1.4;
+font-size:10.5px;
+opacity:0.75;
+line-height:1.3;
 }
 
 .prepTip{
