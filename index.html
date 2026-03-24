@@ -344,9 +344,39 @@ animation: emblemGlow 3.5s infinite ease-in-out;
 
 .leaderImg{
 height:65px;
-width:65px;              /* must match logo */
-object-fit:contain;
-display:block;
+width:65px;
+object-fit:cover;
+border-radius:50%;
+
+/* 🔥 glow ring */
+box-shadow:
+0 0 0 2px rgba(255,215,0,0.8),
+0 0 8px rgba(255,215,0,0.6),
+0 0 14px rgba(77,166,255,0.5);
+
+/* smooth animation */
+animation: leaderGlow 3s ease-in-out infinite;
+}
+
+@keyframes leaderGlow{
+0%{
+box-shadow:
+0 0 0 2px rgba(255,215,0,0.6),
+0 0 6px rgba(255,215,0,0.4),
+0 0 10px rgba(77,166,255,0.3);
+}
+50%{
+box-shadow:
+0 0 0 3px rgba(255,215,0,1),
+0 0 14px rgba(255,215,0,0.9),
+0 0 22px rgba(77,166,255,0.7);
+}
+100%{
+box-shadow:
+0 0 0 2px rgba(255,215,0,0.6),
+0 0 6px rgba(255,215,0,0.4),
+0 0 10px rgba(77,166,255,0.3);
+}
 }  
 
 .todayRow{
