@@ -1404,7 +1404,8 @@ container.innerHTML = "";
 triple.forEach(t => {
 
 let row = document.createElement("div");
-row.className = "row noBorder";
+row.className = "row";
+row.style.borderBottom = "none";
 
 let timeText = "";
 
@@ -1963,7 +1964,7 @@ status = "✔ Completed";
 }
 
 html += `
-<div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px;">
+<div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px; border-bottom:none;">
 <span><b>◆ Triple</b> - ${t.task}</span>
 <span style="font-size:12px;opacity:.85">${status}</span>
 </div>
@@ -2013,7 +2014,7 @@ status = "✔ Completed";
 }
 
 html += `
-<div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px;">
+<div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px; border-bottom:none;">
   <span><b>◆ Double</b> - ${t.task}</span>
   <span style="font-size:12px;opacity:.85">${status}</span>
 </div>
@@ -2032,7 +2033,7 @@ let t = todayExclusive[0];
 let p = prepData[t.task];  
 
 html += `
-<div class="row" style="font-size:13px;">
+<div class="row" style="font-size:13px; border-bottom:none;">
   <span><b>◆ Exclusive</b> - ${t.task}</span>
   <span style="font-size:12px;opacity:.85">📌 Today's Special</span>
 </div>
