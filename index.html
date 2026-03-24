@@ -1527,11 +1527,22 @@ Object.keys(map)
 .sort((a,b)=>{
 
 let order = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let todayIndex = new Date().getUTCDay();
 
-let da = map[a][0];
-let db = map[b][0];
+function getNextIndex(days){
+let indices = days.map(d => order.indexOf(d));
 
-return order.indexOf(da) - order.indexOf(db);
+// convert to "distance from today"
+let diffs = indices.map(i => (i - todayIndex + 7) % 7);
+
+// return nearest upcoming day
+return Math.min(...diffs);
+}
+
+let da = getNextIndex(map[a]);
+let db = getNextIndex(map[b]);
+
+return da - db;
 
 })
 .forEach(task => {
