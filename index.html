@@ -1894,12 +1894,15 @@ let todayExclusive = dayExclusive.filter(t => t.d === today);
 if(todayExclusive.length){
 
 let t = todayExclusive[0];
+let p = prepData[t.task];  
 
 html += `
 <div class="row" style="font-size:13px;">
-<span><b>◆ Exclusive</b> - ${t.task}</span>
-<span style="font-size:12px;opacity:.85">📌 Today Only</span>
+  <span><b>◆ Exclusive</b> - ${t.task}</span>
+  <span style="font-size:12px;opacity:.85">📌 Today's Special</span>
 </div>
+
+${p?.tip ? `<div class="prepTip" style="margin-left:6px;">${p.tip}</div>` : ""}
 `;
 }
   
