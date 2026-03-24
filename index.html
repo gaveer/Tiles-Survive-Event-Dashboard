@@ -335,11 +335,19 @@ filter: drop-shadow(0 0 6px rgba(255,215,0,.45))
 .allianceLogo{
 margin:0;
 height:80px;
+width:80px;              /* ADD THIS */
 object-fit:contain;
 display:block;  
 z-index:2;  
 animation: emblemGlow 3.5s infinite ease-in-out;
 }
+
+.leaderImg{
+height:80px;
+width:80px;              /* must match logo */
+object-fit:contain;
+display:block;
+}  
 
 .todayRow{
 background:transparent;
@@ -479,22 +487,15 @@ opacity:.9;
 }  
 
 .headerBar{
-position:relative;
 display:flex;
 align-items:center;
-justify-content:flex-start;
-min-height:80px; 
-padding-top:0px;  
+justify-content:space-between;
+height:80px;
 }
   
 .headerText{
-position:absolute;
-left:50%;
-top:50%;  
-transform:translate(-50%, -50%);
 text-align:center;
-width:70%;
-pointer-events:none;
+flex:1;
 }
   
 .headerText h1{
@@ -507,15 +508,6 @@ margin:0;
 font-size:12px;
 opacity:.7;
 }
-
-.headerBar{
-height:50px;
-}
-
-.headerBar::after{
-content:"";
-width:80px; /* same as logo width */
-}  
 
 .ghoulionBar{
 display:flex;
@@ -655,6 +647,12 @@ border-bottom:1px solid #222;
 padding-bottom:6px;
 margin-bottom:6px;
 }
+
+.leaderImg{
+height:80px;           /* same as logo */
+object-fit:contain;
+display:block;
+}
   
 </style>
 </head>
@@ -678,7 +676,10 @@ margin-bottom:6px;
 <div class="subtitle">Alliance Event Planner</div>
 </div>
 
-</div>  
+<img src="saphireJess.png" class="leaderImg">
+
+</div>
+  
 <div id="activeBanner" class="activeBanner"></div>
   
 <div class="card ghoulionCard">
