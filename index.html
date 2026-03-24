@@ -809,7 +809,8 @@ let rawData = [];
   
 let prepData = {};  
   
-let specialEvents = [];  
+let shortEvents = [];
+let longEvents = [];  
   
 async function loadTicker(){
 
@@ -882,12 +883,22 @@ console.log("Ticker load error", e);
 }
 
 async function loadSpecialEvents(){
-try{
-let res = await fetch("data/special.json");
-specialEvents = await res.json();
-}catch(e){
-console.log("Special events load error", e);
-}
+  try{
+
+    let [shortRes, longRes] = await Promise.all([
+      fetch("data/specialShort.json"),
+      fetch("data/specialLong.json")
+    ]);
+
+    shortEvents = await shortRes.json();
+    longEvents = await longRes.json();
+
+    console.log("Short events loaded:", shortEvents.length);
+    console.log("Long events loaded:", longEvents.length);
+
+  }catch(e){
+    console.log("Special events load error", e);
+  }
 }  
 
 function getActiveShortEvent(){
@@ -896,9 +907,9 @@ let now = new Date();
 
 let candidates = [];
 
-specialEvents.forEach(e => {
+shortEvents.forEach(e => {
 
-if(!e.short || !e.active) return;
+if(!e.active) return;
 
 let start = new Date(e.start);
 let durationMs = e.duration * 60 * 1000;
@@ -928,7 +939,7 @@ cooldown = true;
 candidates.push({
 event:e,
 state: active ? "active" : prep ? "prep" : "cooldown",
-priority:e.priority || 999,
+priority: (e.priority !== undefined ? e.priority : 999),
 start:cycleStart,
 end:cycleEnd
 });
@@ -1044,23 +1055,21 @@ function updateLongEventTicker(){
 
 let now = new Date();
 
-let longEvents = specialEvents
-  .filter(e => !e.short && e.active)
+let events = longEvents
+  .filter(e => e.active)
+  .sort((a,b) => new Date(a.end) - new Date(b.end))
   .map(e => {
 
     let end = new Date(e.end);
-    let start = new Date(e.start || 0);
 
     return {
       ...e,
-      end,
-      start,
-      isActive: now >= start && now <= end,
-      timeToStart: start - now
+      end
     };
+
   });
 
-longEvents = longEvents.filter(e => e.end > now);
+events = events.filter(e => e.end > now);
 
   
 // 🔥 PRIORITY LOGIC
@@ -1094,7 +1103,7 @@ longEvents = longEvents.filter(e => e.end > now);
 
 let html = "";
 
-longEvents.forEach(e => {
+events.forEach(e => {
 
 if(!e.end) return;  
 
