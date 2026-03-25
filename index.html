@@ -1809,7 +1809,8 @@ let now = new Date();
 
 triple.forEach(t => {
 
-let eventTime = getNextOccurrence(t);
+let occ = getCurrentOrNextOccurrence(t);
+let eventTime = occ.time;
 let isActive = occ.isActive;
 
 // 🔥 ACTIVE detection (Power Play only)
@@ -2111,8 +2112,7 @@ if(typeof h === "string" && h.includes(":")){
   h = Number(h);
 }
 
-let occ = getCurrentOrNextOccurrence(t);
-let eventTime = occ.time;
+let eventTime = getNextOccurrence(t);
 
 let start = new Date(eventTime.getTime() - 4 * 60 * 60 * 1000);
 
