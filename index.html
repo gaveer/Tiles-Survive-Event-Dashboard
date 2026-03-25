@@ -2137,10 +2137,15 @@ html += `
 ${p?.tip ? `<div class="prepTip saveItem">${p.tip}</div>` : ""}
 `;
 }
-
+}
+  
 /* ---------- DOUBLE ---------- */
 
-let todayDouble = double.filter(t => t.d === today);
+let todayDouble = double.filter(t => {
+  let h = t.times.find(x => x !== "ALL");
+  let localDay = getLocalDay(h, t.d);
+  return localDay === ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date().getDay()];
+});
 
 if(todayDouble.length){
 
@@ -2159,8 +2164,7 @@ if(typeof h === "string" && h.includes(":")){
   h = Number(h);
 }
 
-let eventTime = new Date();
-eventTime.setHours(h,0,0,0);
+let eventTime = getNextOccurrence(t);
 
 let start = new Date(eventTime.getTime() - 4 * 60 * 60 * 1000);
 
