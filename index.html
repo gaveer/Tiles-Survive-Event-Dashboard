@@ -2102,11 +2102,11 @@ let html = "";
 /* ---------- TRIPLE ---------- */
 
 let todayTriple = triple.filter(t => {
+console.log("CHECK TRIPLE:", t.d, t.times);  
   let h = t.times.find(x => x !== "ALL");
-  let localDay = getLocalDay(h, t.d);
-  return localDay === days[new Date().getDay()];
+  return t.d === days[new Date().getDay()];
 });
-
+console.log("todayTriple result:", todayTriple);
 if(todayTriple.length){
 
 let t = todayTriple.find(x => {
@@ -2146,11 +2146,12 @@ if(w && now >= w.start && now <= w.end){
 /* ---------- DOUBLE ---------- */
 
 let todayDouble = double.filter(t => {
+console.log("CHECK DOUBLE:", t.d, t.times);
   let h = t.times.find(x => x !== "ALL");
   let localDay = getLocalDay(h, t.d);
   return localDay === days[new Date().getDay()];
 });
-
+console.log("todayDouble result:", todayDouble);
 if(todayDouble.length){
 
 let t = todayDouble.find(x => {
