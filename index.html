@@ -1360,39 +1360,16 @@ console.log("RAW DATA SAMPLE:", rawData[0]);
   return {triple, double, dayExclusive};
 }
 
-function formatToLocalTime(time, d){
+function formatToLocalTimeFromDate(date){
 
-  if(!time || time === "ALL") return "";
-
-  let [h,m] = String(time).split(":").map(Number);
-
-  let now = new Date();
-
-  let date = new Date(Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate(),
-    h,
-    m
-  ));
-
-  let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  let targetDay = days.indexOf(d);
-
-  if(targetDay === -1) return "";
-
-  let diff = targetDay - date.getUTCDay();
-  if(diff < 0) diff += 7;
-
-  date.setUTCDate(date.getUTCDate() + diff);
+  if(!date) return "";
 
   return date.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true
   });
-
-}  
+}
 
 function getNextOccurrence(task){
 
@@ -1507,8 +1484,16 @@ function getTaskState(task){
   if(!task || !task.times || !task.times.length) return null;
 
   let now = new Date();
+  let nowUTC = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    now.getUTCHours(),
+    now.getUTCMinutes()
+  ));
+
   let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  let today = now.getDay();
+  let targetDay = days.indexOf(task.d);
 
   let best = null;
 
@@ -1516,39 +1501,42 @@ function getTaskState(task){
 
     if(!time || time === "ALL") return;
 
-    let [h,m] = String(time).split(":").map(Number);
+    let [h,m] = time.split(":").map(Number);
 
-    let date = new Date();
-    date.setHours(h, m, 0, 0);
+    let base = new Date(Date.UTC(
+      nowUTC.getUTCFullYear(),
+      nowUTC.getUTCMonth(),
+      nowUTC.getUTCDate(),
+      h,
+      m
+    ));
 
-    // align day (LOCAL, not UTC)
-    let targetDay = days.indexOf(task.d);
-    let diff = targetDay - today;
+    let diff = targetDay - base.getUTCDay();
     if(diff < 0) diff += 7;
 
-    date.setDate(date.getDate() + diff);
+    base.setUTCDate(base.getUTCDate() + diff);
 
-    let start = new Date(date.getTime() - 4 * 60 * 60 * 1000);
+    let start = new Date(base.getTime() - 4 * 60 * 60 * 1000);
 
     // ACTIVE
-    if(now >= start && now <= date){
-      best = {status: "ACTIVE", time: date};
+    if(nowUTC >= start && nowUTC <= base){
+      best = {status: "ACTIVE", time: base};
       return;
     }
 
     // UPCOMING
-    if(now < start){
-      if(!best || date < best.time){
-        best = {status: "UPCOMING", time: date};
+    if(nowUTC < start){
+      if(!best || base < best.time){
+        best = {status: "UPCOMING", time: base};
       }
       return;
     }
 
     // PAST → NEXT CYCLE
-    date.setDate(date.getDate() + 7);
+    base.setUTCDate(base.getUTCDate() + 7);
 
-    if(!best || date < best.time){
-      best = {status: "UPCOMING", time: date};
+    if(!best || base < best.time){
+      best = {status: "UPCOMING", time: base};
     }
 
   });
@@ -1592,7 +1580,10 @@ function renderTriple(){
       status = "✔ Completed";
     }
 
-    let timeStr = formatToLocalTime(t.times?.[0], t.d);
+let state = getTaskState(t);
+if(!state) return;
+
+let timeStr = formatToLocalTimeFromDate(state.time);
 
     html += `
     <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}">
@@ -1642,7 +1633,7 @@ function renderDouble(){
       status = "✔ Completed";
     }
 
-    let timeStr = formatToLocalTime(t.times?.[0], t.d);
+    let timeStr = formatToLocalTimeFromDate(state.time)
 
     html += `
     <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}">
@@ -1876,50 +1867,43 @@ return `<span style="color:#4dff88">starts</span> in ${h}h ${m}m`;
 function updateTimer(){
 
   let {triple} = getTasks();
-  let now = new Date();
-
   let container = document.getElementById("timer");
   if(!container) return;
 
-  function getBestTask(list){
+  let candidates = triple
+    .map(t => {
+      let s = getTaskState(t);
+      return s ? {task: t, state: s} : null;
+    })
+    .filter(x => x);
 
-    // ACTIVE first
-    let active = list.find(t=>{
-      let w = getTaskWindow(t);
-      return w && now >= w.start && now <= w.end;
-    });
-
-    if(active) return {task: active, type: "ACTIVE"};
-
-    // else NEXT
-    let sorted = list.slice().sort((a,b)=>{
-      let ta = getNextOccurrence(a) || Infinity;
-      let tb = getNextOccurrence(b) || Infinity;
-      return ta - tb;
-    });
-
-    return {task: sorted[0], type: "NEXT"};
-  }
-
-  let best = getBestTask(triple);
-
-  if(!best.task){
+  if(!candidates.length){
     container.innerHTML = "";
     return;
   }
 
-  let w = getTaskWindow(best.task);
-  let timeStr = formatToLocalTime(best.task.times?.[0], best.task.d);
+  candidates.sort((a,b)=>{
+    let order = {ACTIVE:0, UPCOMING:1};
+    if(order[a.state.status] !== order[b.state.status]){
+      return order[a.state.status] - order[b.state.status];
+    }
+    return a.state.time - b.state.time;
+  });
 
-  let html = `
+  let best = candidates[0];
+
+  let label =
+    best.state.status === "ACTIVE" ? "ACTIVE" : "NEXT";
+
+  let timeStr = formatToLocalTimeFromDate(best.state.time);
+
+  container.innerHTML = `
     <div style="text-align:center;">
-      <div>Triple Chain - ${best.type}</div>
+      <div>Triple Chain - ${label}</div>
       <div style="font-size:18px;"><b>${best.task.task}</b></div>
       <div>${timeStr}</div>
     </div>
   `;
-
-  container.innerHTML = html;
 }
   
 function updateDoubleTimer(){
@@ -1962,10 +1946,7 @@ function updateDoubleTimer(){
     best.state.status === "UPCOMING" ? "NEXT" :
     "DONE";
 
-  let timeStr = formatToLocalTime(
-    best.state.time.toISOString().slice(11,16),
-    best.task.d
-  );
+let timeStr = formatToLocalTimeFromDate(best.state.time);
 
   let html = `
     <div style="text-align:center;">
