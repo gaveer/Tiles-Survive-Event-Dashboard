@@ -2082,7 +2082,7 @@ function updateTodayPanel(){
 
 let now = new Date();
 let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-let today = days[now.getDay()];
+let today = days[now.getUTCDay()];
 
 let {triple, double, dayExclusive} = getTasks();
 
@@ -2092,11 +2092,7 @@ let html = "";
 
 /* ---------- TRIPLE ---------- */
 
-let todayTriple = triple.filter(t => {
-  let h = t.times.find(x => x !== "ALL");
-  let localDay = getLocalDay(h, t.d);
-  return localDay === today;
-});
+let todayTriple = triple.filter(t => t.d === today);
 
 if(todayTriple.length){
 
@@ -2105,9 +2101,20 @@ let p = prepMap[t.task];
 
 let status = "";
 
-let occ = getCurrentOrNextOccurrence(t);
+if(t.events.includes("Power Play")){
 
-let eventTime = occ.time;
+// 🔥 get TODAY's actual time (NOT next occurrence)
+let h = t.times.find(x => x !== "ALL");
+
+if(typeof h === "string" && h.includes(":")){
+  h = Number(h.split(":")[0]);
+}else{
+  h = Number(h);
+}
+
+let eventTime = new Date();
+eventTime.setHours(h,0,0,0);
+
 let start = new Date(eventTime.getTime() - 4 * 60 * 60 * 1000);
 
 // 🔥 status logic
@@ -2134,51 +2141,56 @@ ${p?.tip ? `<div class="prepTip saveItem">${p.tip}</div>` : ""}
 
 /* ---------- DOUBLE ---------- */
 
-let todayDouble = double.filter(t => {
-  let h = t.times.find(x => x !== "ALL");
-  let localDay = getLocalDay(h, t.d);
-  return localDay === today;
-});
+let todayDouble = double.filter(t => t.d === today);
 
 if(todayDouble.length){
 
-  let t = todayDouble[0];
-  let p = prepMap[t.task];
+let t = todayDouble[0];
+let p = prepMap[t.task];
 
-  let status = "";
+let status = "";
 
-  let occ = getCurrentOrNextOccurrence(t);
-  let eventTime = occ.time;
-  let start = new Date(eventTime.getTime() - 4 * 60 * 60 * 1000);
+if(t.events.includes("Power Play")){
 
-  if(t.events.includes("Power Play")){
+let h = t.times.find(x => x !== "ALL");
 
-    if(now >= start && now <= eventTime){
-      status = "🔹 ACTIVE";
-    }
-    else if(now < start){
-      status = "⭐ Upcoming";
-    }
-    else{
-      status = "✔ Completed";
-    }
+if(typeof h === "string" && h.includes(":")){
+  h = Number(h.split(":")[0]);
+}else{
+  h = Number(h);
+}
 
-  }else{
+let eventTime = new Date();
+eventTime.setHours(h,0,0,0);
 
-    // 🔥 non-power-play double = all day
-    status = "🔹 ACTIVE";
+let start = new Date(eventTime.getTime() - 4 * 60 * 60 * 1000);
 
-  }
+if(now >= start && now <= eventTime){
+  status = "🔹 ACTIVE";
+}
+else if(now < start){
+  status = "⭐ Upcoming";
+}
+else{
+  status = "✔ Completed";
+}
 
-  html += `
-  <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px; border-bottom:none;">
-    <span><b>◆ Double</b> - ${t.task}</span>
-    <span style="font-size:12px;opacity:.85">${status}</span>
-  </div>
+}else{
 
-  ${p?.tip ? `<div class="prepTip saveItem" style="margin-left:6px;">${p.tip}</div>` : ""}
-  `;
+// 🔥 no power play → active all day
+status = "🔹 ACTIVE";
 
+}
+
+html += `
+<div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}" style="font-size:13px; border-bottom:none;">
+  <span><b>◆ Double</b> - ${t.task}</span>
+  <span style="font-size:12px;opacity:.85">${status}</span>
+</div>
+
+${p?.tip ? `<div class="prepTip saveItem" style="margin-left:6px;">${p.tip}</div>` : ""}
+`;  
+  
 }
 
 
@@ -2212,8 +2224,6 @@ html = "<small>No priority tasks today</small>";
 container.innerHTML = html;
 
 }
-
-}  
 
 updateTodayPanel();
 
