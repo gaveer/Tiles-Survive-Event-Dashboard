@@ -2113,7 +2113,7 @@ if(typeof h === "string" && h.includes(":")){
 }
 
 let eventTime = new Date();
-eventTime.setHours(h,0,0,0);
+eventTime.setUTCHours(h,0,0,0);
 
 let start = new Date(eventTime.getTime() - 4 * 60 * 60 * 1000);
 
@@ -2161,7 +2161,7 @@ if(typeof h === "string" && h.includes(":")){
 }
 
 let eventTime = new Date();
-eventTime.setHours(h,0,0,0);
+eventTime.setUTCHours(h,0,0,0);
 
 let start = new Date(eventTime.getTime() - 4 * 60 * 60 * 1000);
 
