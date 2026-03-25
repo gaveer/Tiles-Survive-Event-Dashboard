@@ -1549,9 +1549,14 @@ function getTaskState(task){
     }
 
     // COMPLETED fallback
-    if(!best){
-      best = {status: "COMPLETED", time: local};
-    }
+  // FUTURE fallback (always move to next cycle)
+if(now > local){
+  local.setDate(local.getDate() + 7);
+}
+
+if(!best || local < best.time){
+  best = {status: "UPCOMING", time: local};
+}
 
   });
 
