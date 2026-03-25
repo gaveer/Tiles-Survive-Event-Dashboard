@@ -2078,7 +2078,7 @@ function updateTodayPanel(){
 
 let now = new Date();
 let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-let today = days[now.getUTCDay()];
+let today = days[now.getDay()];
 
 let {triple, double, dayExclusive} = getTasks();
 
@@ -2094,6 +2094,9 @@ let todayTriple = triple.filter(t => {
   return localDay === ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date().getDay()];
 });
 
+console.log("todayTriple:", todayTriple);  
+  
+  
 if(todayTriple.length){
 
 let t = todayTriple[0];
@@ -2138,6 +2141,8 @@ ${p?.tip ? `<div class="prepTip saveItem">${p.tip}</div>` : ""}
 `;
 }
   
+}  
+  
 /* ---------- DOUBLE ---------- */
 
 let todayDouble = double.filter(t => {
@@ -2146,6 +2151,8 @@ let todayDouble = double.filter(t => {
   return localDay === ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date().getDay()];
 });
 
+console.log("todayDouble:", todayDouble); 
+  
 if(todayDouble.length){
 
 let t = todayDouble[0];
