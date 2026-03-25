@@ -1390,23 +1390,16 @@ function getTaskState(task){
   let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   let targetDay = days.indexOf(task.d);
 
-  let todayIndex = now.getDay();
-
   let best = null;
 
   task.times.forEach(time => {
 
-    // 🔥 ALL DAY TASK (NO TIME)
+    // 🔥 ALL DAY TASK
     if(time === "ALL"){
-      
-      // only valid if today matches
-      if(targetDay === todayIndex){
-        best = {
-          status: "ACTIVE",
-          time: new Date(now)
-        };
+      let today = now.getDay();
+      if(targetDay === today){
+        best = {status: "ACTIVE", time: new Date(now)};
       }
-
       return;
     }
 
@@ -1422,18 +1415,13 @@ function getTaskState(task){
 
     let start = new Date(base.getTime() - 4 * 60 * 60 * 1000);
 
-    // 🔥 ONLY CARE ABOUT TODAY
-    if(targetDay !== todayIndex){
-      return;
-    }
-
-    // ACTIVE WINDOW (4h)
+    // ACTIVE (4h window)
     if(now >= start && now <= base){
       best = {status: "ACTIVE", time: base};
       return;
     }
 
-    // BEFORE WINDOW
+    // UPCOMING
     if(now < start){
       if(!best || base < best.time){
         best = {status: "UPCOMING", time: base};
@@ -1441,11 +1429,12 @@ function getTaskState(task){
       return;
     }
 
-    // AFTER WINDOW (TODAY ONLY)
-    if(now > base){
-      if(!best){
-        best = {status: "COMPLETED", time: base};
-      }
+    // NEXT CYCLE
+    let next = new Date(base);
+    next.setUTCDate(next.getUTCDate() + 7);
+
+    if(!best || next < best.time){
+      best = {status: "UPCOMING", time: next};
     }
 
   });
