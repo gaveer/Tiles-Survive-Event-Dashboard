@@ -1810,18 +1810,14 @@ let now = new Date();
 triple.forEach(t => {
 
 let occ = getCurrentOrNextOccurrence(t);
-let eventTime = occ.time;
+let nextTime = occ.time;
 let isActive = occ.isActive;
 
-// 🔥 ACTIVE detection (Power Play only)
-
-// PRIORITY 1 → ACTIVE
 if(isActive && !selected){
 selected = {task:t, time:nextTime};
 return;
 }
 
-// PRIORITY 2 → NEXT
 if(!soonest || nextTime < soonest.time){
 soonest = {task:t, time:nextTime};
 }
@@ -2092,7 +2088,11 @@ let html = "";
 
 /* ---------- TRIPLE ---------- */
 
-let todayTriple = triple.filter(t => t.d === today);
+let todayTriple = triple.filter(t => {
+  let h = t.times.find(x => x !== "ALL");
+  let localDay = getLocalDay(h, t.d);
+  return localDay === ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date().getDay()];
+});
 
 if(todayTriple.length){
 
