@@ -2082,7 +2082,7 @@ function updateTodayPanel(){
 
 let now = new Date();
 let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-let today = days[now.getUTCDay()];
+let today = days[now.getDay()];
 
 let {triple, double, dayExclusive} = getTasks();
 
