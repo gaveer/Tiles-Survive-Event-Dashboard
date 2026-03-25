@@ -1414,68 +1414,46 @@ hour12:true
 
 function getNextOccurrence(task){
 
-let now = new Date();
-let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  if(task.utc === "ALL") return null;
 
-let h = task.times.find(x => x !== "ALL");
+  let [h,m] = task.utc.split(":").map(Number);
 
-// ALL DAY → treat as current day end
-if(!h){
-let d = new Date();
-d.setHours(23,59,59,999);
-return d;
+  let now = new Date();
+
+  let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  let targetDay = days.indexOf(task.d);
+
+  // base UTC time
+  let base = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    h,
+    m
+  ));
+
+  let local = new Date(base);
+
+  // align to correct weekday
+  let diff = targetDay - local.getDay();
+  if(diff < 0) diff += 7;
+
+  local.setDate(local.getDate() + diff);
+
+  // 🔥 CRITICAL FIX — HANDLE ACTIVE WINDOW
+  let start = new Date(local.getTime() - 4 * 60 * 60 * 1000);
+
+  if(now >= start && now <= local){
+    return local; // current active cycle
+  }
+
+  // if fully passed → move to next cycle
+  if(now > local){
+    local.setDate(local.getDate() + 7);
+  }
+
+  return local;
 }
-
-// parse hour
-if(typeof h === "string" && h.includes(":")){
-h = Number(h.split(":")[0]);
-}else{
-h = Number(h);
-}
-
-// base UTC time
-let date = new Date();
-date.setUTCHours(h,0,0,0);
-
-// align to correct weekday
-let diff = days.indexOf(task.d) - date.getUTCDay();
-if(diff < 0) diff += 7;
-
-date.setUTCDate(date.getUTCDate() + diff);
-
-// 🔥 KEY FIX: if already passed → move to NEXT WEEK
-if(date < now){
-date.setUTCDate(date.getUTCDate() + 7);
-}
-
-return date;
-}
-
-function getCurrentOrNextOccurrence(task){
-
-let now = new Date();
-let next = getNextOccurrence(task);
-
-// 🔥 Power Play active window = 4h before
-if(task.events.includes("Power Play")){
-
-let start = new Date(next.getTime() - 4 * 60 * 60 * 1000);
-
-if(now >= start && now <= next){
-return {
-time: next,
-isActive: true
-};
-}
-
-}
-
-return {
-time: next,
-isActive: false
-};
-
-}  
   
 function renderTriple(){
 
