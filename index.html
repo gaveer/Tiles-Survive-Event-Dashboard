@@ -1821,11 +1821,10 @@ function updateDoubleTimer(){
   let container = document.getElementById("doubleTimer");
   if(!container) return;
 
-  // 🔥 build with unified state
   let candidates = double
     .map(t => {
       let s = getTaskState(t);
-      return s ? {task: t, state: s} : null;
+      return s ? {task:t, state:s} : null;
     })
     .filter(x => x);
 
@@ -1834,40 +1833,54 @@ function updateDoubleTimer(){
     return;
   }
 
-  // 🔥 PRIORITY: ACTIVE → UPCOMING → COMPLETED
-  candidates.sort((a,b) => {
+  // 🔥 SORT → STATE → PRIORITY → TIME
+  candidates.sort((a,b)=>{
 
-  let sa = a.state;
-  let sb = b.state;
+    let sa = a.state;
+    let sb = b.state;
 
-  if(!sa && !sb) return 0;
-  if(!sa) return 1;
-  if(!sb) return -1;
+    let order = {ACTIVE:0, UPCOMING:1, COMPLETED:2};
 
-  if(sa.status !== sb.status){
-    return sa.status === "ACTIVE" ? -1 : 1;
-  }
+    if(order[sa.status] !== order[sb.status]){
+      return order[sa.status] - order[sb.status];
+    }
 
-  if(a.task.priority !== b.task.priority){
-    return a.task.priority - b.task.priority;
-  }
+    if(a.task.priority !== b.task.priority){
+      return a.task.priority - b.task.priority;
+    }
 
-  return sa.time - sb.time;
-});
+    return sa.time - sb.time;
+  });
+
   let best = candidates[0];
 
-  let statusLabel =
-    best.state.status === "ACTIVE" ? "ACTIVE" :
-    best.state.status === "UPCOMING" ? "NEXT" :
-    "DONE";
+  let t = best.task;
+  let s = best.state;
 
-let timeStr = formatToLocalTimeFromDate(best.state.time);
+  // 🔥 TIME CALC
+  let start = s.time;
+  let end = new Date(start.getTime() + t.duration * 60 * 60 * 1000);
+
+  let diff = (s.status === "ACTIVE" ? end - now : start - now);
+
+  let mins = Math.floor(diff / 60000);
+  let hrs = Math.floor(mins / 60);
+  mins = mins % 60;
+
+  let timerStr = `${String(hrs).padStart(2,"0")}:${String(mins).padStart(2,"0")}`;
+
+  let label =
+    s.status === "ACTIVE"
+      ? `<span style="color:#ff6b6b">Ends in ${timerStr}</span>`
+      : `<span style="color:#4cff88">Starts in ${timerStr}</span>`;
+
+  let timeStr = formatToLocalTimeFromDate(start);
 
   let html = `
     <div style="text-align:center;">
-      <div>Double Chain - ${statusLabel}</div>
-      <div style="font-size:18px;"><b>${best.task.task}</b></div>
-      <div>${timeStr}</div>
+      <div>Double Chain - ${s.status}</div>
+      <div style="font-size:18px;"><b>${t.task}</b></div>
+      <div>${label} • ${timeStr}</div>
     </div>
   `;
 
@@ -1898,13 +1911,17 @@ Promise.all([
   updateDoubleTimer();
   updateTodayPanel();
 
-  // 🔹 1 SECOND LOOP (timers only)
-  setInterval(function(){
-    updateSpecialBar();
-    updateTimer();
-    updateDoubleTimer();
-    updateTodayPanel();
-  }, 1000);
+  // 🔹 FAST LOOP (timers only)
+setInterval(function(){
+  updateTimer();
+  updateDoubleTimer();
+}, 1000);
+
+// 🔹 UI REFRESH (every 60s)
+setInterval(function(){
+  updateSpecialBar();
+  updateTodayPanel();
+}, 60000);
 
   // 🔹 LONG EVENT TICKER REFRESH (5 mins)
   setInterval(updateLongEventTicker, 300000);
