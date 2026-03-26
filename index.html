@@ -147,15 +147,15 @@ margin-bottom:16px;
 }
 
 .card{
-background:#151515;
-border-radius:10px;   /* slightly tighter */
-padding:8px;          /* was 10px */
-margin-top:8px;       /* was 10px */
+  background:#151515;
+  border-radius:10px;
+  padding:8px;
+  margin-top:6px;   /* tighter */
 }
 
 .card h2{
-margin:0 0 6px 0;   /* tighter */
-font-size:15px;     /* uniform */
+  margin:0 0 4px 0;   /* tighter than before */
+  font-size:15px;
 }
 
 .triple{border-left:5px solid gold;}
@@ -163,12 +163,12 @@ font-size:15px;     /* uniform */
 .save{border-left:5px solid #4dff88;}
 
 .row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:3px 0;              /* tighter */
-border-bottom:1px solid #1a1a1a;  /* softer line */
-gap:4px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:2px 0;   /* tighter */
+  border-bottom:1px solid #1a1a1a;
+  gap:4px;
 }
 
 #todayPanel .row{
@@ -796,9 +796,9 @@ height:80px;
 /* 🔽 Bottom Collapse Bar */
 .collapseBar{
   text-align:center;
-  margin-top:6px;
-  padding:6px;
-  background:rgba(255,255,255,0.08);
+  margin-top:4px;
+  padding:4px;   /* reduced */
+  background:rgba(255,255,255,0.04);
   border-radius:6px;
   cursor:pointer;
 }
@@ -806,6 +806,23 @@ height:80px;
 /* arrow already exists */
 .collapseBar .collapseArrow{
   margin:0 auto;
+}
+
+@media (max-width: 600px){
+
+  .card{
+    padding:6px;
+    margin-top:5px;
+  }
+
+  .collapseBar{
+    padding:3px;
+  }
+
+  .row{
+    padding:2px 0;
+  }
+
 }
   
 </style>
