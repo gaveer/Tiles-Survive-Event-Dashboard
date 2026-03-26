@@ -1919,23 +1919,20 @@ setInterval(function(){
   updateDoubleTimer();
 }, 1000);
 
-// 🔹 UI REFRESH (every 60s)
-setInterval(function(){
-  updateSpecialBar();
-  updateTodayPanel();
-}, 60000);
-
   // 🔹 LONG EVENT TICKER REFRESH (5 mins)
   setInterval(updateLongEventTicker, 300000);
 
-  // 🔹 UI REFRESH (5 mins)
+  // 🔹 UI REFRESH (every 60s)
   setInterval(function(){
+    updateSpecialBar();
+    updateTodayPanel();
+    
     renderTriple();
     renderDouble();
     renderDayExclusive();
     renderSaveList();
     renderCasualTasks();
-  }, 300000);
+  }, 60000);
 
 });
   
