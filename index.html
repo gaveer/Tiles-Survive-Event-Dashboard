@@ -796,10 +796,10 @@ height:80px;
 /* 🔽 Bottom Collapse Bar */
 .collapseBar{
   text-align:center;
-  margin-top:6px;
-  padding:6px;
-  background:rgba(255,255,255,0.05);
-  border-radius:6px;
+  margin-top:8px;
+  padding:8px;
+  background:rgba(255,255,255,0.08);
+  border-radius:8px;
   cursor:pointer;
 }
 
@@ -888,18 +888,18 @@ height:80px;
 </div>
   
 <div class="card triple">
-<h2>◆ Triple Chain List</h2>
-  ◆ Triple Chain List <span class="collapseArrow"></span>
-</h2>
+  <h2>◆ Triple Chain List</h2>
+  <div id="tripleList"></div>
+</div>
 
 <div id="tripleList"></div>
 </div>
 
 
 <div class="card double">
-<h2>◆ Double Chain List</h2>
-  ◆ Double Chain List <span class="collapseArrow"></span>
-</h2>
+  <h2>◆ Double Chain List</h2>
+  <div id="doubleList"></div>
+</div>
 
 <div id="doubleList"></div>
 
@@ -1545,15 +1545,7 @@ function toggleList(type){
 
   collapseState[type] = !collapseState[type];
 
-  // 🔄 rotate arrow
-  let header = document.getElementById(type + "Header");
-  let arrow = header.querySelector(".collapseArrow");
-
-  if(!collapseState[type]){
-    arrow.classList.add("up");
-  }else{
-    arrow.classList.remove("up");
-  }
+  // 🔥 NO header logic anymore
 
   if(type === "triple") renderTriple();
   if(type === "double") renderDouble();
