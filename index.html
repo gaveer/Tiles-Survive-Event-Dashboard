@@ -710,6 +710,16 @@ justify-content:center;
 width:80px;
 height:80px;
 }
+
+.nextRow{
+  background: linear-gradient(90deg, rgba(255,215,0,0.12), transparent);
+  border-left: 3px solid #ffd700;
+}
+
+.activeRow{
+  background: linear-gradient(90deg, rgba(0,255,150,0.12), transparent);
+  border-left: 3px solid #00ff95;
+}
   
 </style>
 </head>
@@ -1471,7 +1481,10 @@ function renderTriple(){
     let timeStr = formatToLocalTimeFromDate(state.time);
 
     html += `
-      <div class="row ${state.status === 'ACTIVE' ? 'activeRow' : ''}">
+      <div class="row ${
+  state.status === 'ACTIVE' ? 'activeRow' :
+  state.status === 'UPCOMING' ? 'nextRow' : ''
+}">
         <span>${t.d}</span>
         <span>${timeStr} — ${t.task}</span>
       </div>
@@ -1531,7 +1544,10 @@ function renderDouble(){
 let timeStr = formatToLocalTimeFromDate(state.time);
 
     html += `
-    <div class="row ${status.includes('ACTIVE') ? 'activeRow' : ''}">
+    <div class="row ${
+  state.status === 'ACTIVE' ? 'activeRow' :
+  state.status === 'UPCOMING' ? 'nextRow' : ''
+}">
       <span>${t.d}</span>
       <span>${timeStr} — ${t.task}</span>
     </div>
@@ -1762,116 +1778,51 @@ return `<span style="color:#4dff88">starts</span> in ${h}h ${m}m`;
 function updateTimer(){
 
   let {triple} = getTasks();
+  let now = new Date();
+
   let container = document.getElementById("timer");
   if(!container) return;
 
-  let candidates = triple
-    .map(t => {
-      let s = getTaskState(t);
-      return s ? {task: t, state: s} : null;
-    })
-    .filter(x => x);
+  let active = null;
+  let upcoming = [];
 
-  if(!candidates.length){
-    container.innerHTML = "";
-    return;
-  }
+  triple.forEach(t => {
 
-  candidates.sort((a,b)=>{
+    let s = getTaskState(t);
+    if(!s) return;
 
-  let sa = a.state;
-  let sb = b.state;
-
-  if(!sa && !sb) return 0;
-  if(!sa) return 1;
-  if(!sb) return -1;
-
-  // ACTIVE first
-  if(sa.status !== sb.status){
-    return sa.status === "ACTIVE" ? -1 : 1;
-  }
-
-  // 🔥 PRIORITY (LOWER = HIGHER PRIORITY)
-  if(a.task.priority !== b.task.priority){
-    return a.task.priority - b.task.priority;
-  }
-
-  // TIME
-  return sa.time - sb.time;
-})
-
-  let best = candidates[0];
-
-  let label =
-    best.state.status === "ACTIVE" ? "ACTIVE" : "NEXT";
-
-  let timeStr = formatToLocalTimeFromDate(best.state.time);
-
-  container.innerHTML = `
-    <div style="text-align:center;">
-      <div>Triple Chain - ${label}</div>
-      <div style="font-size:18px;"><b>${best.task.task}</b></div>
-      <div>${timeStr}</div>
-    </div>
-  `;
-}
-  
-function updateDoubleTimer(){
-
-  let {double} = getTasks();
-  let now = new Date();
-
-  let container = document.getElementById("doubleTimer");
-  if(!container) return;
-
-  let candidates = double
-    .map(t => {
-      let s = getTaskState(t);
-      return s ? {task:t, state:s} : null;
-    })
-    .filter(x => x);
-
-  if(!candidates.length){
-    container.innerHTML = "";
-    return;
-  }
-
-  // 🔥 SORT → STATE → PRIORITY → TIME
- let active = null;
-let upcoming = [];
-
-candidates.forEach(x => {
-
-  if(x.state.status === "ACTIVE"){
-    if(!active || x.task.priority < active.task.priority){
-      active = x;
+    if(s.status === "ACTIVE"){
+      if(!active || t.priority < active.task.priority){
+        active = {task:t, state:s};
+      }
     }
-  }
 
-  if(x.state.status === "UPCOMING"){
-    upcoming.push(x);
-  }
-
-});
-
-let best = active;
-
-if(!best && upcoming.length){
-
-  upcoming.sort((a,b)=>{
-    if(a.task.priority !== b.task.priority){
-      return a.task.priority - b.task.priority;
+    if(s.status === "UPCOMING"){
+      upcoming.push({task:t, state:s});
     }
-    return a.state.time - b.state.time;
+
   });
 
-  best = upcoming[0];
-}
+  let best = active;
+
+  if(!best && upcoming.length){
+    upcoming.sort((a,b)=>{
+      if(a.task.priority !== b.task.priority){
+        return a.task.priority - b.task.priority;
+      }
+      return a.state.time - b.state.time;
+    });
+    best = upcoming[0];
+  }
+
+  if(!best){
+    if(container.innerHTML !== "") container.innerHTML = "";
+    return;
+  }
 
   let t = best.task;
   let s = best.state;
 
-  // 🔥 TIME CALC
   let start = s.time;
   let end = new Date(start.getTime() + t.duration * 60 * 60 * 1000);
 
@@ -1885,8 +1836,87 @@ if(!best && upcoming.length){
 
   let label =
     s.status === "ACTIVE"
-      ? `<span style="color:#ff6b6b">Ends in ${timerStr}</span>`
-      : `<span style="color:#4cff88">Starts in ${timerStr}</span>`;
+      ? `<span style="color:#ff6b6b;font-size:11px;">Ends in ${timerStr}</span>`
+      : `<span style="color:#4cff88;font-size:11px;">Starts in ${timerStr}</span>`;
+
+  let timeStr = formatToLocalTimeFromDate(start);
+
+  let html = `
+    <div style="text-align:center;">
+      <div>Triple Chain - ${s.status}</div>
+      <div style="font-size:18px;"><b>${t.task}</b></div>
+      <div>${label} • ${timeStr}</div>
+    </div>
+  `;
+
+  if(container.innerHTML !== html){
+    container.innerHTML = html;
+  }
+}
+  
+function updateDoubleTimer(){
+
+  let {double} = getTasks();
+  let now = new Date();
+
+  let container = document.getElementById("doubleTimer");
+  if(!container) return;
+
+  let active = null;
+  let upcoming = [];
+
+  double.forEach(t => {
+
+    let s = getTaskState(t);
+    if(!s) return;
+
+    if(s.status === "ACTIVE"){
+      if(!active || t.priority < active.task.priority){
+        active = {task:t, state:s};
+      }
+    }
+
+    if(s.status === "UPCOMING"){
+      upcoming.push({task:t, state:s});
+    }
+
+  });
+
+  let best = active;
+
+  if(!best && upcoming.length){
+    upcoming.sort((a,b)=>{
+      if(a.task.priority !== b.task.priority){
+        return a.task.priority - b.task.priority;
+      }
+      return a.state.time - b.state.time;
+    });
+    best = upcoming[0];
+  }
+
+  if(!best){
+    if(container.innerHTML !== "") container.innerHTML = "";
+    return;
+  }
+
+  let t = best.task;
+  let s = best.state;
+
+  let start = s.time;
+  let end = new Date(start.getTime() + t.duration * 60 * 60 * 1000);
+
+  let diff = (s.status === "ACTIVE" ? end - now : start - now);
+
+  let mins = Math.floor(diff / 60000);
+  let hrs = Math.floor(mins / 60);
+  mins = mins % 60;
+
+  let timerStr = `${String(hrs).padStart(2,"0")}:${String(mins).padStart(2,"0")}`;
+
+  let label =
+    s.status === "ACTIVE"
+      ? `<span style="color:#ff6b6b;font-size:11px;">Ends in ${timerStr}</span>`
+      : `<span style="color:#4cff88;font-size:11px;">Starts in ${timerStr}</span>`;
 
   let timeStr = formatToLocalTimeFromDate(start);
 
@@ -1899,8 +1929,8 @@ if(!best && upcoming.length){
   `;
 
   if(container.innerHTML !== html){
-  container.innerHTML = html;
-}
+    container.innerHTML = html;
+  }
 }
 
 // 🔹 LOAD ANNOUNCEMENT (can run independently)
@@ -1959,36 +1989,27 @@ function updateTodayPanel(){
 
   let now = new Date();
   let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  let today = days[now.getUTCDay()]; // 🔥 UTC DAY
+  let today = days[now.getUTCDay()];
 
-  // 🔧 COMMON SORT
   function sortTasks(a,b){
 
     let sa = a.state;
     let sb = b.state;
 
-    if(!sa && !sb) return 0;
-    if(!sa) return 1;
-    if(!sb) return -1;
-
-    // 1️⃣ STATE
     let order = {ACTIVE:0, UPCOMING:1, COMPLETED:2};
 
     if(order[sa.status] !== order[sb.status]){
       return order[sa.status] - order[sb.status];
     }
 
-    // 2️⃣ PRIORITY
     if(a.task.priority !== b.task.priority){
       return a.task.priority - b.task.priority;
     }
 
-    // 3️⃣ TIME
     return sa.time - sb.time;
   }
 
-  // 🔧 RENDER HELPER
-  function renderList(list, label, activeIcon){
+  function renderList(list, label, icon){
 
     list.forEach(x => {
 
@@ -1996,13 +2017,29 @@ function updateTodayPanel(){
       let s = x.state;
       let p = prepMap[t.task];
 
+      let start = s.time;
+      let end = new Date(start.getTime() + t.duration * 60 * 60 * 1000);
+
+      let diff = (s.status === "ACTIVE" ? end - now : start - now);
+
+      let mins = Math.floor(diff / 60000);
+      let hrs = Math.floor(mins / 60);
+      mins = mins % 60;
+
+      let timerStr = `${hrs}h ${mins}m`;
+
       let status =
-        s.status === "ACTIVE" ? activeIcon + " ACTIVE" :
-        s.status === "UPCOMING" ? "⭐ Upcoming" :
-        "✔ Completed";
+        s.status === "ACTIVE"
+          ? `${icon} ACTIVE • <span style="color:#ff6b6b">${timerStr}</span>`
+          : s.status === "UPCOMING"
+          ? `⭐ Upcoming • <span style="color:#4cff88">${timerStr}</span>`
+          : `✔ Completed`;
 
       html += `
-        <div class="row ${s.status === 'ACTIVE' ? 'activeRow' : ''}">
+        <div class="row ${
+          s.status === "ACTIVE" ? "activeRow" :
+          s.status === "UPCOMING" ? "nextRow" : ""
+        }">
           <span><b>◆ ${label}</b> - ${t.task}</span>
           <span>${status}</span>
         </div>
@@ -2012,10 +2049,8 @@ function updateTodayPanel(){
 
   }
 
-  /* ---------- TRIPLE ---------- */
-
   let todayTriple = triple
-    .filter(t => t.d === today) // 🔥 UTC FILTER
+    .filter(t => t.d === today)
     .map(t => {
       let s = getTaskState(t);
       return s ? {task:t, state:s} : null;
@@ -2027,10 +2062,8 @@ function updateTodayPanel(){
     renderList(todayTriple, "Triple", "⚡");
   }
 
-  /* ---------- DOUBLE ---------- */
-
   let todayDouble = double
-    .filter(t => t.d === today) // 🔥 UTC FILTER
+    .filter(t => t.d === today)
     .map(t => {
       let s = getTaskState(t);
       return s ? {task:t, state:s} : null;
@@ -2041,8 +2074,6 @@ function updateTodayPanel(){
   if(todayDouble.length){
     renderList(todayDouble, "Double", "🔹");
   }
-
-  /* ---------- EXCLUSIVE ---------- */
 
   let todayExclusive = dayExclusive
     .filter(t => t.d === today)
@@ -2056,8 +2087,6 @@ function updateTodayPanel(){
   if(todayExclusive.length){
     renderList(todayExclusive, "Exclusive", "📌");
   }
-
-  /* ---------- EMPTY ---------- */
 
   if(!todayTriple.length && !todayDouble.length && !todayExclusive.length){
     html = "<small>No priority tasks today</small>";
