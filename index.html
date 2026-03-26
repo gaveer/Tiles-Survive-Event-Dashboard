@@ -1836,25 +1836,36 @@ function updateDoubleTimer(){
   }
 
   // 🔥 SORT → STATE → PRIORITY → TIME
-  candidates.sort((a,b)=>{
+ let active = null;
+let upcoming = [];
 
-    let sa = a.state;
-    let sb = b.state;
+candidates.forEach(x => {
 
-    let order = {ACTIVE:0, UPCOMING:1, COMPLETED:2};
-
-    if(order[sa.status] !== order[sb.status]){
-      return order[sa.status] - order[sb.status];
+  if(x.state.status === "ACTIVE"){
+    if(!active || x.task.priority < active.task.priority){
+      active = x;
     }
+  }
 
+  if(x.state.status === "UPCOMING"){
+    upcoming.push(x);
+  }
+
+});
+
+let best = active;
+
+if(!best && upcoming.length){
+
+  upcoming.sort((a,b)=>{
     if(a.task.priority !== b.task.priority){
       return a.task.priority - b.task.priority;
     }
-
-    return sa.time - sb.time;
+    return a.state.time - b.state.time;
   });
 
-  let best = candidates[0];
+  best = upcoming[0];
+}
 
   let t = best.task;
   let s = best.state;
