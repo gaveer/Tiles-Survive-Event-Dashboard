@@ -1774,14 +1774,37 @@ return `<span style="color:#ff6a6a">ends</span> in ${h}h ${m}m`;
 return `<span style="color:#4dff88">starts</span> in ${h}h ${m}m`;
 
 }
+
+function initHunterUI(){
+
+  let triple = document.getElementById("timer");
+  let double = document.getElementById("doubleTimer");
+
+  if(triple){
+    triple.innerHTML = `
+      <div>
+        <div id="tripleStatus"></div>
+        <div style="font-size:18px;"><b id="tripleTask"></b></div>
+        <div id="tripleTime"></div>
+      </div>
+    `;
+  }
+
+  if(double){
+    double.innerHTML = `
+      <div>
+        <div id="doubleStatus"></div>
+        <div style="font-size:18px;"><b id="doubleTask"></b></div>
+        <div id="doubleTime"></div>
+      </div>
+    `;
+  }
+}
   
 function updateTimer(){
 
   let {triple} = getTasks();
   let now = new Date();
-
-  let container = document.getElementById("timer");
-  if(!container) return;
 
   let active = null;
   let upcoming = [];
@@ -1815,10 +1838,7 @@ function updateTimer(){
     best = upcoming[0];
   }
 
-  if(!best){
-    if(container.innerHTML !== "") container.innerHTML = "";
-    return;
-  }
+  if(!best) return;
 
   let t = best.task;
   let s = best.state;
@@ -1834,33 +1854,26 @@ function updateTimer(){
 
   let timerStr = `${String(hrs).padStart(2,"0")}:${String(mins).padStart(2,"0")}`;
 
-  let label =
-    s.status === "ACTIVE"
-      ? `<span style="color:#ff6b6b;font-size:11px;">Ends in ${timerStr}</span>`
-      : `<span style="color:#4cff88;font-size:11px;">Starts in ${timerStr}</span>`;
+  let statusEl = document.getElementById("tripleStatus");
+  let taskEl = document.getElementById("tripleTask");
+  let timeEl = document.getElementById("tripleTime");
 
-  let timeStr = formatToLocalTimeFromDate(start);
+  if(!statusEl || !taskEl || !timeEl) return;
 
-  let html = `
-    <div style="text-align:center;">
-      <div>Triple Chain - ${s.status}</div>
-      <div style="font-size:18px;"><b>${t.task}</b></div>
-      <div>${label} • ${timeStr}</div>
-    </div>
-  `;
+  statusEl.innerText = `Triple Chain - ${s.status}`;
+  taskEl.innerText = t.task;
 
-  if(container.innerHTML !== html){
-    container.innerHTML = html;
-  }
+  timeEl.innerHTML =
+    (s.status === "ACTIVE"
+      ? `<span style="color:#ff6b6b">Ends in ${timerStr}</span>`
+      : `<span style="color:#4cff88">Starts in ${timerStr}</span>`)
+    + " • " + formatToLocalTimeFromDate(start);
 }
   
 function updateDoubleTimer(){
 
   let {double} = getTasks();
   let now = new Date();
-
-  let container = document.getElementById("doubleTimer");
-  if(!container) return;
 
   let active = null;
   let upcoming = [];
@@ -1894,10 +1907,7 @@ function updateDoubleTimer(){
     best = upcoming[0];
   }
 
-  if(!best){
-    if(container.innerHTML !== "") container.innerHTML = "";
-    return;
-  }
+  if(!best) return;
 
   let t = best.task;
   let s = best.state;
@@ -1913,24 +1923,20 @@ function updateDoubleTimer(){
 
   let timerStr = `${String(hrs).padStart(2,"0")}:${String(mins).padStart(2,"0")}`;
 
-  let label =
-    s.status === "ACTIVE"
-      ? `<span style="color:#ff6b6b;font-size:11px;">Ends in ${timerStr}</span>`
-      : `<span style="color:#4cff88;font-size:11px;">Starts in ${timerStr}</span>`;
+  let statusEl = document.getElementById("doubleStatus");
+  let taskEl = document.getElementById("doubleTask");
+  let timeEl = document.getElementById("doubleTime");
 
-  let timeStr = formatToLocalTimeFromDate(start);
+  if(!statusEl || !taskEl || !timeEl) return;
 
-  let html = `
-    <div style="text-align:center;">
-      <div>Double Chain - ${s.status}</div>
-      <div style="font-size:18px;"><b>${t.task}</b></div>
-      <div>${label} • ${timeStr}</div>
-    </div>
-  `;
+  statusEl.innerText = `Double Chain - ${s.status}`;
+  taskEl.innerText = t.task;
 
-  if(container.innerHTML !== html){
-    container.innerHTML = html;
-  }
+  timeEl.innerHTML =
+    (s.status === "ACTIVE"
+      ? `<span style="color:#ff6b6b">Ends in ${timerStr}</span>`
+      : `<span style="color:#4cff88">Starts in ${timerStr}</span>`)
+    + " • " + formatToLocalTimeFromDate(start);
 }
 
 // 🔹 LOAD ANNOUNCEMENT (can run independently)
@@ -1953,6 +1959,7 @@ Promise.all([
 
   updateSpecialBar();
   updateLongEventTicker();
+  initHunterUI(); 
   updateTimer();
   updateDoubleTimer();
   updateTodayPanel();
