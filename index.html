@@ -1208,7 +1208,9 @@ rawData = data.map(e => ({
   category: e.category,
   utc: e.utc,
 
-  // derived
+  duration: e.duration,
+  priority: e.priority,
+
   dayExclusive: e.category === "Exclusive"
 }));
 
@@ -1246,8 +1248,8 @@ let nextDayTasks = [...triple, ...double].filter(t => t.d === nextDay);
 nextDayTasks
 .sort((a,b)=>{
 
-  let sa = getTaskState(a);
-  let sb = getTaskState(b);
+  let sa = a.state;
+  let sb = b.state;
 
   if(!sa && !sb) return 0;
   if(!sa) return 1;
@@ -1327,12 +1329,14 @@ function buildTaskMap(){
 
     if(!map[key]){
       map[key] = {
-        d: e.d,
-        task: e.task,
-        times: [],
-        events: [],
-        categories: []
-      };
+  d: e.d,
+  task: e.task,
+  times: [],
+  events: [],
+  categories: [],
+  duration: e.duration,
+  priority: e.priority
+};
     }
 
     map[key].times.push(e.utc);
@@ -1448,8 +1452,8 @@ function renderTriple(){
   .filter(x => x)
   .sort((a,b)=>{
 
-  let sa = getTaskState(a);
-  let sb = getTaskState(b);
+  let sa = a.state;
+  let sb = b.state;
 
   if(!sa && !sb) return 0;
   if(!sa) return 1;
@@ -1461,7 +1465,7 @@ function renderTriple(){
   }
 
   // 🔥 PRIORITY (LOWER = HIGHER PRIORITY)
-  if(a.priority !== b.priority){
+  if(a.task.priority !== b.task.priority){
     return a.priority - b.priority;
   }
 
@@ -1502,8 +1506,8 @@ function renderDouble(){
   // SAFE SORT
   double.sort((a,b)=>{
 
-  let sa = getTaskState(a);
-  let sb = getTaskState(b);
+  let sa = a.state;
+  let sb = b.state;
 
   if(!sa && !sb) return 0;
   if(!sa) return 1;
@@ -1515,7 +1519,7 @@ function renderDouble(){
   }
 
   // 🔥 PRIORITY (LOWER = HIGHER PRIORITY)
-  if(a.priority !== b.priority){
+  if(a.task.priority !== b.task.priority){
     return a.priority - b.priority;
   }
 
@@ -1786,8 +1790,8 @@ function updateTimer(){
 
   candidates.sort((a,b)=>{
 
-  let sa = getTaskState(a);
-  let sb = getTaskState(b);
+  let sa = a.state;
+  let sb = b.state;
 
   if(!sa && !sb) return 0;
   if(!sa) return 1;
@@ -1799,7 +1803,7 @@ function updateTimer(){
   }
 
   // 🔥 PRIORITY (LOWER = HIGHER PRIORITY)
-  if(a.priority !== b.priority){
+  if(a.task.priority !== b.task.priority){
     return a.priority - b.priority;
   }
 
@@ -1847,15 +1851,23 @@ function updateDoubleTimer(){
   // 🔥 PRIORITY: ACTIVE → UPCOMING → COMPLETED
   candidates.sort((a,b) => {
 
-    let order = {ACTIVE: 0, UPCOMING: 1, COMPLETED: 2};
+  let sa = a.state;
+  let sb = b.state;
 
-    if(order[a.state.status] !== order[b.state.status]){
-      return order[a.state.status] - order[b.state.status];
-    }
+  if(!sa && !sb) return 0;
+  if(!sa) return 1;
+  if(!sb) return -1;
 
-    return a.state.time - b.state.time;
-  });
+  if(sa.status !== sb.status){
+    return sa.status === "ACTIVE" ? -1 : 1;
+  }
 
+  if(a.task.priority !== b.task.priority){
+    return a.task.priority - b.task.priority;
+  }
+
+  return sa.time - sb.time;
+});
   let best = candidates[0];
 
   let statusLabel =
@@ -1939,8 +1951,8 @@ function updateTodayPanel(){
     .filter(x => x)
     .sort((a,b)=>{
 
-  let sa = getTaskState(a);
-  let sb = getTaskState(b);
+  let sa = a.state;
+  let sb = b.state;
 
   if(!sa && !sb) return 0;
   if(!sa) return 1;
@@ -1952,7 +1964,7 @@ function updateTodayPanel(){
   }
 
   // 🔥 PRIORITY (LOWER = HIGHER PRIORITY)
-  if(a.priority !== b.priority){
+  if(a.task.priority !== b.task.priority){
     return a.priority - b.priority;
   }
 
@@ -1989,8 +2001,8 @@ function updateTodayPanel(){
     .filter(x => x)
     .sort((a,b)=>{
 
-  let sa = getTaskState(a);
-  let sb = getTaskState(b);
+  let sa = a.state;
+  let sb = b.state;
 
   if(!sa && !sb) return 0;
   if(!sa) return 1;
@@ -2002,7 +2014,7 @@ function updateTodayPanel(){
   }
 
   // 🔥 PRIORITY (LOWER = HIGHER PRIORITY)
-  if(a.priority !== b.priority){
+  if(a.task.priority !== b.task.priority){
     return a.priority - b.priority;
   }
 
