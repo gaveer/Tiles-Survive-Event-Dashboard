@@ -835,22 +835,30 @@ height:80px;
   text-align:center;
   font-size:12px;
   color:#aaa;
-  margin-top:6px;
-  opacity:0.85;
+  margin-top:8px;
+  opacity:0.9;
 }
 
-.feedbackBar span{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
+/* text */
+.feedbackText{
+  margin-bottom:4px;
 }
 
 /* image */
 .feedbackAvatar{
-  height:18px;
+  display:block;
+  margin:0 auto;
+  height:24px;        /* slightly bigger for focus */
   width:auto;
-  border-radius:4px;
+  border-radius:4px;  /* slight rounding */
   object-fit:contain;
+}
+
+/* name */
+.feedbackName{
+  margin-top:4px;
+  font-weight:600;
+  color:#ccc;
 }
   
 </style>
@@ -960,11 +968,15 @@ height:80px;
 </div>
 
 <div class="feedbackBar">
-  <span>
-    For feedback, suggestions or bug reports contact: 
-    <img src="psyknes.png" class="feedbackAvatar">
-    <strong>[CHI]Pysknes</strong>
-  </span>
+  <div class="feedbackText">
+    For feedback, suggestions or bug reports contact:
+  </div>
+
+  <img src="psyknes.png" class="feedbackAvatar">
+
+  <div class="feedbackName">
+    [CHI]Pysknes
+  </div>
 </div>
 
 
