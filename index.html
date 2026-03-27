@@ -832,23 +832,25 @@ height:80px;
 }
 
 .feedbackBar{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
+  text-align:center;
   font-size:12px;
   color:#aaa;
   margin-top:6px;
   opacity:0.85;
 }
 
-/* 🔥 IMAGE FIX */
+.feedbackBar span{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+}
+
+/* image */
 .feedbackAvatar{
-  height:20px;         /* keep size */
-  width:auto;          /* preserve original shape */
-  border-radius:4px;   /* very slight rounding */
-  object-fit:contain;  /* prevent distortion */
-  display:block;
+  height:18px;
+  width:auto;
+  border-radius:4px;
+  object-fit:contain;
 }
   
 </style>
@@ -958,8 +960,11 @@ height:80px;
 </div>
 
 <div class="feedbackBar">
-  <img src="psyknes.png" class="feedbackAvatar">
-  <span>For feedback, suggestions or bug reports contact <strong>[CHI]Pysknes</strong></span>
+  <span>
+    For feedback, suggestions or bug reports contact 
+    <img src="psyknes.png" class="feedbackAvatar">
+    <strong>[CHI]Pysknes</strong>
+  </span>
 </div>
 
 
