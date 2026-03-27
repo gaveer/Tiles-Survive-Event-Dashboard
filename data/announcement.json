@@ -18,7 +18,7 @@
 
   "enabled": true,
 
-  "emergency": {true,
+  "emergency": {
     "active": true,
     "startTime": "2026-03-22T08:30:00Z",
     "endTime": "2026-03-22T09:30:00Z"
