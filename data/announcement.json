@@ -6,7 +6,7 @@
     "time_format": "Use ISO format: YYYY-MM-DDTHH:MM:SSZ (UTC time)",
     "examples": {
       "startTime": "2026-03-22T17:30:00Z",
-      "endTime": "2026-03-22T18:30:00Z"
+      "endTime": "2026-03-27T18:30:00Z"
     },
     "notes": [
       "If both startTime and endTime are set → runs between those times",
