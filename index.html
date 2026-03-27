@@ -1338,7 +1338,7 @@ rawData = data.map(e => ({
 
   dayExclusive: e.category === "Exclusive"
 }));
-
+loadPrep();   // 🔥 force reload after tasks ready
 console.log("Tasks loaded:", rawData);  
   
 }catch(e){
@@ -1368,6 +1368,12 @@ tomorrowUTC.setUTCDate(tomorrowUTC.getUTCDate() + 1);
 
 let nextDay = days[tomorrowUTC.getUTCDay()];
 
+// 🔥 WAIT until tasks are ready
+if(!rawData || rawData.length === 0){
+  console.log("Prep skipped: tasks not ready");
+  return;
+}  
+  
 let {triple, double, dayExclusive} = getTasks();
 
 // 🔥 collect next day tasks
