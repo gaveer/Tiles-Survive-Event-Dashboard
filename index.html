@@ -125,7 +125,7 @@ padding:12px;
 
 body::before{
 content:"";
-position:fixed;
+position:absolute;
 top:0;
 left:0;
 width:100%;
@@ -258,6 +258,7 @@ color:#6fb6ff;
 }  
 
 .ghoulionCard{
+display:none;  
 border-left:6px solid #ff5c5c;
 background:#1b1111;
 padding:8px 10px;  
@@ -860,12 +861,359 @@ height:80px;
   font-weight:600;
   color:#ccc;
 }
+
+.shortEventRow{
+  font-size: 12px;
+  color: #ccc;
+}
+
+.shortLabel{
+  font-weight: 600;
+  color: #fff;
+}
+
+.shortTimer{
+  color: #aaa;
+}
+
+.shortRange{
+  color: #888;
+}
+
+.shortDot{
+  margin: 0 6px;
+  color: #555;
+}
+
+.ghoulionBar.cooldown {
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+/* 🔹 Short Events Row (NEW) */
+
+#shortEventsRow{
+  display:flex;
+  justify-content:center;   /* 🔥 key change */
+  align-items:center;
+  gap:12px;
+  flex-wrap:nowrap;
+}
+
+.seItem{
+  text-align:center;
+  flex:0 0 auto;
+  width:72px;   /* 🔥 slightly smaller for mobile fit */
+}
+
+.seName{
+  font-size:11px;
+  font-weight:600;
+  margin-bottom:4px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.seCircle{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  margin:0 auto 4px;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,0.15);
+  position:relative;
+}
+
+.seCircle img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.seTimer{
+  font-size:11px;
+  margin-bottom:2px;
+  white-space:nowrap;   /* 🔥 critical */
+}
+
+.seTime{
+  font-size:10px;
+  color:#aaa;
+}  
+
+@media (max-width: 600px){
+
+  #shortEventsRow{
+    gap:8px;   /* tighter spacing */
+  }
+
+  .seItem{
+    width:65px;
+  }
+
+  .seCircle{
+    width:42px;
+    height:42px;
+  }
+
+  .seName{
+    font-size:10px;
+  }
+
+  .seTimer{
+    font-size:10px;
+  }
+
+  .seTime{
+    font-size:9px;
+  }
+
+}  
+
+@media (min-width: 601px){
+
+  #shortEventsRow{
+    justify-content:center;
+    gap:18px;
+  }
+
+  .seItem{
+    width:95px;
+  }
+
+  .seCircle{
+    width:58px;
+    height:58px;
+  }
+
+  .seName{
+    font-size:12px;
+  }
+
+  .seTimer{
+    font-size:12px;
+  }
+
+  .seTime{
+    font-size:11px;
+  }
+
+}
+
+/* ⚪ COOLDOWN */
+
+.seItem.cooldown{
+  opacity:0.85;
+}
   
+/* 🟢 ALERT STATE */
+
+.seItem.alert .seCircle{
+  box-shadow:
+    0 0 6px rgba(80,255,120,0.6),
+    0 0 14px rgba(80,255,120,0.8);
+}
+  
+/* 🔥 ACTIVE FIRE EFFECT */
+
+.seItem.active .seCircle{
+  position:relative;
+
+  /* base glow */
+  box-shadow:
+    0 0 6px rgba(255,80,0,0.4),
+    0 0 14px rgba(255,60,0,0.5);
+
+  animation: creatureBreath 2.4s ease-in-out infinite;
+}
+
+
+
+/* 🔥 soft heat aura */
+.seItem.active .seCircle::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,120,0,0.25) 0%,
+    rgba(255,80,0,0.15) 40%,
+    transparent 70%
+  );
+
+  animation: heatWave 2.4s ease-in-out infinite;
+  pointer-events:none;
+}
+
+.seItem.active .seCircle img{
+  animation: microShift 3s ease-in-out infinite;
+}
+
+@keyframes microShift{
+  0%{ transform:translateX(0); }
+  50%{ transform:translateX(1px); }
+  100%{ transform:translateX(0); }
+}  
+  
+/* 🫁 breathing motion */
+@keyframes creatureBreath{
+  0%{
+    transform:scale(1);
+  }
+  40%{
+    transform:scale(1.06);
+  }
+  60%{
+    transform:scale(1.08);
+  }
+  100%{
+    transform:scale(1);
+  }
+}
+
+/* 🌡 heat shimmer */
+@keyframes heatWave{
+  0%{
+    opacity:0.4;
+    transform:scale(1);
+  }
+  50%{
+    opacity:0.8;
+    transform:scale(1.15);
+  }
+  100%{
+    opacity:0.4;
+    transform:scale(1);
+  }
+}
+  
+@keyframes flameFlicker{
+  0%{opacity:0.5;}
+  50%{opacity:1;}
+  100%{opacity:0.5;}
+}
+
+  
+/* 🔹 Floating Support Widget */
+
+#globalFloatingRoot{
+  position:fixed;
+  inset:0;
+  z-index:2147483647;
+  pointer-events:none;
+}
+
+#supportWidget{
+  position:absolute;
+  bottom:20px;
+  right:16px;
+  pointer-events:auto;
+}
+  
+#supportPanel{
+  position:absolute;
+  bottom:45px;   /* 🔥 ensures it opens ABOVE button */
+  right:0;
+
+  margin-top:0;
+  width:180px;
+  background:#111;
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 6px 20px rgba(0,0,0,0.6);
+
+  display:none;
+}  
+
+ 
+  
+/* 🔥 3D Button */
+#supportBtn{
+  background:linear-gradient(145deg,#2a2a2a,#1a1a1a);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:13px;
+  cursor:pointer;
+
+  user-select:none;          /* 🔥 prevents text selection */
+  -webkit-user-select:none;
+  -webkit-tap-highlight-color: transparent;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+
+  transition:all 0.2s ease;
+}
+
+@keyframes supportPulse{
+  0%,100%{ box-shadow:0 4px 10px rgba(0,0,0,0.6); }
+  50%{ box-shadow:0 4px 14px rgba(255,215,0,0.4); }
+}  
+
+#supportBtn:hover{
+  transform:translateY(-2px);
+}
+
+/* 🔹 Panel */
+
+
+/* Title */
+.supportTitle{
+  font-size:12px;
+  color:#bbb;
+  margin-bottom:8px;
+}
+
+/* ID */
+.supportId{
+  font-size:14px;
+  font-weight:600;
+  color:#4cff88;
+  margin-bottom:8px;
+  letter-spacing:1px;
+}
+
+/* Button */
+#copyBtn{
+  width:100%;
+  padding:6px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+
+  background:#222;
+  color:#fff;
+
+  transition:0.2s;
+}
+
+#copyBtn:hover{
+  background:#333;
+}
+
+/* Copy message */
+#copyMsg{
+  margin-top:6px;
+  font-size:11px;
+  color:#4cff88;
+  display:none;
+}
+ 
 </style>
 </head>
 
 <body>
-
+<div id="globalFloatingRoot"></div>
+  
 <div class="appContainer"> 
 
 <div id="ticker">
@@ -911,8 +1259,12 @@ height:80px;
 </div>
 
 </div>
+
+ <div class="card" id="shortEventsContainer">
+  <div id="shortEventsRow"></div>
+</div> 
   
-<div class="card hunterUnified">
+<div id="taskHunter" class="card hunterUnified">
 
 <div class="hunterTitle">Task Hunter</div>
 
@@ -981,8 +1333,211 @@ height:80px;
 
 
 <script>
+
+let maintenanceData = null;
+let maintenanceMessageIndex = 0;
+let maintenanceLastSwitch = 0;  
+let currentMaintenanceState = null;  
+
+function getMaintenanceState(){
+
+if(!maintenanceData) return "normal";
+
+let now = new Date();
+
+// 🔴 EMERGENCY
+if(maintenanceData.emergency?.main){
+  return "emergency";
+}
+
+// 🟡 SCHEDULED
+let s = maintenanceData.scheduled;
+if(!s || !s.main) return "normal";
+
+// 🔥 Find THIS WEEK'S scheduled start
+let start = new Date(now);
+
+// Move to this week's scheduled day
+let diff = s.day - now.getUTCDay();
+start.setUTCDate(now.getUTCDate() + diff);
+start.setUTCHours(s.hour, 0, 0, 0);
+
+// 🔥 If start is in future → move to last week's occurrence
+if(start > now){
+  start.setUTCDate(start.getUTCDate() - 7);
+}
+
+let duration = s.duration;
+
+// 🔥 INFINITE MODE (duration = 0)
+if(duration === 0){
+  return "scheduled";
+}
+
+// 🔥 NORMAL WINDOW (duration > 0)
+if(duration > 0){
+  let end = new Date(start.getTime() + duration * 60000);
+
+  if(now >= start && now <= end){
+    return "scheduled";
+  }
+}
+
+// 🔥 INFINITE MODE (duration = 0)
+if(duration === 0){
+  // Only stay active if we are in the SAME week cycle
+  let endOfDay = new Date(start);
+  endOfDay.setUTCHours(23, 59, 59, 999);
+
+  if(now >= start && now <= endOfDay){
+    return "scheduled";
+  }
+}
+
+return "normal";
+}
+
+function updateMaintenanceMessage(){
+
+let msgBox = document.getElementById("maintenanceMessage");
+if(!msgBox || !maintenanceData) return;
+
+let m = maintenanceData.messages;
+
+if(m.mode === "rotate" && m.rotate.length){
+
+  let now = Date.now();
+
+  // 🔥 FIRST TIME INIT (IMPORTANT FIX)
+  if(maintenanceLastSwitch === 0){
+    maintenanceLastSwitch = now;
+  }
+
+  // 🔁 ROTATE
+  if(now - maintenanceLastSwitch >= m.interval * 1000){
+    maintenanceMessageIndex = (maintenanceMessageIndex + 1) % m.rotate.length;
+    maintenanceLastSwitch = now;
+  }
+
+  msgBox.innerText = m.rotate[maintenanceMessageIndex];
+
+}else{
+  msgBox.innerText = m.static;
+}
+}
+
+function updateMaintenanceTimer(){
+
+let timerEl = document.getElementById("maintenanceTimer");
+if(!timerEl || !maintenanceData) return;
+
+let s = maintenanceData.scheduled;
+let now = new Date();
+
+let currentDay = now.getUTCDay();
+let diff = currentDay - s.day;
+
+let start = new Date(now);
+start.setUTCHours(s.hour,0,0,0);
+start.setUTCDate(now.getUTCDate() - diff);
+
+if(start > now){
+  start.setUTCDate(start.getUTCDate() - 7);
+}
+
+if(s.duration > 0){
+
+  let end = new Date(start.getTime() + s.duration * 60000);
+  let remaining = end - now;
+
+  if(remaining > 0){
+    let h = Math.floor(remaining/1000/60/60);
+    let m = Math.floor((remaining/1000/60)%60);
+
+    timerEl.innerText = "Ends in " + h + "h " + m + "m";
+  }
+
+}else{
+  timerEl.innerText = "Maintenance ongoing";
+}
+}
   
- 
+function applyMaintenanceUI(){
+
+let state = getMaintenanceState();
+
+// 🔥 DO NOTHING if state hasn't changed
+if(state === currentMaintenanceState) return;
+
+currentMaintenanceState = state;
+
+let hunter = document.getElementById("taskHunter");
+
+let hideIds = [
+  "tripleList",
+  "doubleList",
+  "todayPanel",
+  "prepContent"
+];
+
+// 🔴 EMERGENCY
+if(state === "emergency"){
+
+  if(hunter){
+    hunter.innerHTML = `
+      <div style="text-align:center; padding:20px;">
+        <div style="font-size:18px; margin-bottom:8px;">
+          🚧 Emergency Maintenance
+        </div>
+        <div id="maintenanceMessage" style="color:#aaa; font-size:13px;"></div>
+      </div>
+    `;
+  }
+
+  updateMaintenanceMessage();
+  return;
+}
+
+// 🟡 SCHEDULED
+if(state === "scheduled"){
+
+  if(hunter){
+    hunter.innerHTML = `
+      <div style="text-align:center; padding:16px;">
+        <div style="font-size:16px; margin-bottom:6px;">
+          🔧 Maintenance in progress
+        </div>
+        <div id="maintenanceTimer" style="font-size:13px; color:#ccc; margin-bottom:6px;"></div>
+        <div id="maintenanceMessage" style="font-size:12px; color:#aaa;"></div>
+      </div>
+    `;
+  }
+
+  updateMaintenanceMessage();
+  updateMaintenanceTimer();
+
+  hideIds.forEach(id=>{
+    let el = document.getElementById(id);
+    if(el) el.style.display = "none";
+  });
+
+  return;
+}
+
+// 🟢 NORMAL (RESTORE ONLY ONCE)
+if(state === "normal"){
+
+  // 🔥 DO NOT call initHunterUI()
+  // Let your existing system render naturally
+
+  hideIds.forEach(id=>{
+    let el = document.getElementById(id);
+    if(el) el.style.display = "";
+  });
+
+}
+}
+
 function getLocalDay(hourUTC, dayStr){
 
 if(hourUTC === "ALL" || hourUTC === undefined){
@@ -1099,6 +1654,28 @@ console.log("Ticker load error", e);
 
 }
 
+function formatHM(ms){
+  ms = Math.max(0, ms);
+
+  let totalSec = Math.floor(ms / 1000);
+  let h = Math.floor(totalSec / 3600);
+  let m = Math.floor((totalSec % 3600) / 60);
+
+  return `${h}h ${m}m`;
+}
+function formatTime12(date){
+  let h = date.getHours();
+  let m = date.getMinutes();
+
+  let ampm = h >= 12 ? "PM" : "AM";
+  h = h % 12;
+  h = h ? h : 12;
+
+  let mm = m < 10 ? "0" + m : m;
+
+  return `${h}:${mm} ${ampm}`;
+}  
+  
 async function loadSpecialEvents(){
   try{
 
@@ -1120,156 +1697,162 @@ async function loadSpecialEvents(){
 
 function getActiveShortEvent(){
 
-let now = new Date();
+  let now = new Date();
 
-let candidates = [];
+  let activeOrAlert = [];
+  let cooldownList = [];
 
-shortEvents.forEach(e => {
+  shortEvents.forEach(e => {
 
-if(!e.active) return;
+    if(!e.active) return;
 
-let start = new Date(e.start);
-let durationMs = e.duration * 60 * 1000;
+    let baseAlert = new Date(e.alert_start || e.alertStart);
+    let baseStart = new Date(e.start);
+    let baseEnd = new Date(e.end);
 
-let active = false;
-let prep = false;
-let cooldown = false;
+    let repeatMs = e.repeat > 0 ? e.repeat * 60 * 60 * 1000 : 0;
 
-if(e.repeat > 0){
+    let cycles = 0;
 
-let repeatMs = e.repeat * 60 * 60 * 1000;
+if(repeatMs > 0){
+  let diff = now - baseStart;
 
-// 🔥 FIX: handle first cycle properly
-let diff = now - start;
-
-let cycle = diff < 0 ? 0 : Math.floor(diff / repeatMs);
-let cycleStart = new Date(start.getTime() + cycle * e.repeat * 60 * 60 * 1000);
-let cycleEnd = new Date(cycleStart.getTime() + durationMs);
-
-let remaining = cycleEnd - now;
-
-if(now >= cycleStart && now <= cycleEnd){
-active = true;
-if(remaining <= 5 * 60 * 1000) cooldown = true;
-}else if(now < cycleStart){
-prep = true;
-}else{
-cooldown = true;
+  if(diff > 0){
+    cycles = Math.floor(diff / repeatMs);
+  }else{
+    cycles = 0; // 🔥 prevents backward cycle
+  }
 }
 
-candidates.push({
-event:e,
-state: active ? "active" : prep ? "prep" : "cooldown",
-priority: (e.priority !== undefined ? e.priority : 999),
-start:cycleStart,
-end:cycleEnd
-});
+    // 🔥 CURRENT cycle
+    let alertStart = new Date(baseAlert.getTime() + cycles * repeatMs);
+    let start = new Date(baseStart.getTime() + cycles * repeatMs);
+    let end = new Date(baseEnd.getTime() + cycles * repeatMs);
 
-}else{
+    // 🔥 NEXT cycle
+    let nextStart = new Date(start.getTime() + repeatMs);
 
-// 🔥 non-repeating short event (fixed)
-let end = new Date(start.getTime() + durationMs);
+    let state = "";
 
-if(now < start){
+    if(now < alertStart){
+      state = "cooldown";
+      start = nextStart;
+    }
+    else if(now < start){
+      state = "alert";
+    }
+    else if(now <= end){
+      state = "active";
+    }
+    else{
+      state = "cooldown";
+      start = nextStart;
+    }
 
-// PREP
-candidates.push({
-event:e,
-state: "prep",
-priority:e.priority || 999,
-start:start,
-end:end
-});
+    let item = {
+      event: e,
+      state: state,
+      priority: e.priority || 999,
+      start: start,
+      end: end
+    };
 
-}else if(now >= start && now <= end){
+    if(state === "active" || state === "alert"){
+      activeOrAlert.push(item);
+    }else{
+      cooldownList.push(item);
+    }
 
-// ACTIVE / COOLDOWN
-let remaining = end - now;
+  });
 
-candidates.push({
-event:e,
-state: remaining <= 5 * 60 * 1000 ? "cooldown" : "active",
-priority:e.priority || 999,
-start:start,
-end:end
-});
+  let pool = activeOrAlert.length ? activeOrAlert : cooldownList;
 
+  if(pool.length === 0) return null;
+
+  pool.sort((a,b)=> a.priority - b.priority);
+
+  return pool[0];
 }
-
-// after end → ignored
-
-}
-
-});
-
-if(candidates.length === 0) return null;
-
-// 🔥 PRIORITY SORT
-candidates.sort((a,b)=>{
-
-let order = {active:0, prep:1, cooldown:2};
-
-if(order[a.state] !== order[b.state]){
-return order[a.state] - order[b.state];
-}
-
-return a.priority - b.priority;
-
-});
-
-return candidates[0];
-}
-
+  
 function updateSpecialBar(){
 
-let data = getActiveShortEvent();
+  let data = getActiveShortEvent();
 
-if(!data){
-document.getElementById("ghoulionTimer").innerHTML = "";
-return;
-}
+  let timerEl = document.getElementById("ghoulionTimer");
+  let titleEl = document.getElementById("ghoulionTitle");
+  let imgEl = document.getElementById("ghoulionImg");
 
-let e = data.event;   // ✅ DEFINE FIRST
-document.getElementById("ghoulionTitle").innerText = e.name;
-document.getElementById("ghoulionTitle").style.color = e.color || "#ffd54f";  
+  if(!data){
+    timerEl.innerHTML = "";
+    return;
+  }
 
-// 🔥 NOW SAFE TO USE
-let imgName = e.name.toLowerCase().replace(/\s+/g,"_");
-let imgSrc = "images/events/" + imgName + ".png";
+  let e = data.event;
 
-document.getElementById("ghoulionImg").src = imgSrc;
+  // 🔹 TITLE + COLOR
+  titleEl.innerText = e.name;
+  titleEl.style.color = e.color || "#ffd54f";
 
-let now = new Date();
+  // 🔹 IMAGE
+  let imgName = e.name.toLowerCase().replace(/\s+/g,"_");
+  imgEl.src = "images/events/" + imgName + ".png";
 
-let remaining = data.end - now;
+  let now = new Date();
 
-let h = Math.floor(remaining / 1000 / 60 / 60);
-let m = Math.floor((remaining / 1000 / 60) % 60);
+  let label = "";
+  let remaining = 0;
+  let timeRef = null;
 
-let localTime = data.end.toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit',
-hour12:true
-});
+  // 🔥 STATE HANDLING
+  if(data.state === "cooldown"){
+    label = "Next";
+    remaining = data.start - now;
+    timeRef = data.start;
+  }
+  else if(data.state === "alert"){
+    label = "Starts";
+    remaining = data.start - now;
+    timeRef = data.start;
+  }
+  else{
+    label = "Ends";
+    remaining = data.end - now;
+    timeRef = data.end;
+  }
 
-let label = "Next";
+  // 🔥 prevent negative values
+  remaining = Math.max(0, remaining);
 
-if(data.state === "active") label = "Active";
-if(data.state === "prep") label = "Next";
-if(data.state === "cooldown") label = "Wrap";
+  let h = Math.floor(remaining / 1000 / 60 / 60);
+  let m = Math.floor((remaining / 1000 / 60) % 60);
 
-let barClass = "ghoulionBar";
+  let localTime = timeRef.toLocaleTimeString([],{
+    hour:'2-digit',
+    minute:'2-digit',
+    hour12:true
+  });
 
-if(data.state === "active") barClass += " active";
-if(data.state === "prep") barClass += " alert";
+  // 🔥 CLASS HANDLING (FIXED)
+  let barClass = "ghoulionBar";
 
-let timerText =
-"<div class='" + barClass + "'>" +
-label + " • " + localTime +
-" • " + h + "h " + m + "m</div>";
+  if(data.state === "active") barClass += " active";
+  else if(data.state === "alert") barClass += " alert";
+  else barClass += " cooldown";
 
-document.getElementById("ghoulionTimer").innerHTML = timerText;
+  // 🔥 COLOR HANDLING (FIXED)
+  let color = "#bbb"; // cooldown default
 
+  if(data.state === "active") color = "#ff6b6b";     // red
+  else if(data.state === "alert") color = "#4cff88"; // green
+
+  // 🔥 FINAL RENDER (OLD STYLE PRESERVED)
+  timerEl.innerHTML =
+    `<div class="${barClass}">
+      <span style="color:${color}">
+        ${label} ${h}h ${m}m
+      </span>
+      <span class="ghTimer"> • ${localTime}</span>
+    </div>`;
 }
 
 function updateLongEventTicker(){
@@ -1358,6 +1941,16 @@ document.getElementById("eventTicker").innerHTML =
 '<div class="eventScroll"><div class="scrollInner">' + html + html + '</div></div>';
 }    
 
+async function loadMaintenance(){
+
+try{
+let res = await fetch("data/maintenance.json?v=" + Date.now());
+maintenanceData = await res.json();
+}catch(e){
+console.log("Maintenance load error", e);
+}
+}
+  
 async function loadTasks(){
 try{
 let res = await fetch("data/tasks.json");
@@ -1457,7 +2050,7 @@ if(t.categories && t.categories.includes("Triple")) type = "Triple";
 else if(t.categories && t.categories.includes("Double")) type = "Double";
 else if(t.categories && t.categories.includes("Exclusive")) type = "Exclusive";
 
-console.log("Checking:", t.task, "→", p);  
+// console.log("Checking:", t.task, "→", p);
 
 if(!p) return;
 
@@ -1534,7 +2127,11 @@ function buildTaskMap(){
 }
 
 function classifyTasks(){
-console.log("RAW DATA SAMPLE:", rawData[0]);
+if(rawData.length){  
+if(window.debugMode){
+  console.log("RAW DATA SAMPLE:", rawData[0]);
+}
+}
   let tasks = buildTaskMap();
 
   let triple = [];
@@ -2160,7 +2757,8 @@ setInterval(loadTicker, 60000); // every 1 min
 Promise.all([
   loadTasks(),
   loadPrep(),
-  loadSpecialEvents()
+  loadSpecialEvents(),
+  loadMaintenance()
 ]).then(() => {
 
   // 🔹 INITIAL RENDER (after data is ready)
@@ -2172,6 +2770,7 @@ Promise.all([
   renderCasualTasks();
 
   updateSpecialBar();
+  renderAllShortEvents();
   updateLongEventTicker();
   initHunterUI(); 
   updateTimer();
@@ -2182,6 +2781,7 @@ Promise.all([
 setInterval(function(){
   updateTimer();
   updateDoubleTimer();
+  applyMaintenanceUI();
 }, 1000);
 
   // 🔹 LONG EVENT TICKER REFRESH (5 mins)
@@ -2190,6 +2790,7 @@ setInterval(function(){
   // 🔹 UI REFRESH (every 60s)
   setInterval(function(){
     updateSpecialBar();
+    renderAllShortEvents();
     updateTodayPanel();
     
     renderTriple();
@@ -2322,10 +2923,212 @@ function updateTodayPanel(){
   
 updateTodayPanel();
 
+function renderAllShortEvents(){
+
+  let container = document.getElementById("shortEventsRow");
+  if(!container) return;
+
+  let now = new Date();
+
+  let html = shortEvents
+    .filter(e => e.active)
+    .map(e => {
+
+      let baseAlert = new Date(e.alert_start || e.alertStart);
+      let baseStart = new Date(e.start);
+      let baseEnd = new Date(e.end);
+
+      let repeatMs = e.repeat > 0 ? e.repeat * 60 * 60 * 1000 : 0;
+
+      let cycles = 0;
+      let diff = now - baseStart;
+
+      if(repeatMs > 0 && diff > 0){
+        cycles = Math.floor(diff / repeatMs);
+      }
+
+      let alertStart = new Date(baseAlert.getTime() + cycles * repeatMs);
+      let start = new Date(baseStart.getTime() + cycles * repeatMs);
+      let end = new Date(baseEnd.getTime() + cycles * repeatMs);
+
+      let state = "";
+      let label = "";
+      let remaining = 0;
+      let timeRef = start;
+
+      
+      if(now < alertStart){
+        state = "cooldown";
+        label = "Next";
+        remaining = start - now;
+        timeRef = start;
+      }
+      else if(now < start){
+        state = "alert";
+        label = "Starts";
+        remaining = start - now;
+        timeRef = start;
+      }
+      else if(now <= end){
+        state = "active";
+        label = "Ends";
+        remaining = end - now;
+        timeRef = end;
+      }
+      else{
+        state = "cooldown";
+        start = new Date(start.getTime() + repeatMs);
+        label = "Next";
+        remaining = start - now;
+        timeRef = start;
+      }
+
+let timerColor = "#aaa";  // default cooldown
+
+if(state === "alert") timerColor = "#4cff88";   // green
+if(state === "active") timerColor = "#ff6b6b";  // red
+      
+      remaining = Math.max(0, remaining);
+
+      let h = Math.floor(remaining / 1000 / 60 / 60);
+      let m = Math.floor((remaining / 1000 / 60) % 60);
+
+      let localTime = timeRef.toLocaleTimeString([],{
+        hour:'2-digit',
+        minute:'2-digit',
+        hour12:true
+      });
+
+      let imgName = e.name.toLowerCase().replace(/\s+/g,"_");
+
+      return `
+        <div class="seItem ${state}">
+          <div class="seName" style="color:${e.color}">
+            ${e.name}
+          </div>
+
+          <div class="seCircle">
+            <img src="images/events/${imgName}.png"
+                 onerror="this.src='images/events/default.png'">
+          </div>
+
+          <div class="seTimer" style="color:${timerColor}">
+            ${label} ${h}h ${m}m
+          </div>
+
+          <div class="seTime">
+            ${localTime}
+          </div>
+        </div>
+      `;
+
+    }).join("");
+
+  container.innerHTML = html;
+}  
+
+// 🔹 Toggle panel
+document.addEventListener("DOMContentLoaded", function(){
+
+  const btn = document.getElementById("supportBtn");
+  const panel = document.getElementById("supportPanel");
+  const copyBtn = document.getElementById("copyBtn");
+  const msg = document.getElementById("copyMsg");
+  const idText = document.getElementById("gameIdText");
+
+  if(!btn || !panel) return;
+
+  // toggle panel
+  btn.addEventListener("click", function(e){
+    e.stopPropagation();
+    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+  });
+
+  // copy ID
+  copyBtn.addEventListener("click", function(e){
+    e.stopPropagation();
+
+    navigator.clipboard.writeText(idText.innerText);
+
+    msg.style.display = "block";
+
+    setTimeout(()=>{
+      msg.style.display = "none";
+    },1500);
+  });
+
+  // close when clicking outside
+  document.addEventListener("click", function(){
+    panel.style.display = "none";
+  });
+
+});
+
+ document.addEventListener("DOMContentLoaded", function(){
+
+  const root = document.getElementById("globalFloatingRoot");
+
+  root.innerHTML = `
+    <div id="supportWidget">
+
+      <div id="supportBtn">Support Me</div>
+
+      <div id="supportPanel">
+        <div class="supportTitle">Gift me a game pack 🎁</div>
+
+        <div class="supportId" id="gameIdText">
+          20700149
+        </div>
+
+        <button id="copyBtn">Copy ID</button>
+
+        <div id="copyMsg">Copied!</div>
+      </div>
+
+    </div>
+  `;
+
+  const btn = document.getElementById("supportBtn");
+  const panel = document.getElementById("supportPanel");
+  const copyBtn = document.getElementById("copyBtn");
+  const msg = document.getElementById("copyMsg");
+  const idText = document.getElementById("gameIdText");
+
+  btn.onclick = (e)=>{
+    e.stopPropagation();
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
+  };
+
+  copyBtn.onclick = (e)=>{
+    e.stopPropagation();
+    navigator.clipboard.writeText(idText.innerText);
+    msg.style.display = "block";
+    setTimeout(()=> msg.style.display = "none", 1200);
+  };
+
+  document.addEventListener("click", ()=>{
+    panel.style.display = "none";
+  });
+
+}); 
   
 </script>
 
 </div>
+
+ <div id="maintenanceScreen" style="display:none; position:fixed; inset:0; background:#000; z-index:9999; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+
+  <div style="font-size:20px; margin-bottom:10px;">
+    🚧 Maintenance in Progress
+  </div>
+
+  <div id="maintenanceMessage" style="font-size:14px; color:#aaa; margin-bottom:10px;"></div>
+
+  <div id="maintenanceTimer" style="font-size:13px; color:#ccc;"></div>
+
+</div> 
+  
+
   
 </body>
 </html>
