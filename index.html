@@ -1013,7 +1013,15 @@ height:80px;
 .seItem.alert .seCircle{
   box-shadow:
     0 0 6px rgba(80,255,120,0.6),
-    0 0 14px rgba(80,255,120,0.8);
+    0 0 14px rgba(80,255,120,0.8),
+    0 0 22px rgba(80,255,120,0.6);
+
+  animation: alertPulse 2s ease-in-out infinite;
+}
+
+@keyframes alertPulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.06); }
 }
   
 /* 🔥 ACTIVE FIRE EFFECT */
@@ -3355,10 +3363,37 @@ function renderAllShortEvents(){
       let start = new Date(baseStart.getTime() + cycles * repeatMs);
       let end = new Date(baseEnd.getTime() + cycles * repeatMs);
 
-      let state = "";
       let label = "";
-      let remaining = 0;
-      let timeRef = start;
+let remaining = 0;
+let timeRef = start;
+let timerColor = "#aaa"; // default cooldown
+
+if(now < alertStart){
+  state = "cooldown";
+  label = "Next";
+  remaining = start - now;
+  timeRef = start;
+}
+else if(now < start){
+  state = "alert";
+  label = "Starts";
+  remaining = start - now;
+  timeRef = start;
+  timerColor = "#4cff88";   // 🟢 GREEN
+}
+else if(now <= end){
+  state = "active";
+  label = "Ends";
+  remaining = end - now;
+  timeRef = end;
+  timerColor = "#ff6b6b";   // 🔴 RED
+}
+else{
+  state = "cooldown";
+  label = "Next";
+  remaining = nextStart - now;
+  timeRef = nextStart;
+}
 
       
       if(now < alertStart){
@@ -3430,9 +3465,11 @@ if(state === "active") timerColor = "#ff6b6b";  // red
                  onerror="this.src='images/events/default.png'">
           </div>
 
-          <div class="seTimer" style="color:${timerColor}">
-            ${label} ${h}h ${m}m
-          </div>
+          <div class="seTimer">
+  <span style="color:${timerColor}">
+    ${label} ${h}h ${m}m
+  </span>
+</div>
 
           <div class="seTime">
             ${localTime}
