@@ -3363,39 +3363,11 @@ function renderAllShortEvents(){
       let start = new Date(baseStart.getTime() + cycles * repeatMs);
       let end = new Date(baseEnd.getTime() + cycles * repeatMs);
 
-      let label = "";
+let state = "";
+let label = "";
 let remaining = 0;
 let timeRef = start;
-let timerColor = "#aaa"; // default cooldown
-
-if(now < alertStart){
-  state = "cooldown";
-  label = "Next";
-  remaining = start - now;
-  timeRef = start;
-}
-else if(now < start){
-  state = "alert";
-  label = "Starts";
-  remaining = start - now;
-  timeRef = start;
-  timerColor = "#4cff88";   // 🟢 GREEN
-}
-else if(now <= end){
-  state = "active";
-  label = "Ends";
-  remaining = end - now;
-  timeRef = end;
-  timerColor = "#ff6b6b";   // 🔴 RED
-}
-else{
-  state = "cooldown";
-  label = "Next";
-  remaining = nextStart - now;
-  timeRef = nextStart;
-}
-
-      
+            
       if(now < alertStart){
         state = "cooldown";
         label = "Next";
