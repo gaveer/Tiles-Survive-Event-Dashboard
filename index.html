@@ -1619,6 +1619,45 @@ height:80px;
     transform:scale(1);
   }
 }
+
+#copyTodayBtn.r4Btn{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;   /* 👈 left aligned */
+
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  z-index: 9999;
+
+  box-shadow: 
+    0 4px 10px rgba(0,0,0,0.5),
+    inset 0 0 8px rgba(255,255,255,0.05);
+}
+
+/* subtle hover */
+#copyTodayBtn.r4Btn:hover{
+  transform: scale(1.08);
+}
+
+/* click feedback */
+#copyTodayBtn.r4Btn:active{
+  transform: scale(0.95);
+}
   
 </style>
 </head>
@@ -2579,6 +2618,10 @@ function formatToLocalTimeFromDate(date){
   });
 }
 
+function formatToLocalDay(date){
+  return date.toLocaleDateString('en-US', { weekday: 'short' });
+}
+  
 function getTaskState(task){
 
   if(!task || !task.times || !task.times.length) return null;
@@ -2587,17 +2630,26 @@ function getTaskState(task){
 
   let [h,m] = task.times[0].split(":").map(Number);
 
-  let base = new Date();
-
-  base.setUTCHours(h, m, 0, 0);
-
   let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  let targetDay = days.indexOf(task.d);
+let targetDay = days.indexOf(task.d);
 
-  let diff = targetDay - base.getUTCDay();
-  if(diff < 0) diff += 7;
+// ✅ STEP 1: get current UTC day
+let currentUTCDay = now.getUTCDay();
 
-  base.setUTCDate(base.getUTCDate() + diff);
+// ✅ STEP 2: compute day difference
+let diff = targetDay - currentUTCDay;
+if(diff < 0) diff += 7;
+
+// ✅ STEP 3: build base date in UTC ONLY
+let base = new Date(Date.UTC(
+  now.getUTCFullYear(),
+  now.getUTCMonth(),
+  now.getUTCDate() + diff,
+  h,
+  m,
+  0,
+  0
+));
 
   let end = new Date(base.getTime() + task.duration * 60 * 60 * 1000);
 
@@ -2681,7 +2733,7 @@ function renderTriple(){
 
     html += `
       <div class="row ${rowClass}">
-        <span>${t.d}</span>
+        <span>${formatToLocalDay(state.time)}</span>
         <span>${timeStr} — ${t.task}</span>
       </div>
     `;
@@ -2750,7 +2802,7 @@ function renderDouble(){
 
     html += `
       <div class="row ${rowClass}">
-        <span>${t.d}</span>
+        <span>${formatToLocalDay(state.time)}</span>
         <span>${timeStr} — ${t.task}</span>
       </div>
     `;
@@ -3538,6 +3590,130 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 
 }); 
+
+function buildTodayTasksText(){
+
+  let {triple, double, dayExclusive} = getTasks();
+
+  let now = new Date();
+  let todayUTC = now.getUTCDay();
+
+  let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+  function groupByTask(list){
+    let map = {};
+
+    list.forEach(t => {
+      if(days.indexOf(t.d) !== todayUTC) return;
+
+      let name = t.task || "Task";
+
+      if(!map[name]){
+        map[name] = [];
+      }
+
+      map[name].push(t);
+    });
+
+    return map;
+  }
+
+  function processGroup(group, type){
+
+    let result = [];
+
+    Object.keys(group).forEach(name => {
+
+      let entries = group[name];
+
+      let powerPlay = entries.find(e => 
+        e.events && e.events.includes("Power Play")
+      );
+
+      let chosen = powerPlay || entries[0];
+
+      let line = `${type} ${name} ${chosen.d}`;
+
+      if(type === "Triple"){
+        let time = powerPlay?.times?.[0] || "00:00";
+        line += ` ${time} UTC`;
+      }
+
+      else {
+
+        if(powerPlay){
+          let time = powerPlay.times?.[0] || "00:00";
+          line += ` ${time} UTC Power Play`;
+        } else {
+          // 🔥 FIX: show ALL events + 00:00 UTC
+          let allEvents = [];
+
+          entries.forEach(e => {
+            if(e.events){
+              e.events.forEach(ev => {
+                if(!allEvents.includes(ev)){
+                  allEvents.push(ev);
+                }
+              });
+            }
+          });
+
+          let eventStr = allEvents.join(" + ");
+
+          line += ` 00:00 UTC ${eventStr}`;
+        }
+      }
+
+      result.push(line);
+
+    });
+
+    return result;
+  }
+
+  let t1 = processGroup(groupByTask(triple), "Triple");
+  let t2 = processGroup(groupByTask(double), "Double");
+  let t3 = processGroup(groupByTask(dayExclusive), "Exclusive");
+
+  return [...t1, ...t2, ...t3]
+  .map(line => `• ${line}`)
+  .join("\n");
+}
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  const btn = document.getElementById("copyTodayBtn");
+  if(!btn) return;
+
+  btn.addEventListener("click", function(){
+
+    let text = buildTodayTasksText();
+
+    if(!text){
+      btn.innerText = "No Data";
+      setTimeout(()=> btn.innerText = "R4", 1500);
+      return;
+    }
+
+    // clipboard (safe)
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(text);
+    } else {
+      let textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    }
+
+    btn.innerText = "Copied!";
+    setTimeout(()=> btn.innerText = "R4", 1500);
+
+  });
+
+});
   
 </script>
 
@@ -3555,7 +3731,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 </div> 
   
-
+<button id="copyTodayBtn" class="r4Btn">R4</button>
   
 </body>
 </html>
