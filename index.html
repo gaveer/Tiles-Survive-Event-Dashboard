@@ -415,6 +415,7 @@ margin-top:0;
 } 
   
 .hunterUnified{
+position:relative;  
 padding:8px;
 background:#0d0d0d;
 border:1px solid #333;
@@ -1658,6 +1659,73 @@ height:80px;
 #copyTodayBtn.r4Btn:active{
   transform: scale(0.95);
 }
+
+/* 🔥 Goldmine Banner (Header Overlay) */
+
+.goldmineBanner{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:bold;
+  font-size:13px;
+  color:#ffd700;
+
+  /* 🔥 GOLD GIF BACKGROUND */
+  background:
+    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+    url("images/ui/gold.gif");
+
+  background-size: cover;
+  background-position: center;
+
+  text-shadow:
+    0 0 6px rgba(255,215,0,0.8),
+    0 0 14px rgba(255,180,0,0.6);
+
+  opacity:0;
+  pointer-events:none;
+
+  z-index:5;
+
+  transform:translateY(-100%);
+  transition:all 0.3s ease;
+}
+
+/* ACTIVE STATE */
+.goldmineBanner.active{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* subtle pulse */
+@keyframes goldPulse{
+  0% { text-shadow: 0 0 6px rgba(255,215,0,0.5); }
+  50% { text-shadow: 0 0 14px rgba(255,215,0,1); }
+  100% { text-shadow: 0 0 6px rgba(255,215,0,0.5); }
+}
+
+.goldmineBanner.active{
+  animation: goldPulse 2s infinite;
+}
+
+@keyframes goldShake{
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-1px); }
+  50% { transform: translateY(1px); }
+  75% { transform: translateY(-1px); }
+  100% { transform: translateY(0); }
+}
+
+.goldmineBanner.active{
+  animation: goldPulse 2s infinite, goldShake 1.5s infinite;
+}  
   
 </style>
 </head>
@@ -1715,7 +1783,13 @@ height:80px;
   <div id="shortEventsRow"></div>
 </div> 
   
-<div id="taskHunter" class="card hunterUnified">
+<div style="position:relative">
+
+  <div id="goldmineBanner" class="goldmineBanner">
+    💰 Refresh Gold Mine!
+  </div>
+
+  <div id="taskHunter" class="card hunterUnified">
 
 <div class="hunterTitle">Task Hunter</div>
 
@@ -1785,6 +1859,7 @@ height:80px;
 
 <script>
 
+  
 let maintenanceData = null;
 let maintenanceMessageIndex = 0;
 let maintenanceLastSwitch = 0;  
@@ -2390,6 +2465,8 @@ ${e.name} • ${d}d ${h}h ${m}m
 
 document.getElementById("eventTicker").innerHTML =
 '<div class="eventScroll"><div class="scrollInner">' + html + html + '</div></div>';
+
+updateGoldmineBanner();  
 }    
 
 async function loadMaintenance(){
@@ -3246,6 +3323,7 @@ setInterval(function(){
   updateTimer();
   updateDoubleTimer();
   applyMaintenanceUI();
+  updateGoldmineBanner();
 }, 1000);
 
   // 🔹 LONG EVENT TICKER REFRESH (5 mins)
@@ -3387,6 +3465,47 @@ function updateTodayPanel(){
   
 updateTodayPanel();
 
+let goldBannerActive = false;
+
+function updateGoldmineBanner(){
+
+  if(!longEvents || !longEvents.length) return;
+
+  const banner = document.getElementById("goldmineBanner");
+  if(!banner) return;
+
+  let now = new Date();
+
+  let goldmine = longEvents.find(e => 
+    e.name && e.name.toLowerCase().includes("goldmine")
+  );
+
+  if(!goldmine){
+    banner.classList.remove("active");
+    goldBannerActive = false;   // 🔥 FIX
+    return;
+  }
+
+  let end = new Date(goldmine.end);
+  let isRunning = now < end;
+
+  let minute = now.getUTCMinutes();
+  let inWindow = minute < 5;   // 🔧 testing window
+
+  let shouldShow = isRunning && inWindow;
+
+  if(shouldShow && !goldBannerActive){
+    banner.classList.add("active");
+
+    
+    goldBannerActive = true;
+  }
+  else if(!shouldShow && goldBannerActive){
+    banner.classList.remove("active");
+    goldBannerActive = false;
+  }
+}
+  
 function renderAllShortEvents(){
 console.log("renderAllShortEvents RUNNING");
   
