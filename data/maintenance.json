@@ -1,6 +1,6 @@
 {
   "emergency": {
-    "main": false
+    "main": true
   },
 
   "scheduled": {

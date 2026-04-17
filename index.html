@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-P41P2Y6L3F"></script>
@@ -129,21 +129,24 @@ color:white;
 font-family:system-ui;
 margin:0;
 padding:12px;
+position:relative;
+min-height:100vh;
 }
 
 body::before{
 content:"";
-position:absolute;
+position:fixed;
 top:0;
 left:0;
-width:100%;
-height:100%;
+width:100vw;
+height:100vh;
 
 background:
 linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
 url('tiles-bg.jpg') center top/cover no-repeat;
 
 z-index:-1;
+pointer-events:none;
 }
   
 h1{
@@ -165,6 +168,32 @@ margin-bottom:16px;
   border-radius:10px;
   padding:8px;
   margin-top:6px;   /* tighter */
+}
+
+.discordCard{
+  padding:10px;
+}
+
+.discordFrame{
+  display:block;
+  width:100%;
+  min-height:320px;
+  border:0;
+  border-radius:8px;
+}
+
+.discordLink{
+  display:block;
+  margin-top:8px;
+  text-align:center;
+  color:#6fb6ff;
+  font-size:13px;
+  text-decoration:none;
+}
+
+.discordLink:hover{
+  color:#9fd1ff;
+  text-decoration:underline;
 }
 
 .card h2{
@@ -544,6 +573,24 @@ font-size:20px;
 margin:0;
 font-size:12px;
 opacity:.7;
+}
+
+.langRow{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin:8px 0 10px;
+font-size:12px;
+}
+
+#langSelect{
+background:#1a1a1a;
+color:#fff;
+border:1px solid #3a3a3a;
+border-radius:6px;
+padding:4px 8px;
+font-size:12px;
 }
 
 .ghoulionBar{
@@ -1734,6 +1781,142 @@ height:80px;
 .goldmineBanner.active{
   animation: goldPulse 2s infinite, goldShake 1.5s infinite;
 }  
+
+/* =========================================
+   Responsive: Tablet + Phone support
+   ========================================= */
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 1024px){
+  body{
+    padding:10px;
+  }
+
+  .appContainer{
+    max-width:860px;
+    padding:12px;
+  }
+
+  .headerText h1{
+    font-size:24px;
+  }
+
+  .card{
+    padding:10px;
+  }
+
+  #shortEventsRow{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+  }
+
+  .seItem{
+    width:120px;
+  }
+}
+
+/* Phone */
+@media (max-width: 600px){
+  body{
+    padding:0;
+    overflow-x:hidden;
+  }
+
+  .appContainer{
+    width:100%;
+    max-width:100%;
+    margin:0;
+    border-radius:0;
+    padding:8px;
+  }
+
+  .headerBar{
+    height:auto;
+    min-height:64px;
+    padding:4px 0;
+  }
+
+  .headerText h1{
+    font-size:18px;
+    line-height:1.2;
+  }
+
+  .headerText .subtitle{
+    font-size:11px;
+  }
+
+  .langRow{
+    flex-wrap:wrap;
+    gap:6px;
+    margin:6px 0 8px;
+  }
+
+  #langSelect{
+    width:100%;
+    max-width:220px;
+  }
+
+  .card{
+    padding:7px;
+    margin-top:6px;
+  }
+
+  .card h2{
+    font-size:14px;
+  }
+
+  #ticker,
+  #eventTicker{
+    font-size:12px;
+  }
+
+  .eventItem{
+    margin-right:28px;
+  }
+
+  #shortEventsRow{
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:10px 8px;
+  }
+
+  .seItem{
+    width:calc(50% - 6px);
+  }
+
+  .seName{
+    white-space:normal;
+    line-height:1.2;
+  }
+
+  .row{
+    flex-wrap:wrap;
+    gap:2px 6px;
+  }
+
+  .row span:first-child{
+    min-width:0;
+  }
+
+  .row span:last-child{
+    text-align:left;
+    white-space:normal;
+  }
+
+  .hunterStatus{
+    font-size:12px;
+  }
+
+  .hunterTask{
+    font-size:14px;
+  }
+
+  .hunterClock,
+  .hunterTimerText{
+    font-size:11px;
+  }
+}
   
 </style>
 </head>
@@ -1751,21 +1934,30 @@ height:80px;
   
 <div class="headerBar">
 
-<div class="logoBox">
-  <img src="chillin_logo.png" class="allianceLogo">
-</div>
+<!--<div class="logoBox">
+  <img src="logo" class="allianceLogo">
+</div>-->
 
 <div class="headerText">
-<h1>Tiles Survive</h1>
-<div class="subtitle">Alliance Event Planner</div>
+<h1 id="appTitle">Tiles Survive</h1>
+<div id="appSubtitle" class="subtitle">Alliance Event Planner</div>
 </div>
 
-<div class="leaderBox">
+<!--<div class="leaderBox">
   <img src="saphireJess.png" class="leaderImg">
-  <div class="leaderName">[CHI]SaphireJess</div>
-  <div class="leaderTitle">Alliance Leader</div>
+  <div class="leaderName">####</div>
+  <div id="leaderTitle" class="leaderTitle">Alliance Leader</div>
+</div>-->
+
 </div>
 
+<div class="langRow">
+  <label id="langLabel" for="langSelect">Language</label>
+  <select id="langSelect">
+    <option value="en">English</option>
+    <option value="ru">Russian</option>
+    <option value="ar">Arabic</option>
+  </select>
 </div>
   
 <div id="activeBanner" class="activeBanner"></div>
@@ -1794,12 +1986,12 @@ height:80px;
 <div style="position:relative">
 
   <div id="goldmineBanner" class="goldmineBanner">
-    💰 Refresh Gold Mine!
+    <span id="goldmineBannerText"> 💰 Refresh Gold Mine!</span>
   </div>
 
   <div id="taskHunter" class="card hunterUnified">
 
-<div class="hunterTitle">Task Hunter</div>
+<div id="hunterTitle" class="hunterTitle">Task Hunter</div>
 
 <div class="hunterStack">
 
@@ -1816,53 +2008,67 @@ height:80px;
 </div>
   
 <div class="card">
-<h2>📅 Today</h2>
+<h2 id="todayTitle">📅 Today</h2>
 <div id="todayPanel"></div>
 </div>
 
 <div id="prepPanel" class="card">
-<h2>🧠 Prep</h2>
+<h2 id="prepTitle">🧠 Prep</h2>
 <div id="prepContent">Loading...</div>
 </div>
   
 <div class="card triple">
-  <h2>◆ Triple Chain List</h2>
+  <h2 id="tripleListTitle">◆ Triple Chain List</h2>
   <div id="tripleList"></div>
 </div>
 
 <div class="card double">
-  <h2>◆ Double Chain List</h2>
+  <h2 id="doubleListTitle">◆ Double Chain List</h2>
   <div id="doubleList"></div>
 </div>
 
 <div class="card save">
-<h2>◆ Day Exclusive</h2>
+<h2 id="dayExclusiveTitle">◆ Day Exclusive</h2>
 <div id="dayExclusiveList"></div>
 </div>
 
 
 <div class="card save">
-<h2>◆ Save Resources</h2>
+<h2 id="saveResourcesTitle">◆ Save Resources</h2>
 <div id="saveList"></div>
 </div>
 
 <div class="card save">
-<h2>⚔️ Casual Tasks</h2>
+<h2 id="casualTasksTitle">⚔️ Casual Tasks</h2>
 <div id="casualList"></div>
 
 </div>
 
 <div class="feedbackBar">
-  <div class="feedbackText">
+  <div id="feedbackText" class="feedbackText">
     For feedback, suggestions or bug reports contact:
   </div>
 
-  <img src="psyknes.png" class="feedbackAvatar">
+  <img src="gaver.png" class="feedbackAvatar">
 
-  <div class="feedbackName">
-    [CHI]Pysknes
+<div class="feedbackName">
+    [TNE]Gaver
+    </iframe>
+  <a class="discordLink" href="https://discord.gg/xvX5Yc4FgJ" target="_blank" rel="noopener noreferrer">
+  -- Join our Discord server --
+  </a>
   </div>
 </div>
+
+<!--<div class="card discordCard">
+  <h2>Discord</h2>
+  <iframe
+    class="discordFrame"
+    src="https://discord.com/widget?id=1491009847464951850&theme=dark"
+    allowtransparency="true"
+    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+  >
+</div>-->
 
 
 <script>
@@ -1872,6 +2078,322 @@ let maintenanceData = null;
 let maintenanceMessageIndex = 0;
 let maintenanceLastSwitch = 0;  
 let currentMaintenanceState = null;  
+let currentLang = localStorage.getItem("dashboardLang") || "en";
+
+const translations = {
+  en: {
+    language: "Language",
+    appTitle: "Tiles Survive",
+    appSubtitle: "Alliance Event Planner",
+    leaderTitle: "Alliance Leader",
+    goldmineBanner: "💰 Refresh Gold Mine!",
+    hunterTitle: "Task Hunter",
+    tripleChain: "Triple Chain",
+    doubleChain: "Double Chain",
+    today: "📅 Today",
+    prep: "🧠 Prep",
+    tripleList: "◆ Triple Chain List",
+    doubleList: "◆ Double Chain List",
+    dayExclusive: "◆ Day Exclusive",
+    saveResources: "◆ Save Resources",
+    casualTasks: "⚔️ Casual Tasks",
+    feedbackText: "For feedback, suggestions or bug reports contact:",
+    loading: "Loading...",
+    noPrepNeeded: "No prep needed",
+    active: "ACTIVE",
+    upcoming: "Upcoming",
+    completed: "Completed",
+    startsIn: "Starts in",
+    endsIn: "Ends in",
+    next: "Next",
+    starts: "Starts",
+    ends: "Ends",
+    noPriorityTasks: "No priority tasks today",
+    maintenanceInProgress: "Maintenance in progress",
+    maintenanceOngoing: "Maintenance ongoing",
+    emergencyMaintenance: "🚧 Emergency Maintenance",
+    scheduledMaintenance: "🔧 Maintenance in progress",
+    supportMe: "Support Me",
+    supportTitle: "Support me with a top up 🎁",
+    copyId: "Copy ID",
+    copied: "Copied!",
+    noData: "No Data"
+  },
+  ru: {
+    language: "Язык",
+    appTitle: "Tiles Survive",
+    appSubtitle: "Планировщик событий альянса",
+    leaderTitle: "Лидер альянса",
+    goldmineBanner: "💰 Обновите Золотую Шахту!",
+    hunterTitle: "Охотник за заданиями",
+    tripleChain: "Тройная цепочка",
+    doubleChain: "Двойная цепочка",
+    today: "📅 Сегодня",
+    prep: "🧠 Подготовка",
+    tripleList: "◆ Список тройной цепочки",
+    doubleList: "◆ Список двойной цепочки",
+    dayExclusive: "◆ Эксклюзив дня",
+    saveResources: "◆ Сохраняйте ресурсы",
+    casualTasks: "⚔️ Обычные задания",
+    feedbackText: "Для отзывов, предложений или сообщений об ошибках:",
+    loading: "Загрузка...",
+    noPrepNeeded: "Подготовка не требуется",
+    active: "АКТИВНО",
+    upcoming: "Скоро",
+    completed: "Завершено",
+    startsIn: "Начнется через",
+    endsIn: "Закончится через",
+    next: "След.",
+    starts: "Старт",
+    ends: "Конец",
+    noPriorityTasks: "Сегодня нет приоритетных задач",
+    maintenanceInProgress: "Техобслуживание в процессе",
+    maintenanceOngoing: "Техобслуживание активно",
+    emergencyMaintenance: "🚧 Экстренное техобслуживание",
+    scheduledMaintenance: "🔧 Техобслуживание в процессе",
+    supportMe: "Поддержать",
+    supportTitle: "Поддержите меня донатом 🎁",
+    copyId: "Копировать ID",
+    copied: "Скопировано!",
+    noData: "Нет данных"
+  },
+  ar: {
+    language: "اللغة",
+    appTitle: "Tiles Survive",
+    appSubtitle: "مخطط فعاليات التحالف",
+    leaderTitle: "قائد التحالف",
+    goldmineBanner: "💰 حدّث منجم الذهب!",
+    hunterTitle: "متعقب المهام",
+    tripleChain: "السلسلة الثلاثية",
+    doubleChain: "السلسلة المزدوجة",
+    today: "📅 اليوم",
+    prep: "🧠 التحضير",
+    tripleList: "◆ قائمة السلسلة الثلاثية",
+    doubleList: "◆ قائمة السلسلة المزدوجة",
+    dayExclusive: "◆ مهمة اليوم الحصرية",
+    saveResources: "◆ حفظ الموارد",
+    casualTasks: "⚔️ مهام عادية",
+    feedbackText: "للملاحظات أو الاقتراحات أو الإبلاغ عن الأخطاء:",
+    loading: "جارٍ التحميل...",
+    noPrepNeeded: "لا يوجد تحضير مطلوب",
+    active: "نشط",
+    upcoming: "قادم",
+    completed: "مكتمل",
+    startsIn: "يبدأ خلال",
+    endsIn: "ينتهي خلال",
+    next: "التالي",
+    starts: "يبدأ",
+    ends: "ينتهي",
+    noPriorityTasks: "لا توجد مهام أولوية اليوم",
+    maintenanceInProgress: "الصيانة جارية",
+    maintenanceOngoing: "الصيانة مستمرة",
+    emergencyMaintenance: "🚧 صيانة طارئة",
+    scheduledMaintenance: "🔧 الصيانة جارية",
+    supportMe: "ادعمني",
+    supportTitle: "ادعمني بشحن هدية 🎁",
+    copyId: "نسخ المعرف",
+    copied: "تم النسخ!",
+    noData: "لا توجد بيانات"
+  }
+};
+
+const eventNameTranslations = {
+  "Ghoulion Pursuit": { ru: "Погоня на Гулиона", ar: "مطاردة الغوليون" },
+  "Alliance Duel": { ru: "Дуэль Альянсов", ar: "مبارزة التحالف" },
+  "Power Play": { ru: "Силовая игра", ar: "قوة التحالف" },
+  "Reservoir Raid": { ru: "Рейд на Резервуар", ar: "غارة الخزان" },
+  "Arcadian Conquest": { ru: "Аркадийское Завоевание", ar: "فتح أركاديا" },
+  "Terror Purge": { ru: "Зачистка Террора", ar: "تطهير الرعب" },
+  "Underground Goldmine": { ru: "Подземный Рудник", ar: "منجم الذهب السفلي" },
+  "Lost Frontier": { ru: "Потерянный Фронтир", ar: "الحدود المفقودة" }
+};
+
+const taskNameTranslations = {
+  "Hero Frags": { ru: "Осколки Героя", ar: "شظايا البطل" },
+  "Train Speed": { ru: "Скорость Обучения", ar: "تسريع التدريب" },
+  "Build Speed": { ru: "Скорость Стройки", ar: "تسريع البناء" },
+  "Research Speed": { ru: "Скорость Исследования", ar: "تسريع البحث" },
+  "Use Stamina": { ru: "Трата Выносливости", ar: "استخدام الطاقة" },
+  "Gather RSS": { ru: "Сбор Ресурсов", ar: "جمع الموارد" }
+};
+
+function tr(key){
+  return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key;
+}
+
+function trTask(name){
+  let row = taskNameTranslations[name];
+  return row && row[currentLang] ? row[currentLang] : name;
+}
+
+function trEvent(name){
+  let row = eventNameTranslations[name];
+  return row && row[currentLang] ? row[currentLang] : name;
+}
+
+function getLocalizedText(value, fallback = ""){
+  if(value == null) return fallback;
+
+  if(typeof value === "string"){
+    return value;
+  }
+
+  if(typeof value === "object"){
+    if(typeof value[currentLang] === "string" && value[currentLang].trim() !== ""){
+      return value[currentLang];
+    }
+
+    if(typeof value.en === "string" && value.en.trim() !== ""){
+      return value.en;
+    }
+
+    for(const key of Object.keys(value)){
+      if(typeof value[key] === "string" && value[key].trim() !== ""){
+        return value[key];
+      }
+    }
+  }
+
+  return fallback;
+}
+
+const SUPPORTED_LANGS = ["en", "ru", "ar"];
+const ANNOUNCEMENT_TRANSLATABLE_FIELDS = ["message"];
+const PREP_TRANSLATABLE_FIELDS = ["task", "prepComment", "tip"];
+
+function toTranslationObject(value){
+  const emptyTranslations = SUPPORTED_LANGS.reduce((acc, lang) => {
+    acc[lang] = "";
+    return acc;
+  }, {});
+
+  if(value == null){
+    return emptyTranslations;
+  }
+
+  if(typeof value === "object"){
+    return SUPPORTED_LANGS.reduce((acc, lang) => {
+      acc[lang] = typeof value[lang] === "string" ? value[lang] : "";
+      return acc;
+    }, {});
+  }
+
+  if(typeof value === "string"){
+    return SUPPORTED_LANGS.reduce((acc, lang) => {
+      acc[lang] = value;
+      return acc;
+    }, {});
+  }
+
+  return emptyTranslations;
+}
+
+function normalizeAnnouncementTranslations(data){
+  ANNOUNCEMENT_TRANSLATABLE_FIELDS.forEach(field => {
+    data[field] = toTranslationObject(data[field]);
+  });
+  return data;
+}
+
+function normalizePrepTranslations(items){
+  if(!Array.isArray(items)) return [];
+
+  return items.map(item => {
+    PREP_TRANSLATABLE_FIELDS.forEach(field => {
+      item[field] = toTranslationObject(item[field]);
+    });
+    return item;
+  });
+}
+
+function getPrepTaskKey(taskValue){
+  if(typeof taskValue === "string"){
+    return taskValue;
+  }
+
+  if(taskValue && typeof taskValue === "object"){
+    if(typeof taskValue.en === "string" && taskValue.en.trim() !== ""){
+      return taskValue.en;
+    }
+    return getLocalizedText(taskValue, "");
+  }
+
+  return "";
+}
+
+function getPrepTaskLabel(taskValue, fallbackTask){
+  if(taskValue && typeof taskValue === "object"){
+    return getLocalizedText(taskValue, fallbackTask || "");
+  }
+  return trTask(fallbackTask || taskValue || "");
+}
+
+function applyLanguage(lang){
+  currentLang = translations[lang] ? lang : "en";
+  localStorage.setItem("dashboardLang", currentLang);
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+
+  const setText = (id, text) => {
+    let el = document.getElementById(id);
+    if(el) el.innerText = text;
+  };
+
+  let select = document.getElementById("langSelect");
+  if(select) select.value = currentLang;
+
+  setText("langLabel", tr("language"));
+  setText("appTitle", tr("appTitle"));
+  setText("appSubtitle", tr("appSubtitle"));
+  setText("leaderTitle", tr("leaderTitle"));
+  setText("goldmineBannerText", tr("goldmineBanner"));
+  setText("hunterTitle", tr("hunterTitle"));
+  setText("tripleLabel", tr("tripleChain"));
+  setText("doubleLabel", tr("doubleChain"));
+  setText("todayTitle", tr("today"));
+  setText("prepTitle", tr("prep"));
+  setText("tripleListTitle", tr("tripleList"));
+  setText("doubleListTitle", tr("doubleList"));
+  setText("dayExclusiveTitle", tr("dayExclusive"));
+  setText("saveResourcesTitle", tr("saveResources"));
+  setText("casualTasksTitle", tr("casualTasks"));
+  setText("feedbackText", tr("feedbackText"));
+  setText("maintenanceTitle", tr("scheduledMaintenance"));
+  setText("supportBtn", tr("supportMe"));
+  setText("copyBtn", tr("copyId"));
+
+  const supportTitle = document.querySelector(".supportTitle");
+  if(supportTitle) supportTitle.innerText = tr("supportTitle");
+
+  let prepContent = document.getElementById("prepContent");
+  if(prepContent && prepContent.innerText.trim() === "Loading..."){
+    prepContent.innerText = tr("loading");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  const langSelect = document.getElementById("langSelect");
+  if(langSelect){
+    langSelect.value = currentLang;
+    langSelect.addEventListener("change", function(e){
+      applyLanguage(e.target.value);
+      updateTimer();
+      updateDoubleTimer();
+      updateTodayPanel();
+      renderTriple();
+      renderDouble();
+      renderDayExclusive();
+      renderSaveList();
+      renderCasualTasks();
+      loadPrep();
+      renderAllShortEvents();
+      updateLongEventTicker();
+      loadTicker();
+      applyMaintenanceUI(true);
+    });
+  }
+  applyLanguage(currentLang);
+});
 
 function getMaintenanceState(){
 
@@ -1988,20 +2510,20 @@ if(s.duration > 0){
     let h = Math.floor(remaining/1000/60/60);
     let m = Math.floor((remaining/1000/60)%60);
 
-    timerEl.innerText = "Ends in " + h + "h " + m + "m";
+    timerEl.innerText = tr("endsIn") + " " + h + "h " + m + "m";
   }
 
 }else{
-  timerEl.innerText = "Maintenance ongoing";
+  timerEl.innerText = tr("maintenanceOngoing");
 }
 }
   
-function applyMaintenanceUI(){
+function applyMaintenanceUI(forceRefresh = false){
 
 let state = getMaintenanceState();
 
 // 🔥 DO NOTHING if state hasn't changed
-if(state === currentMaintenanceState) return;
+if(!forceRefresh && state === currentMaintenanceState) return;
 
 currentMaintenanceState = state;
 
@@ -2021,7 +2543,7 @@ if(state === "emergency"){
     hunter.innerHTML = `
       <div style="text-align:center; padding:20px;">
         <div style="font-size:18px; margin-bottom:8px;">
-          🚧 Emergency Maintenance
+          ${tr("emergencyMaintenance")}
         </div>
         <div id="maintenanceMessage" style="color:#aaa; font-size:13px;"></div>
       </div>
@@ -2039,7 +2561,7 @@ if(state === "scheduled"){
     hunter.innerHTML = `
       <div style="text-align:center; padding:16px;">
         <div style="font-size:16px; margin-bottom:6px;">
-          🔧 Maintenance in progress
+          ${tr("scheduledMaintenance")}
         </div>
         <div id="maintenanceTimer" style="font-size:13px; color:#ccc; margin-bottom:6px;"></div>
         <div id="maintenanceMessage" style="font-size:12px; color:#aaa;"></div>
@@ -2113,7 +2635,7 @@ async function loadTicker(){
 try{
 
 let res = await fetch("data/announcement.json");
-let data = await res.json();
+let data = normalizeAnnouncementTranslations(await res.json());
 
 let ticker = document.getElementById("ticker");
 let text = document.querySelector(".tickerText");
@@ -2164,18 +2686,21 @@ isEmergency = true;
 }
 
 // 🔥 APPLY MESSAGE
+const emergencyMessage = getLocalizedText(data.message, "");
+const normalMessage = getLocalizedText(data.normalMessage, emergencyMessage);
+
 if(isEmergency){
 let msg = isEmergency
-  ? "🚨 " + data.message
-  : (data.normalMessage || data.message);
+  ? "🚨 " + emergencyMessage
+  : normalMessage;
 
 // 🔥 duplicate text (this removes gap)
 text.innerHTML = msg + " • " + msg;
 ticker.classList.add("emergency");
 }else{
 let msg = isEmergency
-  ? "🚨 " + data.message
-  : (data.normalMessage || data.message);
+  ? "🚨 " + emergencyMessage
+  : normalMessage;
 
 // 🔥 duplicate text (this removes gap)
 text.innerHTML = msg + " • " + msg;
@@ -2324,7 +2849,7 @@ function updateSpecialBar(){
   let e = data.event;
 
   // 🔹 TITLE + COLOR
-  titleEl.innerText = e.name;
+  titleEl.innerText = trEvent(e.name);
   titleEl.style.color = e.color || "#ffd54f";
 
   // 🔹 IMAGE
@@ -2339,17 +2864,17 @@ function updateSpecialBar(){
 
   // 🔥 STATE HANDLING
   if(data.state === "cooldown"){
-    label = "Next";
+    label = tr("next");
     remaining = data.start - now;
     timeRef = data.start;
   }
   else if(data.state === "alert"){
-    label = "Starts";
+    label = tr("starts");
     remaining = data.start - now;
     timeRef = data.start;
   }
   else{
-    label = "Ends";
+    label = tr("ends");
     remaining = data.end - now;
     timeRef = data.end;
   }
@@ -2465,7 +2990,7 @@ let imgSrc = "images/events/" + imgName + ".png";
 html += `
 <span class="${cls}">
 <img src="${imgSrc}">
-${e.name} • ${d}d ${h}h ${m}m
+${trEvent(e.name)} • ${d}d ${h}h ${m}m
 </span>
 `;
 
@@ -2515,11 +3040,14 @@ console.log("Tasks load error", e);
 async function loadPrep(){
 try{
 let res = await fetch("data/prep.json");
-prepData = await res.json();
+prepData = normalizePrepTranslations(await res.json());
 prepMap = {};
 
 prepData.forEach(p => {
-  prepMap[p.task] = p;
+  const key = getPrepTaskKey(p.task);
+  if(key){
+    prepMap[key] = p;
+  }
 });  
 
 console.log("Prep loaded:", prepData);
@@ -2590,14 +3118,17 @@ else if(t.categories && t.categories.includes("Exclusive")) type = "Exclusive";
 
 if(!p) return;
 
+const prepTaskLabel = getPrepTaskLabel(p.task, t.task);
+const prepComment = getLocalizedText(p.prepComment, "");
+
 // 🔥 only if prep required
 if(!(p.itemPrep || p.activityPrep)) return;
 
 html += `
 <div class="prepRow">
-  <div class="prepTitle">${t.task} (${type}) • ${timeStr} • ${countdown}</div>
+  <div class="prepTitle">${prepTaskLabel} (${type}) • ${timeStr} • ${countdown}</div>
   ${p.saveItemType ? `<div class="prepItem">Save: ${p.saveItemType}</div>` : ""}
-  ${p.prepComment ? `<div class="prepComment">${p.prepComment}</div>` : ""}
+  ${prepComment ? `<div class="prepComment">${prepComment}</div>` : ""}
 </div>
 `;
 
@@ -2819,7 +3350,7 @@ function renderTriple(){
     html += `
       <div class="row ${rowClass}">
         <span>${formatToLocalDay(state.time)}</span>
-        <span>${timeStr} — ${t.task}</span>
+        <span>${timeStr} — ${trTask(t.task)}</span>
       </div>
     `;
   });
@@ -2888,7 +3419,7 @@ function renderDouble(){
     html += `
       <div class="row ${rowClass}">
         <span>${formatToLocalDay(state.time)}</span>
-        <span>${timeStr} — ${t.task}</span>
+        <span>${timeStr} — ${trTask(t.task)}</span>
       </div>
     `;
   });
@@ -2959,7 +3490,7 @@ row.className = "row";
 
 row.innerHTML = `
 <span>${days.join(" | ")}</span>
-<span>${task}</span>
+<span>${trTask(task)}</span>
 `;
 
 container.appendChild(row);
@@ -3022,7 +3553,7 @@ row.className = "row";
 row.style.borderBottom = "none";
 
 row.innerHTML = `
-<span>${task}</span>
+<span>${trTask(task)}</span>
 <span>${days.join(" | ")}</span>
 `;
 
@@ -3086,7 +3617,7 @@ row.className = "row";
 
 row.innerHTML = `
 <span>${days.join(" | ")}</span>
-<span>${task}</span>
+<span>${trTask(task)}</span>
 `;
 
 container.appendChild(row);
@@ -3207,15 +3738,15 @@ function updateTimer(){
 
   statusEl.innerHTML = `
   <span class="hunterStatus">
-    Triple Chain - <span class="state">${s.status}</span>
+    ${tr("tripleChain")} - <span class="state">${s.status === "ACTIVE" ? tr("active") : tr("upcoming")}</span>
   </span>
 `;
 
-taskEl.innerHTML = `<span class="hunterTask">${t.task}</span>`;
+taskEl.innerHTML = `<span class="hunterTask">${trTask(t.task)}</span>`;
 
 timeEl.innerHTML = `
   <span class="hunterTimerText" style="color:${s.status === "ACTIVE" ? "#ff6b6b" : "#4cff88"}">
-    ${s.status === "ACTIVE" ? "Ends in" : "Starts in"} ${timerStr}
+    ${s.status === "ACTIVE" ? tr("endsIn") : tr("startsIn")} ${timerStr}
   </span>
   •
   <span class="hunterClock">${formatToLocalTimeFromDate(start)}</span>
@@ -3283,15 +3814,15 @@ function updateDoubleTimer(){
 
   statusEl.innerHTML = `
   <span class="hunterStatus">
-    Double Chain - <span class="state">${s.status}</span>
+    ${tr("doubleChain")} - <span class="state">${s.status === "ACTIVE" ? tr("active") : tr("upcoming")}</span>
   </span>
 `;
 
-taskEl.innerHTML = `<span class="hunterTask">${t.task}</span>`;
+taskEl.innerHTML = `<span class="hunterTask">${trTask(t.task)}</span>`;
 
 timeEl.innerHTML = `
   <span class="hunterTimerText" style="color:${s.status === "ACTIVE" ? "#ff6b6b" : "#4cff88"}">
-    ${s.status === "ACTIVE" ? "Ends in" : "Starts in"} ${timerStr}
+    ${s.status === "ACTIVE" ? tr("endsIn") : tr("startsIn")} ${timerStr}
   </span>
   •
   <span class="hunterClock">${formatToLocalTimeFromDate(start)}</span>
@@ -3419,20 +3950,20 @@ function updateTodayPanel(){
 
       let status =
         s.status === "ACTIVE"
-          ? `${icon} ACTIVE • <span style="color:#ff6b6b">${timerStr}</span>`
+          ? `${icon} ${tr("active")} • <span style="color:#ff6b6b">${timerStr}</span>`
           : s.status === "UPCOMING"
-          ? `⭐ Upcoming • <span style="color:#4cff88">${timerStr}</span>`
-          : `✔ Completed`;
+          ? `⭐ ${tr("upcoming")} • <span style="color:#4cff88">${timerStr}</span>`
+          : `✔ ${tr("completed")}`;
 
       html += `
         <div class="row ${
           s.status === "ACTIVE" ? "activeRow" :
           s.status === "UPCOMING" ? "nextRow" : ""
         }">
-          <span><b>◆ ${label}</b> - ${t.task}</span>
+          <span><b>◆ ${label}</b> - ${trTask(t.task)}</span>
           <span>${status}</span>
         </div>
-        ${p?.tip ? `<div class="prepTip saveItem">${p.tip}</div>` : ""}
+        ${getLocalizedText(p?.tip, "") ? `<div class="prepTip saveItem">${getLocalizedText(p.tip, "")}</div>` : ""}
       `;
     });
   }
@@ -3453,19 +3984,19 @@ function updateTodayPanel(){
   let todayExclusive = prepare(dayExclusive);
 
   if(todayTriple.length){
-    renderList(todayTriple, "Triple", "⚡");
+    renderList(todayTriple, tr("tripleChain"), "⚡");
   }
 
   if(todayDouble.length){
-    renderList(todayDouble, "Double", "🔹");
+    renderList(todayDouble, tr("doubleChain"), "🔹");
   }
 
   if(todayExclusive.length){
-    renderList(todayExclusive, "Exclusive", "📌");
+    renderList(todayExclusive, tr("dayExclusive"), "📌");
   }
 
   if(!todayTriple.length && !todayDouble.length && !todayExclusive.length){
-    html = "<small>No priority tasks today</small>";
+    html = `<small>${tr("noPriorityTasks")}</small>`;
   }
 
   container.innerHTML = html;
@@ -3564,26 +4095,26 @@ let timeRef = start;
             
       if(now < alertStart){
         state = "cooldown";
-        label = "Next";
+        label = tr("next");
         remaining = start - now;
         timeRef = start;
       }
       else if(now < start){
         state = "alert";
-        label = "Starts";
+        label = tr("starts");
         remaining = start - now;
         timeRef = start;
       }
       else if(now <= end){
         state = "active";
-        label = "Ends";
+        label = tr("ends");
         remaining = end - now;
         timeRef = end;
       }
       else{
         state = "cooldown";
         start = new Date(start.getTime() + repeatMs);
-        label = "Next";
+        label = tr("next");
         remaining = start - now;
         timeRef = start;
       }
@@ -3623,7 +4154,7 @@ if(state === "active") timerColor = "#ff6b6b";  // red
       return `
         <div class="seItem ${state} ${extraClass}">
           <div class="seName" style="color:${e.color}">
-            ${e.name}
+            ${trEvent(e.name)}
           </div>
 
           <div class="seCircle">
@@ -3692,18 +4223,18 @@ document.addEventListener("DOMContentLoaded", function(){
   root.innerHTML = `
     <div id="supportWidget">
 
-      <div id="supportBtn">Support Me</div>
+      <div id="supportBtn">${tr("supportMe")}</div>
 
       <div id="supportPanel">
-        <div class="supportTitle">Support me with a top up 🎁</div>
+        <div class="supportTitle">${tr("supportTitle")}</div>
 
         <div class="supportId" id="gameIdText">
-          20700149
+          #####
         </div>
 
-        <button id="copyBtn">Copy ID</button>
+        <button id="copyBtn">${tr("copyId")}</button>
 
-        <div id="copyMsg">Copied!</div>
+        <div id="copyMsg">${tr("copied")}</div>
       </div>
 
     </div>
@@ -3723,6 +4254,7 @@ document.addEventListener("DOMContentLoaded", function(){
   copyBtn.onclick = (e)=>{
     e.stopPropagation();
     navigator.clipboard.writeText(idText.innerText);
+    msg.innerText = tr("copied");
     msg.style.display = "block";
     setTimeout(()=> msg.style.display = "none", 1200);
   };
@@ -3730,6 +4262,8 @@ document.addEventListener("DOMContentLoaded", function(){
   document.addEventListener("click", ()=>{
     panel.style.display = "none";
   });
+
+  applyLanguage(currentLang);
 
 }); 
 
@@ -3833,7 +4367,7 @@ document.addEventListener("DOMContentLoaded", function(){
     let text = buildTodayTasksText();
 
     if(!text){
-      btn.innerText = "No Data";
+      btn.innerText = tr("noData");
       setTimeout(()=> btn.innerText = "R4", 1500);
       return;
     }
@@ -3850,7 +4384,7 @@ document.addEventListener("DOMContentLoaded", function(){
       textarea.remove();
     }
 
-    btn.innerText = "Copied!";
+    btn.innerText = tr("copied");
     setTimeout(()=> btn.innerText = "R4", 1500);
 
   });
@@ -3863,7 +4397,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
  <div id="maintenanceScreen" style="display:none; position:fixed; inset:0; background:#000; z-index:9999; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
 
-  <div style="font-size:20px; margin-bottom:10px;">
+  <div id="maintenanceTitle" style="font-size:20px; margin-bottom:10px;">
     🚧 Maintenance in Progress
   </div>
 
@@ -3873,7 +4407,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 </div> 
   
-<button id="copyTodayBtn" class="r4Btn">R4</button>
+<!--<button id="copyTodayBtn" class="r4Btn">R4</button>-->
   
 </body>
 </html>
