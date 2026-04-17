@@ -1,7 +1,7 @@
 [
   {
     "name": "Arcadian Conquest",
-    "active": true,
+    "active": false,
     "color": "#fed342",
     "alertStart": "2026-04-04T09:30:00Z",
     "start": "2026-04-04T10:00:00Z",
