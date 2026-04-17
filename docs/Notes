@@ -1,0 +1,168 @@
+🧠 1. PROJECT STRUCTURE (minimal but powerful)
+
+Don’t keep everything as one evolving blob.
+
+/project
+  ├── index.html
+  ├── /data
+  ├── /images
+  ├── /docs
+  │     ├── ARCHITECTURE.md
+  │     ├── CHANGELOG.md
+  │     └── DEBUG_NOTES.md
+  └── /core (optional later)
+📌 2. ARCHITECTURE.md (this replaces “memory”)
+
+You already built this mentally — now we lock it.
+
+Paste this (adapt as needed):
+
+Writing
+Task System Architecture
+Data Flow
+
+rawData (tasks.json)
+→ buildTaskMap()
+→ classifyTasks()
+→ getTaskState() ← CORE ENGINE
+→ render (lists)
+→ timers (hunter)
+→ intervals (refresh)
+
+Key Rules
+d (day) is static from JSON
+utc is source of time truth
+ALL scheduling depends on getTaskState()
+State Engine
+
+getTaskState(task):
+
+Converts (day + time) → Date
+Determines ACTIVE / UPCOMING
+Drives ordering
+Secondary Systems
+updateTodayPanel → independent logic (today-only)
+Prep system → reads getTaskState()
+Timers → read getTaskState()
+Known Critical Point
+
+⚠ Week alignment logic in getTaskState()
+→ previously caused Thu/Fri glitch
+
+Rendering Order
+
+status → priority → time
+
+🧾 3. CHANGELOG.md (this is your “persistent memory”)
+
+Every fix goes here. Short, surgical.
+
+Writing
+Changelog
+v1.0 (Baseline - Live Site)
+Core system implemented
+Bug: Thu/Fri misalignment (mid-week)
+v1.1
+Fixed week alignment logic in getTaskState()
+v1.2 (future)
+Improve ordering logic (priority vs time)
+Unify Today panel with main state engine
+🧪 4. DEBUG_NOTES.md (this saves HOURS later)
+
+Document bugs like this one.
+
+Writing
+Debug Notes
+Bug: Thu/Fri Task Misalignment
+Symptoms
+Appears mid-week (Wednesday)
+Tasks shift incorrectly (Thu/Fri)
+Self-corrects next day
+Root Cause
+getTaskState() used:
+diff = targetDay - currentUTCDay
+if(diff < 0) diff += 7
+This forced incorrect week selection
+Lesson
+Week selection must consider cycle, not just day diff
+⚙️ 5. CODE DISCIPLINE (VERY IMPORTANT)
+
+You only need 3 rules:
+
+Rule 1 — Single Source of Truth
+ONLY getTaskState() is allowed to build Dates
+
+No other function should do:
+
+new Date(...) + task logic
+Rule 2 — No Hidden Time Logic
+
+If any function does:
+
+setUTCHours / setUTCDate
+
+👉 It must be documented.
+
+Rule 3 — Separate Concerns
+State → getTaskState
+Display → render
+Formatting → format functions
+
+Never mix.
+
+🧪 6. BUILT-IN TEST MODE (you already started this)
+
+Keep this permanently:
+
+function getNow(){
+  return window.TEST_NOW ? new Date(window.TEST_NOW) : new Date();
+}
+How you use it:
+window.TEST_NOW = "2026-04-08T14:00:00Z";
+renderDouble();
+renderTriple();
+
+👉 This alone prevents 90% of future bugs.
+
+🔁 7. STANDARD DEBUG FLOW (follow this every time)
+
+When something breaks:
+
+1. Check getTaskState() output
+2. Log:
+   - targetDay
+   - currentUTCDay
+   - base
+3. Compare expected vs actual
+4. THEN look at render
+
+NOT the other way around.
+
+🎯 8. WHEN YOU COME BACK NEXT TIME
+
+Instead of re-explaining everything, you just say:
+
+Working on v1.1
+Here is getTaskState()
+Issue: ordering broken for double chain
+
+That’s enough.
+
+🚀 9. OPTIONAL (HIGHLY RECOMMENDED)
+
+If you’re open to it later:
+
+Move getTaskState() into its own file
+Add small test cases (even console logs)
+💬 Final Reality Check
+
+What you wanted:
+
+"AI remembers everything forever"
+
+What you now have:
+
+✔ A system that never forgets
+✔ Faster debugging
+✔ No repeated analysis
+✔ Clean upgrades
