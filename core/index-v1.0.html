@@ -1,0 +1,3879 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P41P2Y6L3F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-P41P2Y6L3F');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiles Survive Alliance Planner</title>
+  
+<style>
+  
+/* 🔥 Ticker container */
+#ticker{
+width:100%;
+overflow:hidden;
+white-space:nowrap;
+background:#111;
+border-bottom:1px solid #333;
+font-size:13px;
+z-index:999;
+}
+
+/* scrolling text top ticker*/
+.tickerText{
+  display:inline-block;
+  padding:6px 0;
+  white-space:nowrap;
+  animation: scrollTicker 18s linear infinite;   /* 🔥 slower */
+}
+
+/* animation */
+@keyframes scrollTicker{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+/* 🚨 emergency mode */
+#ticker.emergency{
+background:linear-gradient(90deg,#3a0000,#1a0000);
+color:#ff4d4d;
+border-bottom:1px solid #ff4d4d;
+box-shadow:0 0 12px rgba(255,0,0,0.7);
+}
+
+/* faster scroll */
+#ticker.emergency .tickerText{
+animation-duration:6s;
+}
+
+/* 🔥 add pulse effect (NEW) */
+#ticker.emergency{
+animation: emergencyPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes emergencyPulse{
+0%{box-shadow:0 0 6px rgba(255,0,0,0.4);}
+50%{box-shadow:0 0 18px rgba(255,0,0,1);}
+100%{box-shadow:0 0 6px rgba(255,0,0,0.4);}
+}
+
+/* highlight helper (keep this) */
+.highlight{
+color:#4fc3f7;
+font-weight:bold;
+}
+
+#eventTicker{
+width:100%;
+overflow:hidden;
+white-space:nowrap;
+background:#0f0f0f;
+font-size:13px;          /* slightly bigger text */
+border-bottom:1px solid #222;
+display:flex;              /* NEW */
+align-items:center;        /* vertical center */
+height:32px;               /* controlled height */
+}
+
+/* scrolling text bottom ticker*/  
+.eventScroll{
+  display:inline-flex;          /* 🔥 key change */
+  white-space:nowrap;
+  animation: scrollTicker 20s linear infinite;  /* slower */
+}
+
+.scrollInner{
+  display:inline-flex;
+}  
+
+  
+.eventItem{
+margin-right:50px;      /* was 40px */
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.eventItem img{
+width:24px;          /* was 18px */
+height:24px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.eventUrgent img{
+box-shadow:0 0 0 2px rgba(255,80,80,0.9),
+           0 0 10px rgba(255,0,0,0.8);
+animation: urgentPulse 1.5s infinite;
+}
+
+@keyframes urgentPulse{
+0%{ box-shadow:0 0 0 2px rgba(255,80,80,0.6), 0 0 6px rgba(255,0,0,0.4); }
+50%{ box-shadow:0 0 0 3px rgba(255,80,80,1), 0 0 14px rgba(255,0,0,0.9); }
+100%{ box-shadow:0 0 0 2px rgba(255,80,80,0.6), 0 0 6px rgba(255,0,0,0.4); }
+}
+
+.eventUrgent{
+color:#ff4d4d;
+}  
+ 
+body{
+background:#0b0b0b;
+color:white;
+font-family:system-ui;
+margin:0;
+padding:12px;
+}
+
+body::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:
+linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+url('tiles-bg.jpg') center top/cover no-repeat;
+
+z-index:-1;
+}
+  
+h1{
+text-align:center;
+color:#ffd54a;
+margin-bottom:6px;
+font-size:26px;
+}
+
+.subtitle{
+text-align:center;
+font-size:13px;
+opacity:.7;
+margin-bottom:16px;
+}
+
+.card{
+  background:#151515;
+  border-radius:10px;
+  padding:8px;
+  margin-top:6px;   /* tighter */
+}
+
+.card h2{
+  margin:0 0 4px 0;   /* tighter than before */
+  font-size:15px;
+}
+
+.triple{border-left:5px solid gold;}
+.double{border-left:5px solid #4da6ff;}
+.save{border-left:5px solid #4dff88;}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:2px 0;   /* tighter */
+  border-bottom:1px solid #1a1a1a;
+  gap:4px;
+}
+
+#todayPanel .row{
+  padding:4px 0;
+  font-size:12px;   /* slightly smaller */
+} 
+  
+.row:last-child{
+border-bottom:none;
+}
+
+.row span:first-child{
+min-width:45px;
+}
+
+.row span:last-child{
+text-align:right;
+flex:1;
+color:#ffd54a;
+font-size:13px;   /* uniform text */
+white-space:nowrap;
+}
+
+.timer{
+text-align:center;
+font-size:14px;   /* smaller */
+color:#4da6ff;
+margin-top:4px;
+}
+
+button{
+margin-top:10px;
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#ffd54a;
+color:black;
+font-weight:bold;
+}
+
+.hunterRow{
+display:flex;
+gap:8px;
+margin-top:14px;
+}
+  
+.hunterRow .card{
+flex:1;
+padding:10px;
+}
+
+.hunterRow b{
+font-size:14px;
+}
+
+.hunterRow .timer{
+font-size:18px;
+}
+  
+.hunterRow .card{
+flex:1;
+}
+
+.hunterTriple{
+border-left:6px solid #ffd700;
+background:#1c1a10;
+}
+
+.hunterTriple b{
+color:#ffd700;
+}
+
+.hunterDouble{
+border-left:6px solid #4da6ff;
+background:#141922;
+}
+
+.hunterDouble b{
+color:#6fb6ff;
+}  
+
+.ghoulionCard{
+display:none;  
+border-left:6px solid #ff5c5c;
+background:#1b1111;
+padding:8px 10px;  
+}
+
+.ghoulionRow{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.ghoulionIcon{
+width:50px;
+height:50px;
+border-radius:50%;
+}
+
+.ghoulionTitle{
+font-size:16px;
+color:#ff6a6a;
+}
+
+.ghoulionTimer{
+font-size:18px;
+color:#ffd54a;
+margin-top:4px;
+}
+
+.activeBanner{
+background:#ffd700;
+color:black;
+text-align:center;
+font-weight:bold;
+padding:10px;
+border-radius:10px;
+margin-bottom:12px;
+display:none;
+font-size:16px;
+
+box-shadow:0 0 10px rgba(255,215,0,.6),
+           0 0 20px rgba(255,215,0,.4);
+
+animation: bannerPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes bannerPulse{
+
+0%{
+box-shadow:0 0 8px rgba(255,215,0,.5),
+           0 0 14px rgba(255,215,0,.35);
+}
+
+50%{
+box-shadow:0 0 18px rgba(255,215,0,.9),
+           0 0 28px rgba(255,215,0,.6);
+}
+
+100%{
+box-shadow:0 0 8px rgba(255,215,0,.5),
+           0 0 14px rgba(255,215,0,.35);
+}
+
+}
+
+@keyframes emblemGlow{
+0%{
+filter: drop-shadow(0 0 6px rgba(255,215,0,.45))
+        drop-shadow(0 0 10px rgba(77,166,255,.35));
+}
+
+50%{
+filter: drop-shadow(0 0 14px rgba(255,215,0,.75))
+        drop-shadow(0 0 22px rgba(77,166,255,.55));
+}
+
+100%{
+filter: drop-shadow(0 0 6px rgba(255,215,0,.45))
+        drop-shadow(0 0 10px rgba(77,166,255,.35));
+}
+}
+
+.allianceLogo{
+margin:0;
+height:80px;
+width:80px;              /* ADD THIS */
+object-fit:contain;
+display:block;  
+z-index:2;  
+animation: emblemGlow 3.5s infinite ease-in-out;
+}
+
+.leaderImg{
+height:65px;
+width:65px;
+object-fit:contain;
+display:block;
+
+/* 🔥 keep square shape */
+border-radius:4px;
+
+/* 🔥 soft square glow */
+box-shadow:
+0 0 2px rgba(255,200,0,0.9),
+0 0 8px rgba(255,160,0,0.6),
+0 0 18px rgba(255,100,0,0.35);
+
+/* 🔥 subtle pulse */
+animation: leaderGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes leaderGlow{
+0%{
+box-shadow:
+0 0 6px rgba(255,140,0,0.3),
+0 0 12px rgba(255,120,0,0.25);
+}
+50%{
+box-shadow:
+0 0 14px rgba(255,180,0,0.7),
+0 0 26px rgba(255,100,0,0.5);
+}
+100%{
+box-shadow:
+0 0 6px rgba(255,140,0,0.3),
+0 0 12px rgba(255,120,0,0.25);
+}
+}  
+
+.todayRow{
+background:transparent;
+border-left:3px solid #ffd700;
+border-radius:4px;
+}
+
+.appContainer{
+max-width:480px;
+margin:auto;
+background:rgba(0,0,0,0.65);
+backdrop-filter: blur(4px);  
+padding:10px;
+border-radius:12px;
+}
+
+@media (max-width: 600px){
+.appContainer{
+max-width:100%;
+}
+
+.hunterBox .timer{
+font-size:14px;
+line-height:1.2;
+margin-top:0;
+}
+} 
+  
+.hunterUnified{
+position:relative;  
+padding:8px;
+background:#0d0d0d;
+border:1px solid #333;
+box-shadow:0 0 10px rgba(0,0,0,0.6);
+}
+
+.hunterTitle{
+text-align:center;
+font-weight:bold;
+margin-bottom:6px;
+border-bottom:1px solid #333;
+padding-bottom:6px;
+}
+
+.hunterStack{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.hunterBox{
+flex:1;
+padding:4px 4px;
+text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+}
+
+.hunterBox b{
+font-size:16px;
+}
+  
+.hunterBox .timer b{
+white-space: nowrap;
+}
+    
+.hunterLabel{
+font-size:13px;
+opacity:.8;
+margin-bottom:1px;
+text-align:center;
+}
+
+  
+.tripleBox .hunterLabel{
+color:#ffd700;
+}
+
+.doubleBox .hunterLabel{
+color:##9FF9FD;
+}
+
+.eventIcon{
+width:20px;
+height:20px;
+border-radius:50%;
+object-fit:cover;
+margin-right:3px;
+vertical-align:middle;
+}  
+  
+@media (max-width: 600px){
+
+body{
+padding:0; /* reduce outer spacing */
+}
+
+.appContainer{
+padding:8px; /* tighter inside */
+border-radius:0;
+}
+  
+}  
+
+@media (max-width: 600px){
+.row{
+padding:2px 0;
+}
+}  
+  
+:root{
+--title:18px;
+--section:15px;
+--main:14px;
+--meta:12px;
+}
+
+.smallText{
+font-size:var(--meta);
+opacity:.75;
+}  
+ 
+.huntLine{
+font-size:14px;
+opacity:.9;
+}  
+
+.headerBar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+height:80px;
+}
+  
+.headerText{
+text-align:center;
+flex:1;
+}
+  
+.headerText h1{
+margin:0;
+font-size:20px;
+}
+
+.headerText .subtitle{
+margin:0;
+font-size:12px;
+opacity:.7;
+}
+
+.ghoulionBar{
+display:flex;
+align-items:center;
+justify-content:center;
+
+gap:4px;
+padding:4px 6px;  
+
+background:rgba(20,20,20,0.85);
+border-radius:8px;
+
+font-size:12px;
+color:#e0e0e0;
+  
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;  
+  
+box-shadow:0 0 6px rgba(255,215,0,0.25);
+}
+
+.ghTimer{
+opacity:.7;
+font-size:12px;
+}  
+
+.ghoulionBar.alert{
+color:#ffd54a;
+box-shadow:0 0 10px rgba(255,215,0,0.6);
+font-weight:500;  
+}  
+#timer, #doubleTimer{
+line-height:1.0;
+}
+
+#timer small, #doubleTimer small{
+font-size:12px;
+}
+
+.ghoulionBar.active{
+position:relative;
+overflow:hidden;
+
+/* 🔥 stronger base */
+background:linear-gradient(90deg,#3a1f00,#5a2f00,#3a1f00);
+color:#ffcc66;
+
+/* 🔥 MUCH stronger glow */
+box-shadow:
+0 0 12px rgba(255,140,0,0.8),
+0 0 24px rgba(255,100,0,0.6),
+0 0 36px rgba(255,80,0,0.4);
+
+/* 🔥 subtle scale (makes it pop) */
+transform:scale(1.02);
+}
+
+/* 🔥 moving flame glow */
+.ghoulionBar.active::before{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:200%;
+height:100%;
+/* 🔥 lighter overlay */
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,120,0,0.25),
+rgba(255,200,0,0.2),
+transparent
+);
+
+animation: flameMove 10s linear infinite;
+pointer-events:none;
+}
+
+/* 🔥 pulse heat effect */
+.ghoulionBar.active{
+animation: heatPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes flameMove{
+0%{left:-100%;}
+100%{left:100%;}
+}
+
+@keyframes heatPulse{
+0%{box-shadow:0 0 6px rgba(255,140,0,0.4);}
+50%{box-shadow:0 0 16px rgba(255,140,0,0.9);}
+100%{box-shadow:0 0 6px rgba(255,140,0,0.4);}
+}
+
+.prepRow{
+margin-bottom:6px;
+padding:4px 2px;
+border-bottom:1px solid #1a1a1a;
+}
+
+.prepTitle{
+font-weight:600;
+font-size:13px;
+margin-bottom:2px;
+}
+
+.prepItem{
+font-size:11px;
+color:#4fc3f7;
+margin-bottom:2px;
+}
+
+.prepComment{
+font-size:11px;
+opacity:0.7;
+line-height:1.3;
+}
+
+.prepTip{
+font-size:11px;
+opacity:0.8;              /* match prepComment */
+margin-top:2px;           /* slightly tighter for Today panel */
+line-height:1.4;
+white-space:pre-line;
+}
+
+.noBorder{
+border-bottom:none !important;
+}  
+
+.saveItem{
+border-bottom:1px solid #222;
+padding-bottom:6px;
+margin-bottom:6px;
+}
+
+.leaderBox{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+width:80px;
+height:80px;   /* 🔥 IMPORTANT */
+text-align:center;
+}
+
+.leaderName{
+font-size:11px;
+text-align:center;
+margin-top:2px;
+line-height:1.1;
+}
+
+.leaderTitle{
+font-size:10px;
+opacity:.6;
+line-height:1;
+}
+
+.logoBox{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+width:80px;
+height:80px;
+}
+
+/* 🟡 NEXT — soft yellow (very subtle) */
+.nextRow{
+  background: rgba(253, 208, 23, 0.2);
+  border-left: none;
+}
+
+/* 🟢 ACTIVE — soft light green (subtle, transparent) */
+.activeRow{
+  background: rgba(116, 193, 83, 0.2);   /* softer + no gradient */
+  border-left: none;                     /* remove vertical line */
+}
+
+/* 🔹 Task Hunter Typography Control */
+
+/* "Triple Chain - ACTIVE" */
+.hunterStatus{
+  font-size: 13px;   /* 🔧 adjust this */
+}
+
+/* ONLY the word ACTIVE */
+.hunterStatus .state{
+  font-size: 13px;   /* 🔧 adjust this */
+}
+
+/* "Hero Frags" */
+.hunterTask{
+  font-size: 15px;   /* 🔧 adjust this */
+  font-weight: bold;
+}
+
+/* "Ends in 02:06" */
+.hunterTimerText{
+  font-size: 11px;   /* 🔧 adjust this */
+}
+
+/* "05:30 PM" */
+.hunterClock{
+  font-size: 13px;   /* 🔧 adjust this */
+}  
+
+/* 🔽 Collapsible Arrow Icon */
+.collapseArrow{
+  display:inline-block;
+  width:13px;
+  height:13px;
+  margin-left:6px;
+  position:relative;
+}
+
+/* double chevron */
+.collapseArrow::before,
+.collapseArrow::after{
+  content:"";
+  position:absolute;
+  left:4px;
+  width:8px;
+  height:8px;
+  border-right:2px solid #ffd54a;
+  border-bottom:2px solid #ffd54a;
+  transform: rotate(45deg);
+  opacity:0.9;
+}
+
+/* second arrow (lower) */
+.collapseArrow::after{
+  top:6px;
+}
+
+/* first arrow (upper) */
+.collapseArrow::before{
+  top:0;
+}
+
+/* 🔼 rotated when expanded */
+.collapseArrow.up{
+  transform: rotate(180deg);
+}
+
+/* ✨ glow animation ONLY on arrow */
+.collapseArrow{
+  animation: arrowGlow 2s ease-in-out infinite;
+}
+
+@keyframes arrowGlow{
+  0%{
+    filter: drop-shadow(0 0 2px rgba(255,213,74,0.4));
+  }
+  50%{
+    filter: drop-shadow(0 0 8px rgba(255,213,74,0.9));
+  }
+  100%{
+    filter: drop-shadow(0 0 2px rgba(255,213,74,0.4));
+  }
+}  
+
+/* 🔽 Bottom Collapse Bar */
+.collapseBar{
+  text-align:center;
+  margin-top:2px;
+  padding:2px 0;
+  background:rgba(255,255,255,0.04);
+  border-radius:3px;
+  cursor:pointer;
+}
+
+/* arrow already exists */
+.collapseBar .collapseArrow{
+  margin:0 auto;
+}
+
+@media (max-width: 600px){
+
+  .card{
+    padding:6px;
+    margin-top:5px;
+  }
+
+  .collapseBar{
+    padding:3px;
+  }
+
+  .row{
+    padding:2px 0;
+  }
+
+}
+
+.feedbackBar{
+  text-align:center;
+  font-size:12px;
+  color:#aaa;
+  margin-top:8px;
+  opacity:0.9;
+}
+
+/* text */
+.feedbackText{
+  margin-bottom:4px;
+}
+
+/* image */
+.feedbackAvatar{
+  display:block;
+  margin:0 auto;
+  height:24px;        /* slightly bigger for focus */
+  width:auto;
+  border-radius:4px;  /* slight rounding */
+  object-fit:contain;
+}
+
+/* name */
+.feedbackName{
+  margin-top:4px;
+  font-weight:600;
+  color:#ccc;
+}
+
+.shortEventRow{
+  font-size: 12px;
+  color: #ccc;
+}
+
+.shortLabel{
+  font-weight: 600;
+  color: #fff;
+}
+
+.shortTimer{
+  color: #aaa;
+}
+
+.shortRange{
+  color: #888;
+}
+
+.shortDot{
+  margin: 0 6px;
+  color: #555;
+}
+
+.ghoulionBar.cooldown {
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+/* 🔹 Short Events Row (NEW) */
+
+#shortEventsRow{
+  display:flex;
+  justify-content:center;   /* 🔥 key change */
+  align-items:center;
+  gap:12px;
+  flex-wrap:nowrap;
+}
+
+.seItem{
+  text-align:center;
+  flex:0 0 auto;
+  width:72px;   /* 🔥 slightly smaller for mobile fit */
+}
+
+.seName{
+  font-size:11px;
+  font-weight:600;
+  margin-bottom:4px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.seCircle{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  margin:0 auto 4px;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,0.15);
+  position:relative;
+}
+
+.seCircle img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.seTimer{
+  font-size:11px;
+  margin-bottom:2px;
+  white-space:nowrap;   /* 🔥 critical */
+}
+
+.seTime{
+  font-size:10px;
+  color:#aaa;
+}  
+
+@media (max-width: 600px){
+
+  #shortEventsRow{
+    gap:8px;   /* tighter spacing */
+  }
+
+  .seItem{
+    width:65px;
+  }
+
+  .seCircle{
+    width:42px;
+    height:42px;
+  }
+
+  .seName{
+    font-size:10px;
+  }
+
+  .seTimer{
+    font-size:10px;
+  }
+
+  .seTime{
+    font-size:9px;
+  }
+
+}  
+
+@media (min-width: 601px){
+
+  #shortEventsRow{
+    justify-content:center;
+    gap:18px;
+  }
+
+  .seItem{
+    width:95px;
+  }
+
+  .seCircle{
+    width:58px;
+    height:58px;
+  }
+
+  .seName{
+    font-size:12px;
+  }
+
+  .seTimer{
+    font-size:12px;
+  }
+
+  .seTime{
+    font-size:11px;
+  }
+
+}
+
+/* ⚪ COOLDOWN */
+
+.seItem.cooldown{
+  opacity:0.85;
+}
+  
+/* 🟢 ALERT STATE */
+
+.seItem.alert .seCircle{
+  box-shadow:
+    0 0 6px rgba(80,255,120,0.6),
+    0 0 14px rgba(80,255,120,0.8),
+    0 0 22px rgba(80,255,120,0.6);
+
+  animation: alertPulse 2s ease-in-out infinite;
+}
+
+@keyframes alertPulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.06); }
+}
+  
+/* 🔥 ACTIVE FIRE EFFECT */
+
+.seItem.active .seCircle{
+  position:relative;
+
+  /* base glow */
+  box-shadow:
+    0 0 6px rgba(255,80,0,0.4),
+    0 0 14px rgba(255,60,0,0.5);
+
+  animation: creatureBreath 2.4s ease-in-out infinite;
+}
+
+
+
+/* 🔥 soft heat aura */
+.seItem.active .seCircle::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,120,0,0.25) 0%,
+    rgba(255,80,0,0.15) 40%,
+    transparent 70%
+  );
+
+  animation: heatWave 2.4s ease-in-out infinite;
+  pointer-events:none;
+}
+
+/* 🦇 TEMP TEST — Terror bats */
+/* 🦇 Terror bats FIXED */
+/* 🦇 Terror bats — CLEAN VERSION */
+/* 🦇 Terror bats FIXED */
+.seItem.terrorActive .seCircle::before{
+  content:"";
+  position:absolute;
+
+  top:-30%;
+  left:-30%;
+  width:160%;
+  height:160%;
+
+  transform-origin:center;
+
+  background:url("images/effects/bats.gif") center/contain no-repeat;
+
+  pointer-events:none;
+
+  /* 🔥 removes white dominance */
+  mix-blend-mode:multiply;
+
+  opacity:0.75;
+
+  z-index:3;
+
+  animation: batBurst 1.2s cubic-bezier(.2,.8,.2,1);
+}
+  
+.seItem.active .seCircle img{
+  animation: microShift 3s ease-in-out infinite;
+}
+
+@keyframes batBurst{
+  0%{
+    transform: scale(0.4) translateY(10%);
+    opacity:0;
+  }
+
+  30%{
+    transform: scale(1.3) translateY(-5%);
+    opacity:1;
+  }
+
+  60%{
+    transform: scale(1.1) translateY(0%);
+    opacity:0.9;
+  }
+
+  100%{
+    transform: scale(1) translateY(0%);
+    opacity:0.85;
+  }
+}
+/* 🔥 Ghoulion fire animation */
+.seItem.ghoulionActive .seCircle{
+  position:relative;
+  overflow:hidden;
+}
+
+.seItem.ghoulionActive .seCircle::before{
+  content:"";
+  position:absolute;
+
+  top:-35%;
+  left:-35%;
+  width:170%;
+  height:170%;
+
+  background:url("images/effects/lion.gif") center/contain no-repeat;
+
+  pointer-events:none;
+  z-index:3;
+
+  transform-origin:center;
+
+  animation: ghoulionCycle 8s infinite;
+}  
+
+.seItem.ghoulionActive .seCircle::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+
+  box-shadow:0 0 20px rgba(255,80,0,0.6);
+
+  pointer-events:none;
+  z-index:2;
+
+  animation: ghoulionGlow 2s ease-in-out infinite;
+}
+
+@keyframes ghoulionGlow{
+  0%,100%{ opacity:0.5; }
+  50%{ opacity:1; }
+}  
+  
+@keyframes ghoulionCycle{
+
+  /* idle */
+  0%, 85%, 100%{
+    transform: scale(1);
+    opacity:0.85;
+  }
+
+  /* start roar */
+  88%{
+    transform: scale(1.4) rotate(3deg);
+    opacity:1;
+  }
+
+  /* peak */
+  92%{
+    transform: scale(1.2) rotate(-2deg);
+    opacity:1;
+  }
+
+  /* settle */
+  96%{
+    transform: scale(1);
+    opacity:0.85;
+  }
+}  
+/* ⚔️ Arcadian charge effect */
+.seItem.arcadianActive .seCircle{
+  position:relative;
+  overflow:hidden;
+}
+
+.seItem.arcadianActive .seCircle::before{
+  content:"";
+  position:absolute;
+
+  top:-30%;
+  left:-30%;
+  width:160%;
+  height:160%;
+
+  background:url("images/effects/arcadian.gif") center/contain no-repeat;
+
+  pointer-events:none;
+  z-index:3;
+
+  transform-origin:center;
+
+  animation: arcadianCharge 10s infinite;
+}  
+
+@keyframes arcadianCharge{
+
+  /* idle */
+  0%, 85%, 100%{
+    transform: scale(1);
+    opacity:0.85;
+  }
+
+  /* charge forward */
+  88%{
+    transform: scale(1.2) translateY(-2%);
+    opacity:1;
+  }
+
+  /* impact */
+  91%{
+    transform: scale(1.3) translateY(1%);
+  }
+
+  /* recoil */
+  94%{
+    transform: scale(1.1);
+  }
+
+  /* settle */
+  97%{
+    transform: scale(1);
+  }
+}
+
+.seItem.arcadianActive .seCircle::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+
+  background:radial-gradient(circle, rgba(200,230,255,0.5), transparent 70%);
+
+  opacity:0;
+
+  pointer-events:none;
+  z-index:2;
+
+  animation: arcadianFlash 10s infinite;
+}
+
+@keyframes arcadianFlash{
+  0%, 85%, 100%{ opacity:0; }
+
+  90%{ opacity:0.6; }
+
+  93%{ opacity:0; }
+}
+
+/* 🌊 Reservoir Raid — glass ripple */
+.seItem.rrActive .seCircle{
+  position:relative;
+  overflow:hidden;
+}
+
+.seItem.rrActive .seCircle::before{
+  content:"";
+  position:absolute;
+
+  inset:-20%;
+
+  background:url("images/effects/rr.gif") center/cover no-repeat;
+
+  pointer-events:none;
+  z-index:2;
+
+  /* 🔥 KEY: very subtle */
+  opacity:0.8;
+
+  /* glass feel */
+  mix-blend-mode:overlay;
+
+  animation: rrRipple 8s linear infinite;
+}
+
+@keyframes rrRipple{
+  0%{
+    transform: scale(1) translateY(0);
+  }
+
+  50%{
+    transform: scale(1.05) translateY(-2%);
+  }
+
+  100%{
+    transform: scale(1) translateY(0);
+  }
+}
+
+.seItem.rrActive .seCircle::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+
+  background:radial-gradient(
+    circle at 30% 30%,
+    rgba(255,255,255,0.25),
+    transparent 60%
+  );
+
+  opacity:0.4;
+
+  pointer-events:none;
+  z-index:3;
+
+  animation: rrShimmer 6s ease-in-out infinite;
+}
+
+@keyframes rrShimmer{
+  0%,100%{ opacity:0.2; }
+  50%{ opacity:0.5; }
+}
+  
+@keyframes microShift{
+  0%{ transform:translateX(0); }
+  50%{ transform:translateX(1px); }
+  100%{ transform:translateX(0); }
+}  
+  
+/* 🫁 breathing motion */
+@keyframes creatureBreath{
+  0%{
+    transform:scale(1);
+  }
+  40%{
+    transform:scale(1.06);
+  }
+  60%{
+    transform:scale(1.08);
+  }
+  100%{
+    transform:scale(1);
+  }
+}
+
+/* 🌡 heat shimmer */
+@keyframes heatWave{
+  0%{
+    opacity:0.4;
+    transform:scale(1);
+  }
+  50%{
+    opacity:0.8;
+    transform:scale(1.15);
+  }
+  100%{
+    opacity:0.4;
+    transform:scale(1);
+  }
+}
+  
+@keyframes flameFlicker{
+  0%{opacity:0.5;}
+  50%{opacity:1;}
+  100%{opacity:0.5;}
+}
+
+  
+/* 🔹 Floating Support Widget */
+
+#globalFloatingRoot{
+  position:fixed;
+  inset:0;
+  z-index:2147483647;
+  pointer-events:none;
+}
+
+#supportWidget{
+  position:absolute;
+  bottom:20px;
+  right:16px;
+  pointer-events:auto;
+}
+  
+#supportPanel{
+  position:absolute;
+  bottom:45px;   /* 🔥 ensures it opens ABOVE button */
+  right:0;
+
+  margin-top:0;
+  width:180px;
+  background:#111;
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 6px 20px rgba(0,0,0,0.6);
+
+  display:none;
+}  
+
+ 
+  
+/* 🔥 3D Button */
+#supportBtn{
+  background:linear-gradient(145deg,#2f2f2f,#151515);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:13px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-tap-highlight-color: transparent;
+
+  /* 🔥 3D depth */
+  box-shadow:
+    0 6px 0 #0d0d0d,           /* bottom edge */
+    0 8px 14px rgba(0,0,0,0.6);
+
+  transition:all 0.12s ease;
+  animation:supportBreath 6s ease-in-out infinite;
+}
+
+@keyframes supportBreath{
+  0%,100%{
+    box-shadow:
+      0 6px 0 #0d0d0d,
+      0 8px 14px rgba(0,0,0,0.6);
+  }
+
+  50%{
+    box-shadow:
+      0 6px 0 #0d0d0d,
+      0 8px 18px rgba(255,215,0,0.25);
+  }
+
+  /* ⚡ sync with electric pulse */
+  88%{
+    box-shadow:
+      0 6px 0 #0d0d0d,
+      0 8px 22px rgba(0,255,255,0.6);
+  }
+
+  92%{
+    box-shadow:
+      0 6px 0 #0d0d0d,
+      0 8px 14px rgba(0,0,0,0.6);
+  }
+}
+  
+@keyframes supportPulse{
+  0%,100%{ box-shadow:0 4px 10px rgba(0,0,0,0.6); }
+  50%{ box-shadow:0 4px 14px rgba(255,215,0,0.4); }
+}  
+
+#supportBtn:active{
+  transform:translateY(4px);
+
+  box-shadow:
+    0 2px 0 #0d0d0d,
+    0 4px 8px rgba(0,0,0,0.5);
+}
+  
+#supportBtn:hover{
+  transform:translateY(-2px);
+}
+
+#supportBtn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:10px;
+  animation:electricPulse 5s infinite;
+
+  background:linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(0,255,255,0.9) 48%,
+    rgba(0,255,255,0.4) 52%,
+    transparent 60%
+  );
+
+  opacity:0;
+  transform:translateX(-120%);
+}
+
+@keyframes electricPulse{
+
+  /* idle */
+  0%, 85%, 100%{
+    opacity:0;
+    transform:translateX(-120%);
+  }
+
+  /* ⚡ quick strike */
+  88%{
+    opacity:1;
+    transform:translateX(20%);
+  }
+
+  90%{
+    opacity:0.6;
+    transform:translateX(60%);
+  }
+
+  92%{
+    opacity:0;
+    transform:translateX(120%);
+  }
+}  
+  
+#supportBtn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:10px;
+
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.08),
+    transparent
+  );
+
+  opacity:0;
+  transition:0.3s;
+}
+
+#supportBtn:hover::after{
+  opacity:1;
+}
+  
+/* 🔹 Panel */
+
+
+/* Title */
+.supportTitle{
+  font-size:12px;
+  color:#bbb;
+  margin-bottom:8px;
+}
+
+/* ID */
+.supportId{
+  font-size:14px;
+  font-weight:600;
+  color:#4cff88;
+  margin-bottom:8px;
+  letter-spacing:1px;
+}
+
+/* Button */
+#copyBtn{
+  width:100%;
+  padding:6px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+
+  background:#222;
+  color:#fff;
+
+  transition:0.2s;
+}
+
+#copyBtn:hover{
+  background:#333;
+}
+
+/* Copy message */
+#copyMsg{
+  margin-top:6px;
+  font-size:11px;
+  color:#4cff88;
+  display:none;
+}
+
+/* 🔥 Terror bats overlay (FIXED) */
+.seItem.terrorActive .seCircle{
+  position:relative;
+  /* keep clipping intact */
+  overflow:hidden;
+}
+
+/* 🦇 Bats layer */
+.seItem.terrorActive .seCircle::after{
+  content:"";
+  position:absolute;
+  inset:0;                 /* stay INSIDE circle */
+  border-radius:50%;       /* 🔥 keeps it circular */
+
+  background:url("images/effects/bats.gif") center/cover no-repeat;
+
+  pointer-events:none;
+
+  mix-blend-mode:screen;
+  opacity:0.85;
+
+  animation:batFade 1s ease;
+}
+
+/* soft appearance */
+@keyframes batFade{
+  from{
+    opacity:0;
+    transform:scale(0.9);
+  }
+  to{
+    opacity:0.85;
+    transform:scale(1);
+  }
+}
+
+#copyTodayBtn.r4Btn{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;   /* 👈 left aligned */
+
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  z-index: 9999;
+
+  box-shadow: 
+    0 4px 10px rgba(0,0,0,0.5),
+    inset 0 0 8px rgba(255,255,255,0.05);
+}
+
+/* subtle hover */
+#copyTodayBtn.r4Btn:hover{
+  transform: scale(1.08);
+}
+
+/* click feedback */
+#copyTodayBtn.r4Btn:active{
+  transform: scale(0.95);
+}
+
+/* 🔥 Goldmine Banner (Header Overlay) */
+
+.goldmineBanner{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:bold;
+  font-size:13px;
+  color:#ffd700;
+
+  /* 🔥 GOLD GIF BACKGROUND */
+  background:
+    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+    url("images/ui/gold.gif");
+
+  background-size: cover;
+  background-position: center;
+
+  text-shadow:
+    0 0 6px rgba(255,215,0,0.8),
+    0 0 14px rgba(255,180,0,0.6);
+
+  opacity:0;
+  pointer-events:none;
+
+  z-index:5;
+
+  transform:translateY(-100%);
+  transition:all 0.3s ease;
+}
+
+/* ACTIVE STATE */
+.goldmineBanner.active{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* subtle pulse */
+@keyframes goldPulse{
+  0% { text-shadow: 0 0 6px rgba(255,215,0,0.5); }
+  50% { text-shadow: 0 0 14px rgba(255,215,0,1); }
+  100% { text-shadow: 0 0 6px rgba(255,215,0,0.5); }
+}
+
+.goldmineBanner.active{
+  animation: goldPulse 2s infinite;
+}
+
+@keyframes goldShake{
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-1px); }
+  50% { transform: translateY(1px); }
+  75% { transform: translateY(-1px); }
+  100% { transform: translateY(0); }
+}
+
+.goldmineBanner.active{
+  animation: goldPulse 2s infinite, goldShake 1.5s infinite;
+}  
+  
+</style>
+</head>
+
+<body>
+<div id="globalFloatingRoot"></div>
+  
+<div class="appContainer"> 
+
+<div id="ticker">
+  <div class="tickerText"></div>
+</div>
+
+<div id="eventTicker"></div>
+  
+<div class="headerBar">
+
+<div class="logoBox">
+  <img src="chillin_logo.png" class="allianceLogo">
+</div>
+
+<div class="headerText">
+<h1>Tiles Survive</h1>
+<div class="subtitle">Alliance Event Planner</div>
+</div>
+
+<div class="leaderBox">
+  <img src="saphireJess.png" class="leaderImg">
+  <div class="leaderName">[CHI]SaphireJess</div>
+  <div class="leaderTitle">Alliance Leader</div>
+</div>
+
+</div>
+  
+<div id="activeBanner" class="activeBanner"></div>
+  
+<div class="card ghoulionCard">
+
+<div class="ghoulionRow">
+
+<img id="ghoulionImg" class="ghoulionIcon">
+
+<div>
+
+<b id="ghoulionTitle" class="ghoulionTitle">Ghoulion Pursuit</b>
+<div id="ghoulionTimer" class="ghoulionTimer"></div>
+
+</div>
+
+</div>
+
+</div>
+
+ <div class="card" id="shortEventsContainer">
+  <div id="shortEventsRow"></div>
+</div> 
+  
+<div style="position:relative">
+
+  <div id="goldmineBanner" class="goldmineBanner">
+    💰 Refresh Gold Mine!
+  </div>
+
+  <div id="taskHunter" class="card hunterUnified">
+
+<div class="hunterTitle">Task Hunter</div>
+
+<div class="hunterStack">
+
+<div class="hunterBox tripleBox">
+  <div class="hunterLabel" id="tripleLabel">Triple Chain</div>
+  <div class="timer" id="timer"></div>
+</div>
+
+<div class="hunterBox doubleBox">
+  <div class="hunterLabel" id="doubleLabel">Double Chain</div>
+  <div class="timer" id="doubleTimer"></div>
+</div>
+
+</div>
+  
+<div class="card">
+<h2>📅 Today</h2>
+<div id="todayPanel"></div>
+</div>
+
+<div id="prepPanel" class="card">
+<h2>🧠 Prep</h2>
+<div id="prepContent">Loading...</div>
+</div>
+  
+<div class="card triple">
+  <h2>◆ Triple Chain List</h2>
+  <div id="tripleList"></div>
+</div>
+
+<div class="card double">
+  <h2>◆ Double Chain List</h2>
+  <div id="doubleList"></div>
+</div>
+
+<div class="card save">
+<h2>◆ Day Exclusive</h2>
+<div id="dayExclusiveList"></div>
+</div>
+
+
+<div class="card save">
+<h2>◆ Save Resources</h2>
+<div id="saveList"></div>
+</div>
+
+<div class="card save">
+<h2>⚔️ Casual Tasks</h2>
+<div id="casualList"></div>
+
+</div>
+
+<div class="feedbackBar">
+  <div class="feedbackText">
+    For feedback, suggestions or bug reports contact:
+  </div>
+
+  <img src="psyknes.png" class="feedbackAvatar">
+
+  <div class="feedbackName">
+    [CHI]Pysknes
+  </div>
+</div>
+
+
+<script>
+
+  
+let maintenanceData = null;
+let maintenanceMessageIndex = 0;
+let maintenanceLastSwitch = 0;  
+let currentMaintenanceState = null;  
+
+function getMaintenanceState(){
+
+if(!maintenanceData) return "normal";
+
+let now = new Date();
+
+// 🔴 EMERGENCY
+if(maintenanceData.emergency?.main){
+  return "emergency";
+}
+
+// 🟡 SCHEDULED
+let s = maintenanceData.scheduled;
+if(!s || !s.main) return "normal";
+
+// 🔥 Find THIS WEEK'S scheduled start
+let start = new Date(now);
+
+// Move to this week's scheduled day
+let diff = s.day - now.getUTCDay();
+start.setUTCDate(now.getUTCDate() + diff);
+start.setUTCHours(s.hour, 0, 0, 0);
+
+// 🔥 If start is in future → move to last week's occurrence
+if(start > now){
+  start.setUTCDate(start.getUTCDate() - 7);
+}
+
+let duration = s.duration;
+
+// 🔥 INFINITE MODE (duration = 0)
+if(duration === 0){
+  return "scheduled";
+}
+
+// 🔥 NORMAL WINDOW (duration > 0)
+if(duration > 0){
+  let end = new Date(start.getTime() + duration * 60000);
+
+  if(now >= start && now <= end){
+    return "scheduled";
+  }
+}
+
+// 🔥 INFINITE MODE (duration = 0)
+if(duration === 0){
+  // Only stay active if we are in the SAME week cycle
+  let endOfDay = new Date(start);
+  endOfDay.setUTCHours(23, 59, 59, 999);
+
+  if(now >= start && now <= endOfDay){
+    return "scheduled";
+  }
+}
+
+return "normal";
+}
+
+function updateMaintenanceMessage(){
+
+let msgBox = document.getElementById("maintenanceMessage");
+if(!msgBox || !maintenanceData) return;
+
+let m = maintenanceData.messages;
+
+if(m.mode === "rotate" && m.rotate.length){
+
+  let now = Date.now();
+
+  // 🔥 FIRST TIME INIT (IMPORTANT FIX)
+  if(maintenanceLastSwitch === 0){
+    maintenanceLastSwitch = now;
+  }
+
+  // 🔁 ROTATE
+  if(now - maintenanceLastSwitch >= m.interval * 1000){
+    maintenanceMessageIndex = (maintenanceMessageIndex + 1) % m.rotate.length;
+    maintenanceLastSwitch = now;
+  }
+
+  msgBox.innerText = m.rotate[maintenanceMessageIndex];
+
+}else{
+  msgBox.innerText = m.static;
+}
+}
+
+function updateMaintenanceTimer(){
+
+let timerEl = document.getElementById("maintenanceTimer");
+if(!timerEl || !maintenanceData) return;
+
+let s = maintenanceData.scheduled;
+let now = new Date();
+
+let currentDay = now.getUTCDay();
+let diff = currentDay - s.day;
+
+let start = new Date(now);
+start.setUTCHours(s.hour,0,0,0);
+start.setUTCDate(now.getUTCDate() - diff);
+
+if(start > now){
+  start.setUTCDate(start.getUTCDate() - 7);
+}
+
+if(s.duration > 0){
+
+  let end = new Date(start.getTime() + s.duration * 60000);
+  let remaining = end - now;
+
+  if(remaining > 0){
+    let h = Math.floor(remaining/1000/60/60);
+    let m = Math.floor((remaining/1000/60)%60);
+
+    timerEl.innerText = "Ends in " + h + "h " + m + "m";
+  }
+
+}else{
+  timerEl.innerText = "Maintenance ongoing";
+}
+}
+  
+function applyMaintenanceUI(){
+
+let state = getMaintenanceState();
+
+// 🔥 DO NOTHING if state hasn't changed
+if(state === currentMaintenanceState) return;
+
+currentMaintenanceState = state;
+
+let hunter = document.getElementById("taskHunter");
+
+let hideIds = [
+  "tripleList",
+  "doubleList",
+  "todayPanel",
+  "prepContent"
+];
+
+// 🔴 EMERGENCY
+if(state === "emergency"){
+
+  if(hunter){
+    hunter.innerHTML = `
+      <div style="text-align:center; padding:20px;">
+        <div style="font-size:18px; margin-bottom:8px;">
+          🚧 Emergency Maintenance
+        </div>
+        <div id="maintenanceMessage" style="color:#aaa; font-size:13px;"></div>
+      </div>
+    `;
+  }
+
+  updateMaintenanceMessage();
+  return;
+}
+
+// 🟡 SCHEDULED
+if(state === "scheduled"){
+
+  if(hunter){
+    hunter.innerHTML = `
+      <div style="text-align:center; padding:16px;">
+        <div style="font-size:16px; margin-bottom:6px;">
+          🔧 Maintenance in progress
+        </div>
+        <div id="maintenanceTimer" style="font-size:13px; color:#ccc; margin-bottom:6px;"></div>
+        <div id="maintenanceMessage" style="font-size:12px; color:#aaa;"></div>
+      </div>
+    `;
+  }
+
+  updateMaintenanceMessage();
+  updateMaintenanceTimer();
+
+  hideIds.forEach(id=>{
+    let el = document.getElementById(id);
+    if(el) el.style.display = "none";
+  });
+
+  return;
+}
+
+// 🟢 NORMAL (RESTORE ONLY ONCE)
+if(state === "normal"){
+
+  // 🔥 DO NOT call initHunterUI()
+  // Let your existing system render naturally
+
+  hideIds.forEach(id=>{
+    let el = document.getElementById(id);
+    if(el) el.style.display = "";
+  });
+
+}
+}
+
+function getLocalDay(hourUTC, dayStr){
+
+if(hourUTC === "ALL" || hourUTC === undefined){
+return dayStr;   // 🔥 FIX
+}
+
+let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+let date = new Date();
+
+if(typeof hourUTC === "string" && hourUTC.includes(":")){
+hourUTC = Number(hourUTC.split(":")[0]);
+}else{
+hourUTC = Number(hourUTC);
+}
+
+date.setUTCHours(hourUTC,0,0,0);
+
+let targetDay = days.indexOf(dayStr);
+let diff = targetDay - date.getUTCDay();
+if(diff < 0) diff += 7;
+
+date.setUTCDate(date.getUTCDate() + diff);
+
+// 🔥 convert to LOCAL day
+return days[date.getDay()];
+}  
+  
+let rawData = [];
+  
+let prepData = [];
+let prepMap = {};  
+  
+let shortEvents = [];
+let longEvents = [];  
+  
+async function loadTicker(){
+
+try{
+
+let res = await fetch("data/announcement.json");
+let data = await res.json();
+
+let ticker = document.getElementById("ticker");
+let text = document.querySelector(".tickerText");
+
+if(!data.enabled){
+ticker.style.display = "none";
+return;
+}
+
+let now = new Date();
+
+// 🔥 DEFAULT STATES
+let isEmergency = false;
+
+// 🔥 CHECK TIMED EMERGENCY
+if(data.emergency && data.emergency.active){
+
+let start = data.emergency.startTime ? new Date(data.emergency.startTime) : null;
+let end = data.emergency.endTime ? new Date(data.emergency.endTime) : null;
+
+// cases:
+// 1. both start + end
+if(start && end){
+if(now >= start && now <= end){
+isEmergency = true;
+}
+}
+
+// 2. only end (active immediately until end)
+else if(!start && end){
+if(now <= end){
+isEmergency = true;
+}
+}
+
+// 3. only start (active after start indefinitely)
+else if(start && !end){
+if(now >= start){
+isEmergency = true;
+}
+}
+
+// 4. fallback (manual on)
+else{
+isEmergency = true;
+}
+
+}
+
+// 🔥 APPLY MESSAGE
+if(isEmergency){
+let msg = isEmergency
+  ? "🚨 " + data.message
+  : (data.normalMessage || data.message);
+
+// 🔥 duplicate text (this removes gap)
+text.innerHTML = msg + " • " + msg;
+ticker.classList.add("emergency");
+}else{
+let msg = isEmergency
+  ? "🚨 " + data.message
+  : (data.normalMessage || data.message);
+
+// 🔥 duplicate text (this removes gap)
+text.innerHTML = msg + " • " + msg;
+ticker.classList.remove("emergency");
+}
+
+}catch(e){
+console.log("Ticker load error", e);
+}
+
+}
+
+function formatHM(ms){
+  ms = Math.max(0, ms);
+
+  let totalSec = Math.floor(ms / 1000);
+  let h = Math.floor(totalSec / 3600);
+  let m = Math.floor((totalSec % 3600) / 60);
+
+  return `${h}h ${m}m`;
+}
+function formatTime12(date){
+  let h = date.getHours();
+  let m = date.getMinutes();
+
+  let ampm = h >= 12 ? "PM" : "AM";
+  h = h % 12;
+  h = h ? h : 12;
+
+  let mm = m < 10 ? "0" + m : m;
+
+  return `${h}:${mm} ${ampm}`;
+}  
+  
+async function loadSpecialEvents(){
+  try{
+
+    let [shortRes, longRes] = await Promise.all([
+      fetch("data/specialShort.json"),
+      fetch("data/specialLong.json")
+    ]);
+
+    shortEvents = await shortRes.json();
+    longEvents = await longRes.json();
+
+    console.log("Short events loaded:", shortEvents.length);
+    console.log("Long events loaded:", longEvents.length);
+
+  }catch(e){
+    console.log("Special events load error", e);
+  }
+}  
+
+function getActiveShortEvent(){
+
+  let now = new Date();
+
+  let activeOrAlert = [];
+  let cooldownList = [];
+
+  shortEvents.forEach(e => {
+
+    if(!e.active) return;
+
+    let baseAlert = new Date(e.alert_start || e.alertStart);
+    let baseStart = new Date(e.start);
+    let baseEnd = new Date(e.end);
+
+    let repeatMs = e.repeat > 0 ? e.repeat * 60 * 60 * 1000 : 0;
+
+    let cycles = 0;
+
+if(repeatMs > 0){
+  let diff = now - baseStart;
+
+  if(diff > 0){
+    cycles = Math.floor(diff / repeatMs);
+  }else{
+    cycles = 0; // 🔥 prevents backward cycle
+  }
+}
+
+    // 🔥 CURRENT cycle
+    let alertStart = new Date(baseAlert.getTime() + cycles * repeatMs);
+    let start = new Date(baseStart.getTime() + cycles * repeatMs);
+    let end = new Date(baseEnd.getTime() + cycles * repeatMs);
+
+    // 🔥 NEXT cycle
+    let nextStart = new Date(start.getTime() + repeatMs);
+
+    let state = "";
+
+    if(now < alertStart){
+      state = "cooldown";
+      start = nextStart;
+    }
+    else if(now < start){
+      state = "alert";
+    }
+    else if(now <= end){
+      state = "active";
+    }
+    else{
+      state = "cooldown";
+      start = nextStart;
+    }
+
+    let item = {
+      event: e,
+      state: state,
+      priority: e.priority || 999,
+      start: start,
+      end: end
+    };
+
+    if(state === "active" || state === "alert"){
+      activeOrAlert.push(item);
+    }else{
+      cooldownList.push(item);
+    }
+
+  });
+
+  let pool = activeOrAlert.length ? activeOrAlert : cooldownList;
+
+  if(pool.length === 0) return null;
+
+  pool.sort((a,b)=> a.priority - b.priority);
+
+  return pool[0];
+}
+  
+function updateSpecialBar(){
+
+  let data = getActiveShortEvent();
+
+  let timerEl = document.getElementById("ghoulionTimer");
+  let titleEl = document.getElementById("ghoulionTitle");
+  let imgEl = document.getElementById("ghoulionImg");
+
+  if(!data){
+    timerEl.innerHTML = "";
+    return;
+  }
+
+  let e = data.event;
+
+  // 🔹 TITLE + COLOR
+  titleEl.innerText = e.name;
+  titleEl.style.color = e.color || "#ffd54f";
+
+  // 🔹 IMAGE
+  let imgName = e.name.toLowerCase().replace(/\s+/g,"_");
+  imgEl.src = "images/events/" + imgName + ".png";
+
+  let now = new Date();
+
+  let label = "";
+  let remaining = 0;
+  let timeRef = null;
+
+  // 🔥 STATE HANDLING
+  if(data.state === "cooldown"){
+    label = "Next";
+    remaining = data.start - now;
+    timeRef = data.start;
+  }
+  else if(data.state === "alert"){
+    label = "Starts";
+    remaining = data.start - now;
+    timeRef = data.start;
+  }
+  else{
+    label = "Ends";
+    remaining = data.end - now;
+    timeRef = data.end;
+  }
+
+  // 🔥 prevent negative values
+  remaining = Math.max(0, remaining);
+
+  let h = Math.floor(remaining / 1000 / 60 / 60);
+  let m = Math.floor((remaining / 1000 / 60) % 60);
+
+  let localTime = timeRef.toLocaleTimeString([],{
+    hour:'2-digit',
+    minute:'2-digit',
+    hour12:true
+  });
+
+  // 🔥 CLASS HANDLING (FIXED)
+  let barClass = "ghoulionBar";
+
+  if(data.state === "active") barClass += " active";
+  else if(data.state === "alert") barClass += " alert";
+  else barClass += " cooldown";
+
+  // 🔥 COLOR HANDLING (FIXED)
+  let color = "#bbb"; // cooldown default
+
+  if(data.state === "active") color = "#ff6b6b";     // red
+  else if(data.state === "alert") color = "#4cff88"; // green
+
+  // 🔥 FINAL RENDER (OLD STYLE PRESERVED)
+  timerEl.innerHTML =
+    `<div class="${barClass}">
+      <span style="color:${color}">
+        ${label} ${h}h ${m}m
+      </span>
+      <span class="ghTimer"> • ${localTime}</span>
+    </div>`;
+}
+
+function updateLongEventTicker(){
+
+let now = new Date();
+
+let events = longEvents
+  .filter(e => e.active)
+  .sort((a,b) => new Date(a.end) - new Date(b.end))
+  .map(e => {
+
+    let end = new Date(e.end);
+
+    return {
+      ...e,
+      end
+    };
+
+  });
+
+events = events.filter(e => e.end > now);
+
+  
+// 🔥 PRIORITY LOGIC
+//let activeEvents = longEvents.filter(e => e.isActive);
+
+//if(activeEvents.length){
+
+// 🔥 SORT active events by priority
+//activeEvents.sort((a,b)=> (a.priority || 999) - (b.priority || 999));
+
+// 🔥 TAKE ONLY TOP PRIORITY
+//longEvents = [activeEvents[0]];
+//}else{
+
+// 🔥 ONLY future events
+//let upcoming = longEvents.filter(e => {
+
+
+// 🔥 must not have already started
+//return e.start > now;
+
+//});
+
+// 🔥 SORT by nearest
+//upcoming.sort((a,b)=> a.start.getTime() - b.start.getTime());
+
+// 🔥 TAKE ONLY THE NEXT ONE
+//longEvents = upcoming.length ? [upcoming[0]] : [];
+
+//}
+
+let html = "";
+
+events.forEach(e => {
+
+if(!e.end) return;  
+
+let end = new Date(e.end);
+
+if(now > end) return;
+
+let diff = end - now;
+
+let d = Math.floor(diff / (1000*60*60*24));
+let h = Math.floor((diff / (1000*60*60)) % 24);
+let m = Math.floor((diff / (1000*60)) % 60);
+
+let urgent = diff <= 24*60*60*1000;
+
+let cls = urgent ? "eventItem eventUrgent" : "eventItem";
+
+let imgName = e.name.toLowerCase().replace(/\s+/g,"_");
+let imgSrc = "images/events/" + imgName + ".png";
+
+html += `
+<span class="${cls}">
+<img src="${imgSrc}">
+${e.name} • ${d}d ${h}h ${m}m
+</span>
+`;
+
+});
+
+document.getElementById("eventTicker").innerHTML =
+'<div class="eventScroll"><div class="scrollInner">' + html + html + '</div></div>';
+
+updateGoldmineBanner();  
+}    
+
+async function loadMaintenance(){
+
+try{
+let res = await fetch("data/maintenance.json?v=" + Date.now());
+maintenanceData = await res.json();
+}catch(e){
+console.log("Maintenance load error", e);
+}
+}
+  
+async function loadTasks(){
+try{
+let res = await fetch("data/tasks.json");
+let data = await res.json();
+
+rawData = data.map(e => ({
+  d: e.d,
+  task: e.t,
+  event: e.e,
+  category: e.category,
+  utc: e.utc,
+
+  duration: e.duration,
+  priority: e.priority,
+
+  dayExclusive: e.category === "Exclusive"
+}));
+loadPrep();   // 🔥 force reload after tasks ready
+console.log("Tasks loaded:", rawData);  
+  
+}catch(e){
+console.log("Tasks load error", e);
+}
+}
+
+async function loadPrep(){
+try{
+let res = await fetch("data/prep.json");
+prepData = await res.json();
+prepMap = {};
+
+prepData.forEach(p => {
+  prepMap[p.task] = p;
+});  
+
+console.log("Prep loaded:", prepData);
+
+let html = "";
+
+// 🔥 get next day
+let now = new Date();
+let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let tomorrowUTC = new Date();
+tomorrowUTC.setUTCDate(tomorrowUTC.getUTCDate() + 1);
+
+let nextDay = days[tomorrowUTC.getUTCDay()];
+
+// 🔥 WAIT until tasks are ready
+if(!rawData || rawData.length === 0){
+  console.log("Prep skipped: tasks not ready");
+  return;
+}  
+  
+let {triple, double, dayExclusive} = getTasks();
+
+// 🔥 collect next day tasks
+let nextDayTasks = [...triple, ...double, ...dayExclusive]
+  .filter(t => {
+    return t.d === nextDay;   // 🔥 ONLY tomorrow
+  });
+
+nextDayTasks
+.sort((a,b)=>{
+
+  let sa = getTaskState(a);
+  let sb = getTaskState(b);
+
+  if(!sa && !sb) return 0;
+  if(!sa) return 1;
+  if(!sb) return -1;
+
+  return sa.time - sb.time;
+})
+.forEach(t => {
+
+let p = prepMap[t.task];
+
+let state = getTaskState(t);
+if(!state) return;
+
+let nextTime = state.time;
+
+let now = new Date();
+let diff = nextTime - now;
+
+let h = Math.floor(diff/1000/60/60);
+let m = Math.floor((diff/1000/60)%60);
+
+let countdown = h + "h " + m + "m";
+
+// 🔥 time string
+let timeStr = formatToLocalTimeFromDate(nextTime);
+
+// 🔥 NEW — detect type
+let type = "";
+if(t.categories && t.categories.includes("Triple")) type = "Triple";
+else if(t.categories && t.categories.includes("Double")) type = "Double";
+else if(t.categories && t.categories.includes("Exclusive")) type = "Exclusive";
+
+// console.log("Checking:", t.task, "→", p);
+
+if(!p) return;
+
+// 🔥 only if prep required
+if(!(p.itemPrep || p.activityPrep)) return;
+
+html += `
+<div class="prepRow">
+  <div class="prepTitle">${t.task} (${type}) • ${timeStr} • ${countdown}</div>
+  ${p.saveItemType ? `<div class="prepItem">Save: ${p.saveItemType}</div>` : ""}
+  ${p.prepComment ? `<div class="prepComment">${p.prepComment}</div>` : ""}
+</div>
+`;
+
+});
+
+document.getElementById("prepContent").innerHTML = html || "No prep needed";
+  
+}catch(e){
+console.log("Prep load error", e);
+}
+}
+  
+function getTasks(){
+return classifyTasks();
+} 
+
+const eventIcons = {
+"Alliance Duel": "Alliance_Duel.PNG",
+"Power Play": "Power_Play.PNG",
+"Turbo Turtle": "Turbo_Turtle.PNG",
+
+"Ghoulion Pursuit": "ghoulion.png",
+"Reservoir Raid": "Reservoir_Raid.PNG",
+"Lost Frontier": "Lost_Frontier.PNG",
+
+"Leprechaun Event": "Leprechaun_Event.PNG",
+"Leprechaun Event Store": "Leprechaun_Event_Store.PNG",
+
+"Future Tycoon": "Future_Tycoon.PNG",
+"Underground Goldmine": "Underground_Goldmine.PNG",
+"Wasteland Album": "Wasteland_Album.PNG"
+};
+
+
+
+function buildTaskMap(){
+
+  let map = {};
+
+  rawData.forEach(e => {
+
+    let key = e.d + "|" + e.task;
+
+    if(!map[key]){
+      map[key] = {
+  d: e.d,
+  task: e.task,
+  times: [],
+  events: [],
+  categories: [],
+  duration: e.duration,
+  priority: e.priority
+};
+    }
+
+    map[key].times.push(e.utc);
+    map[key].events.push(e.event);
+    map[key].categories.push(e.category);
+
+  });
+
+  return Object.values(map);
+}
+
+function classifyTasks(){
+if(rawData.length){  
+if(window.debugMode){
+  console.log("RAW DATA SAMPLE:", rawData[0]);
+}
+}
+  let tasks = buildTaskMap();
+
+  let triple = [];
+  let double = [];
+  let dayExclusive = [];
+
+  tasks.forEach(t => {
+
+    if(t.categories.includes("Triple")){
+      triple.push(t);
+    }
+    else if(t.categories.includes("Double")){
+      double.push(t);
+    }
+
+    if(t.categories.includes("Exclusive")){
+      dayExclusive.push(t);
+    }
+
+  });
+
+  return {triple, double, dayExclusive};
+}
+
+function formatToLocalTimeFromDate(date){
+
+  if(!date) return "";
+
+  return date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+}
+
+function formatToLocalDay(date){
+  return date.toLocaleDateString('en-US', { weekday: 'short' });
+}
+  
+function getTaskState(task){
+
+  if(!task || !task.times || !task.times.length) return null;
+
+  let now = new Date();
+
+  let [h,m] = task.times[0].split(":").map(Number);
+
+  let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let targetDay = days.indexOf(task.d);
+
+// ✅ STEP 1: get current UTC day
+let currentUTCDay = now.getUTCDay();
+
+// ✅ STEP 2: compute day difference
+let diff = targetDay - currentUTCDay;
+if(diff < 0) diff += 7;
+
+// ✅ STEP 3: build base date in UTC ONLY
+let base = new Date(Date.UTC(
+  now.getUTCFullYear(),
+  now.getUTCMonth(),
+  now.getUTCDate() + diff,
+  h,
+  m,
+  0,
+  0
+));
+
+  let end = new Date(base.getTime() + task.duration * 60 * 60 * 1000);
+
+  if(now >= base && now <= end){
+    return { status: "ACTIVE", time: base };
+  }
+
+  if(now < base){
+    return { status: "UPCOMING", time: base };
+  }
+
+  let next = new Date(base);
+  next.setUTCDate(next.getUTCDate() + 7);
+
+  return { status: "UPCOMING", time: next };
+}
+
+let collapseState = {
+  triple: true,
+  double: true
+};
+
+function toggleList(type){
+
+  collapseState[type] = !collapseState[type];
+
+  // 🔥 NO header logic anymore
+
+  if(type === "triple") renderTriple();
+  if(type === "double") renderDouble();
+}
+  
+function renderTriple(){
+
+  let container = document.getElementById("tripleList");
+  if(!container) return;
+
+  let {triple} = getTasks();
+
+  let list = triple
+    .map(t => {
+      let state = getTaskState(t);
+      return state ? {task:t, state} : null;
+    })
+    .filter(x => x);
+
+  list.sort((a,b)=>{
+
+    if(a.state.status !== b.state.status){
+      return a.state.status === "ACTIVE" ? -1 : 1;
+    }
+
+    if(a.task.priority !== b.task.priority){
+      return a.task.priority - b.task.priority;
+    }
+
+    return a.state.time - b.state.time;
+  });
+
+  let nextUpcomingIndex = list.findIndex(x => x.state.status === "UPCOMING");
+
+  let limit = collapseState.triple ? 4 : list.length;
+
+  let html = "";
+
+  list.slice(0, limit).forEach((x, index) => {
+
+    let t = x.task;
+    let state = x.state;
+
+    let rowClass = "";
+
+    if(state.status === "ACTIVE"){
+      rowClass = "activeRow";
+    }
+    else if(index === nextUpcomingIndex){
+      rowClass = "nextRow";
+    }
+
+    let timeStr = formatToLocalTimeFromDate(state.time);
+
+    html += `
+      <div class="row ${rowClass}">
+        <span>${formatToLocalDay(state.time)}</span>
+        <span>${timeStr} — ${t.task}</span>
+      </div>
+    `;
+  });
+
+  // 🔽 ADD COLLAPSE BAR AT BOTTOM
+  html += `
+    <div class="collapseBar" onclick="toggleList('triple')">
+      <span class="collapseArrow ${collapseState.triple ? '' : 'up'}"></span>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+  
+function renderDouble(){
+
+  let container = document.getElementById("doubleList");
+  if(!container) return;
+
+  let {double} = getTasks();
+
+  let list = double
+    .map(t => {
+      let state = getTaskState(t);
+      return state ? {task:t, state} : null;
+    })
+    .filter(x => x);
+
+  list.sort((a,b)=>{
+
+    let order = {ACTIVE:0, UPCOMING:1, COMPLETED:2};
+
+    if(order[a.state.status] !== order[b.state.status]){
+      return order[a.state.status] - order[b.state.status];
+    }
+
+    if(a.task.priority !== b.task.priority){
+      return a.task.priority - b.task.priority;
+    }
+
+    return a.state.time - b.state.time;
+  });
+
+  let nextUpcomingIndex = list.findIndex(x => x.state.status === "UPCOMING");
+
+  let limit = collapseState.double ? 4 : list.length;
+
+  let html = "";
+
+  list.slice(0, limit).forEach((x, index) => {
+
+    let t = x.task;
+    let state = x.state;
+
+    let rowClass = "";
+
+    if(state.status === "ACTIVE"){
+      rowClass = "activeRow";
+    }
+    else if(index === nextUpcomingIndex){
+      rowClass = "nextRow";
+    }
+
+    let timeStr = formatToLocalTimeFromDate(state.time);
+
+    html += `
+      <div class="row ${rowClass}">
+        <span>${formatToLocalDay(state.time)}</span>
+        <span>${timeStr} — ${t.task}</span>
+      </div>
+    `;
+  });
+
+  html += `
+    <div class="collapseBar" onclick="toggleList('double')">
+      <span class="collapseArrow ${collapseState.double ? '' : 'up'}"></span>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+  
+function renderDayExclusive(){
+
+let {dayExclusive} = getTasks();
+
+let container = document.getElementById("dayExclusiveList");
+
+container.innerHTML = "";
+
+// 🔥 group by task name
+let map = {};
+
+dayExclusive.forEach(t => {
+
+if(!map[t.task]){
+map[t.task] = [];
+}
+
+map[t.task].push(t.d);
+
+});
+
+// 🔥 render grouped output
+Object.keys(map)
+.sort((a,b)=>{
+
+let order = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let todayIndex = new Date().getUTCDay();
+
+function getNextIndex(days){
+let indices = days.map(d => order.indexOf(d));
+
+// convert to "distance from today"
+let diffs = indices.map(i => (i - todayIndex + 7) % 7);
+
+// return nearest upcoming day
+return Math.min(...diffs);
+}
+
+let da = getNextIndex(map[a]);
+let db = getNextIndex(map[b]);
+
+return da - db;
+
+})
+.forEach(task => {
+
+let days = map[task];
+
+// sort days (Sun → Sat)
+let order = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+days.sort((a,b)=> order.indexOf(a) - order.indexOf(b));
+
+let row = document.createElement("div");
+row.className = "row";
+
+row.innerHTML = `
+<span>${days.join(" | ")}</span>
+<span>${task}</span>
+`;
+
+container.appendChild(row);
+
+});
+
+}
+
+function renderSaveList(){
+
+let {triple, double, dayExclusive} = getTasks();
+let container = document.getElementById("saveList");
+
+container.innerHTML = "";
+
+// 🔥 combine all tasks
+let allTasks = [...triple, ...double, ...dayExclusive];
+
+// 🔥 group by task
+let map = {};
+
+allTasks.forEach(t => {
+
+let p = prepMap[t.task];
+
+if(!p || !p.saveItemType) return;
+
+if(!map[t.task]){
+map[t.task] = {
+days: [],
+item: p.saveItemType
+};
+}
+
+map[t.task].days.push(t.d);
+
+});
+
+// 🔥 SORT (same smart logic as Day Exclusive)
+let order = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let todayIndex = new Date().getUTCDay();
+
+function getNextIndex(days){
+let indices = days.map(d => order.indexOf(d));
+let diffs = indices.map(i => (i - todayIndex + 7) % 7);
+return Math.min(...diffs);
+}
+
+Object.keys(map)
+.sort((a,b)=> getNextIndex(map[a].days) - getNextIndex(map[b].days))
+.forEach(task => {
+
+let days = map[task].days;
+
+// sort days nicely
+days.sort((a,b)=> order.indexOf(a) - order.indexOf(b));
+
+let row = document.createElement("div");
+row.className = "row";
+row.style.borderBottom = "none";
+
+row.innerHTML = `
+<span>${task}</span>
+<span>${days.join(" | ")}</span>
+`;
+
+container.appendChild(row);
+
+// 🔥 ADD SAVE ITEM BELOW (your requirement)
+let item = document.createElement("div");
+item.className = "prepComment saveItem";
+item.style.marginLeft = "6px";
+item.innerText = "Save: " + map[task].item;
+
+container.appendChild(item);
+
+});
+
+}  
+function renderCasualTasks(){
+
+let container = document.getElementById("casualList");
+container.innerHTML = "";
+
+// 🔥 USE RAW DATA (important)
+let singles = rawData.filter(e => 
+  e.category === "Casual"
+);
+
+// 🔥 group by task
+let map = {};
+
+singles.forEach(e => {
+
+if(!map[e.task]){
+  map[e.task] = [];
+}
+
+map[e.task].push(e.d);
+
+});
+
+// 🔥 SORT (same smart logic)
+let order = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let todayIndex = new Date().getUTCDay();
+
+function getNextIndex(days){
+let indices = days.map(d => order.indexOf(d));
+let diffs = indices.map(i => (i - todayIndex + 7) % 7);
+return Math.min(...diffs);
+}
+
+Object.keys(map)
+.sort((a,b)=> getNextIndex(map[a]) - getNextIndex(map[b]))
+.forEach(task => {
+
+let days = map[task];
+
+// sort days nicely
+days.sort((a,b)=> order.indexOf(a) - order.indexOf(b));
+
+let row = document.createElement("div");
+row.className = "row";
+
+row.innerHTML = `
+<span>${days.join(" | ")}</span>
+<span>${task}</span>
+`;
+
+container.appendChild(row);
+
+});
+
+}  
+function getTaskTiming(task){
+return {active:null, next:null};
+}
+
+
+
+function getDayCountdown(type){
+
+let now = new Date();
+
+let end = new Date();
+end.setUTCHours(24,0,0,0);
+
+let diff = end - now;
+
+let h = Math.floor(diff/1000/60/60);
+let m = Math.floor((diff/1000/60)%60);
+
+if(type === "end"){
+return `<span style="color:#ff6a6a">ends</span> in ${h}h ${m}m`;
+}
+
+return `<span style="color:#4dff88">starts</span> in ${h}h ${m}m`;
+
+}
+
+function initHunterUI(){
+
+  let triple = document.getElementById("timer");
+  let double = document.getElementById("doubleTimer");
+
+  if(triple){
+    triple.innerHTML = `
+      <div>
+        <div id="tripleStatus"></div>
+        <div><b id="tripleTask"></b></div>
+        <div id="tripleTime"></div>
+      </div>
+    `;
+  }
+
+  if(double){
+    double.innerHTML = `
+      <div>
+        <div id="doubleStatus"></div>
+        <div><b id="doubleTask"></b></div>
+        <div id="doubleTime"></div>
+      </div>
+    `;
+  }
+}
+  
+function updateTimer(){
+
+  let {triple} = getTasks();
+  let now = new Date();
+
+  let active = null;
+  let upcoming = [];
+
+  triple.forEach(t => {
+
+    let s = getTaskState(t);
+    if(!s) return;
+
+    if(s.status === "ACTIVE"){
+      if(!active || t.priority < active.task.priority){
+        active = {task:t, state:s};
+      }
+    }
+
+    if(s.status === "UPCOMING"){
+      upcoming.push({task:t, state:s});
+    }
+
+  });
+
+  let best = active;
+
+  if(!best && upcoming.length){
+    upcoming.sort((a,b)=>{
+      if(a.task.priority !== b.task.priority){
+        return a.task.priority - b.task.priority;
+      }
+      return a.state.time - b.state.time;
+    });
+    best = upcoming[0];
+  }
+
+  if(!best) return;
+
+  let t = best.task;
+  let s = best.state;
+
+  let start = s.time;
+  let end = new Date(start.getTime() + t.duration * 60 * 60 * 1000);
+
+  let diff = (s.status === "ACTIVE" ? end - now : start - now);
+
+  let mins = Math.floor(diff / 60000);
+  let hrs = Math.floor(mins / 60);
+  mins = mins % 60;
+
+  let timerStr = `${hrs}h ${mins}m`;
+
+  let statusEl = document.getElementById("tripleStatus");
+  let taskEl = document.getElementById("tripleTask");
+  let timeEl = document.getElementById("tripleTime");
+
+  if(!statusEl || !taskEl || !timeEl) return;
+
+  statusEl.innerHTML = `
+  <span class="hunterStatus">
+    Triple Chain - <span class="state">${s.status}</span>
+  </span>
+`;
+
+taskEl.innerHTML = `<span class="hunterTask">${t.task}</span>`;
+
+timeEl.innerHTML = `
+  <span class="hunterTimerText" style="color:${s.status === "ACTIVE" ? "#ff6b6b" : "#4cff88"}">
+    ${s.status === "ACTIVE" ? "Ends in" : "Starts in"} ${timerStr}
+  </span>
+  •
+  <span class="hunterClock">${formatToLocalTimeFromDate(start)}</span>
+`;
+}
+  
+function updateDoubleTimer(){
+
+  let {double} = getTasks();
+  let now = new Date();
+
+  let active = null;
+  let upcoming = [];
+
+  double.forEach(t => {
+
+    let s = getTaskState(t);
+    if(!s) return;
+
+    if(s.status === "ACTIVE"){
+      if(!active || t.priority < active.task.priority){
+        active = {task:t, state:s};
+      }
+    }
+
+    if(s.status === "UPCOMING"){
+      upcoming.push({task:t, state:s});
+    }
+
+  });
+
+  let best = active;
+
+  if(!best && upcoming.length){
+    upcoming.sort((a,b)=>{
+      if(a.task.priority !== b.task.priority){
+        return a.task.priority - b.task.priority;
+      }
+      return a.state.time - b.state.time;
+    });
+    best = upcoming[0];
+  }
+
+  if(!best) return;
+
+  let t = best.task;
+  let s = best.state;
+
+  let start = s.time;
+  let end = new Date(start.getTime() + t.duration * 60 * 60 * 1000);
+
+  let diff = (s.status === "ACTIVE" ? end - now : start - now);
+
+  let mins = Math.floor(diff / 60000);
+  let hrs = Math.floor(mins / 60);
+  mins = mins % 60;
+
+  let timerStr = `${hrs}h ${mins}m`;
+
+  let statusEl = document.getElementById("doubleStatus");
+  let taskEl = document.getElementById("doubleTask");
+  let timeEl = document.getElementById("doubleTime");
+
+  if(!statusEl || !taskEl || !timeEl) return;
+
+  statusEl.innerHTML = `
+  <span class="hunterStatus">
+    Double Chain - <span class="state">${s.status}</span>
+  </span>
+`;
+
+taskEl.innerHTML = `<span class="hunterTask">${t.task}</span>`;
+
+timeEl.innerHTML = `
+  <span class="hunterTimerText" style="color:${s.status === "ACTIVE" ? "#ff6b6b" : "#4cff88"}">
+    ${s.status === "ACTIVE" ? "Ends in" : "Starts in"} ${timerStr}
+  </span>
+  •
+  <span class="hunterClock">${formatToLocalTimeFromDate(start)}</span>
+`;
+}
+
+// 🔹 LOAD ANNOUNCEMENT (can run independently)
+loadTicker();
+setInterval(loadTicker, 60000); // every 1 min
+
+// 🔹 LOAD ALL CORE DATA FIRST (CRITICAL FIX)
+Promise.all([
+  loadTasks(),
+  loadPrep(),
+  loadSpecialEvents(),
+  loadMaintenance()
+]).then(() => {
+
+  // 🔹 INITIAL RENDER (after data is ready)
+  
+  renderTriple();
+  renderDouble();
+  renderDayExclusive();
+  renderSaveList();
+  renderCasualTasks();
+
+  updateSpecialBar();
+  renderAllShortEvents();
+  updateLongEventTicker();
+  initHunterUI(); 
+  updateTimer();
+  updateDoubleTimer();
+  updateTodayPanel();
+
+  // 🔹 FAST LOOP (timers only)
+setInterval(function(){
+  updateTimer();
+  updateDoubleTimer();
+  applyMaintenanceUI();
+  updateGoldmineBanner();
+}, 1000);
+
+  // 🔹 LONG EVENT TICKER REFRESH (5 mins)
+  setInterval(updateLongEventTicker, 300000);
+
+  // 🔹 UI REFRESH (every 60s)
+  setInterval(function(){
+    updateSpecialBar();
+    renderAllShortEvents();
+    updateTodayPanel();
+    
+    renderTriple();
+    renderDouble();
+    renderDayExclusive();
+    renderSaveList();
+    renderCasualTasks();
+  }, 60000);
+
+});
+  
+function updateTodayPanel(){
+
+  let {triple, double, dayExclusive} = getTasks();
+
+  let container = document.getElementById("todayPanel");
+  let html = "";
+
+  let now = new Date();
+  let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  let today = days[now.getUTCDay()];
+
+  function sortTasks(a,b){
+
+    let order = {ACTIVE:0, UPCOMING:1, COMPLETED:2};
+
+    if(order[a.state.status] !== order[b.state.status]){
+      return order[a.state.status] - order[b.state.status];
+    }
+
+    if(a.task.priority !== b.task.priority){
+      return a.task.priority - b.task.priority;
+    }
+
+    return a.state.time - b.state.time;
+  }
+
+  function getTodayState(t){
+
+    let [h,m] = t.times[0].split(":").map(Number);
+
+    let base = new Date();
+    base.setUTCHours(h, m, 0, 0);
+
+    let end = new Date(base.getTime() + t.duration * 60 * 60 * 1000);
+
+    if(now >= base && now <= end){
+      return { status:"ACTIVE", time: base };
+    }
+
+    if(now < base){
+      return { status:"UPCOMING", time: base };
+    }
+
+    return { status:"COMPLETED", time: base };
+  }
+
+  function renderList(list, label, icon){
+
+    list.forEach(x => {
+
+      let t = x.task;
+      let s = x.state;
+      let p = prepMap[t.task];
+
+      let start = s.time;
+      let end = new Date(start.getTime() + t.duration * 60 * 60 * 1000);
+
+      let diff = (s.status === "ACTIVE" ? end - now : start - now);
+
+      let mins = Math.floor(diff / 60000);
+      let hrs = Math.floor(mins / 60);
+      mins = mins % 60;
+
+      let timerStr = `${hrs}h ${mins}m`;
+
+      let status =
+        s.status === "ACTIVE"
+          ? `${icon} ACTIVE • <span style="color:#ff6b6b">${timerStr}</span>`
+          : s.status === "UPCOMING"
+          ? `⭐ Upcoming • <span style="color:#4cff88">${timerStr}</span>`
+          : `✔ Completed`;
+
+      html += `
+        <div class="row ${
+          s.status === "ACTIVE" ? "activeRow" :
+          s.status === "UPCOMING" ? "nextRow" : ""
+        }">
+          <span><b>◆ ${label}</b> - ${t.task}</span>
+          <span>${status}</span>
+        </div>
+        ${p?.tip ? `<div class="prepTip saveItem">${p.tip}</div>` : ""}
+      `;
+    });
+  }
+
+  function prepare(list){
+
+    return list
+      .filter(t => t.d === today)
+      .map(t => {
+        let s = getTodayState(t);
+        return {task:t, state:s};
+      })
+      .sort(sortTasks);
+  }
+
+  let todayTriple = prepare(triple);
+  let todayDouble = prepare(double);
+  let todayExclusive = prepare(dayExclusive);
+
+  if(todayTriple.length){
+    renderList(todayTriple, "Triple", "⚡");
+  }
+
+  if(todayDouble.length){
+    renderList(todayDouble, "Double", "🔹");
+  }
+
+  if(todayExclusive.length){
+    renderList(todayExclusive, "Exclusive", "📌");
+  }
+
+  if(!todayTriple.length && !todayDouble.length && !todayExclusive.length){
+    html = "<small>No priority tasks today</small>";
+  }
+
+  container.innerHTML = html;
+}
+  
+updateTodayPanel();
+
+let goldBannerActive = false;
+
+function updateGoldmineBanner(){
+
+  if(!longEvents || !longEvents.length) return;
+
+  const banner = document.getElementById("goldmineBanner");
+  if(!banner) return;
+
+  let now = new Date();
+
+  let goldmine = longEvents.find(e => 
+    e.name && e.name.toLowerCase().includes("goldmine")
+  );
+
+  if(!goldmine){
+    banner.classList.remove("active");
+    goldBannerActive = false;   // 🔥 FIX
+    return;
+  }
+
+  let end = new Date(goldmine.end);
+  let isRunning = now < end;
+
+  let minute = now.getUTCMinutes();
+  let inWindow = minute < 5;   // 🔧 testing window
+
+  let shouldShow = isRunning && inWindow;
+
+  if(shouldShow && !goldBannerActive){
+    banner.classList.add("active");
+
+    
+    goldBannerActive = true;
+  }
+  else if(!shouldShow && goldBannerActive){
+    banner.classList.remove("active");
+    goldBannerActive = false;
+  }
+}
+  
+function renderAllShortEvents(){
+console.log("renderAllShortEvents RUNNING");
+  
+  let container = document.getElementById("shortEventsRow");
+  if(!container) return;
+
+  let now = new Date();
+
+  let html = shortEvents
+    .filter(e => e.active)
+    .map(e => {
+
+      let baseAlert = new Date(e.alert_start || e.alertStart);
+      let baseStart = new Date(e.start);
+      let baseEnd = new Date(e.end);
+
+      let repeatMs = e.repeat > 0 ? e.repeat * 60 * 60 * 1000 : 0;
+
+      let cycles = 0;
+      let diff = now - baseStart;
+
+      if(repeatMs > 0 && diff > 0){
+        cycles = Math.floor(diff / repeatMs);
+      }
+
+      let alertStart = new Date(baseAlert.getTime() + cycles * repeatMs);
+      let start = new Date(baseStart.getTime() + cycles * repeatMs);
+      let end = new Date(baseEnd.getTime() + cycles * repeatMs);
+
+      // 🔥 FIX: move to current/next cycle if already past
+if(now > end && repeatMs > 0){
+  alertStart = new Date(alertStart.getTime() + repeatMs);
+  start = new Date(start.getTime() + repeatMs);
+  end = new Date(end.getTime() + repeatMs);
+}
+
+console.log("SHORT EVENT DEBUG:", e.name, {
+  now: new Date(),
+  alertStart,
+  start,
+  end
+});
+      
+let state = "";
+let label = "";
+let remaining = 0;
+let timeRef = start;
+            
+      if(now < alertStart){
+        state = "cooldown";
+        label = "Next";
+        remaining = start - now;
+        timeRef = start;
+      }
+      else if(now < start){
+        state = "alert";
+        label = "Starts";
+        remaining = start - now;
+        timeRef = start;
+      }
+      else if(now <= end){
+        state = "active";
+        label = "Ends";
+        remaining = end - now;
+        timeRef = end;
+      }
+      else{
+        state = "cooldown";
+        start = new Date(start.getTime() + repeatMs);
+        label = "Next";
+        remaining = start - now;
+        timeRef = start;
+      }
+
+      let extraClass = "";
+if(e.name.toLowerCase().includes("terror") && state === "active"){
+  extraClass = "terrorActive";
+}
+if(e.name.toLowerCase().includes("ghoulion") && state === "active"){
+  extraClass = "ghoulionActive";
+}
+if(e.name.toLowerCase().includes("arcadian") && state === "active"){
+  extraClass = "arcadianActive";
+}      
+if(e.name.toLowerCase().includes("reservoir") && state === "active"){
+  extraClass = "rrActive";
+}
+      
+let timerColor = "#aaa";  // default cooldown
+
+if(state === "alert") timerColor = "#4cff88";   // green
+if(state === "active") timerColor = "#ff6b6b";  // red
+      
+      remaining = Math.max(0, remaining);
+
+      let h = Math.floor(remaining / 1000 / 60 / 60);
+      let m = Math.floor((remaining / 1000 / 60) % 60);
+
+      let localTime = timeRef.toLocaleTimeString([],{
+        hour:'2-digit',
+        minute:'2-digit',
+        hour12:true
+      });
+
+      let imgName = e.name.toLowerCase().replace(/\s+/g,"_");
+
+      return `
+        <div class="seItem ${state} ${extraClass}">
+          <div class="seName" style="color:${e.color}">
+            ${e.name}
+          </div>
+
+          <div class="seCircle">
+            <img src="images/events/${imgName}.png"
+                 onerror="this.src='images/events/default.png'">
+          </div>
+
+          <div class="seTimer">
+  <span style="color:${timerColor}">
+    ${label} ${h}h ${m}m
+  </span>
+</div>
+
+          <div class="seTime">
+            ${localTime}
+          </div>
+        </div>
+      `;
+
+    }).join("");
+
+  container.innerHTML = html;
+}  
+
+// 🔹 Toggle panel
+document.addEventListener("DOMContentLoaded", function(){
+
+  const btn = document.getElementById("supportBtn");
+  const panel = document.getElementById("supportPanel");
+  const copyBtn = document.getElementById("copyBtn");
+  const msg = document.getElementById("copyMsg");
+  const idText = document.getElementById("gameIdText");
+
+  if(!btn || !panel) return;
+
+  // toggle panel
+  btn.addEventListener("click", function(e){
+    e.stopPropagation();
+    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+  });
+
+  // copy ID
+  copyBtn.addEventListener("click", function(e){
+    e.stopPropagation();
+
+    navigator.clipboard.writeText(idText.innerText);
+
+    msg.style.display = "block";
+
+    setTimeout(()=>{
+      msg.style.display = "none";
+    },1500);
+  });
+
+  // close when clicking outside
+  document.addEventListener("click", function(){
+    panel.style.display = "none";
+  });
+
+});
+
+ document.addEventListener("DOMContentLoaded", function(){
+
+  const root = document.getElementById("globalFloatingRoot");
+
+  root.innerHTML = `
+    <div id="supportWidget">
+
+      <div id="supportBtn">Support Me</div>
+
+      <div id="supportPanel">
+        <div class="supportTitle">Support me with a top up 🎁</div>
+
+        <div class="supportId" id="gameIdText">
+          20700149
+        </div>
+
+        <button id="copyBtn">Copy ID</button>
+
+        <div id="copyMsg">Copied!</div>
+      </div>
+
+    </div>
+  `;
+
+  const btn = document.getElementById("supportBtn");
+  const panel = document.getElementById("supportPanel");
+  const copyBtn = document.getElementById("copyBtn");
+  const msg = document.getElementById("copyMsg");
+  const idText = document.getElementById("gameIdText");
+
+  btn.onclick = (e)=>{
+    e.stopPropagation();
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
+  };
+
+  copyBtn.onclick = (e)=>{
+    e.stopPropagation();
+    navigator.clipboard.writeText(idText.innerText);
+    msg.style.display = "block";
+    setTimeout(()=> msg.style.display = "none", 1200);
+  };
+
+  document.addEventListener("click", ()=>{
+    panel.style.display = "none";
+  });
+
+}); 
+
+function buildTodayTasksText(){
+
+  let {triple, double, dayExclusive} = getTasks();
+
+  let now = new Date();
+  let todayUTC = now.getUTCDay();
+
+  let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+  function groupByTask(list){
+    let map = {};
+
+    list.forEach(t => {
+      if(days.indexOf(t.d) !== todayUTC) return;
+
+      let name = t.task || "Task";
+
+      if(!map[name]){
+        map[name] = [];
+      }
+
+      map[name].push(t);
+    });
+
+    return map;
+  }
+
+  function processGroup(group, type){
+
+    let result = [];
+
+    Object.keys(group).forEach(name => {
+
+      let entries = group[name];
+
+      let powerPlay = entries.find(e => 
+        e.events && e.events.includes("Power Play")
+      );
+
+      let chosen = powerPlay || entries[0];
+
+      let line = `${type} ${name} ${chosen.d}`;
+
+      if(type === "Triple"){
+        let time = powerPlay?.times?.[0] || "00:00";
+        line += ` ${time} UTC`;
+      }
+
+      else {
+
+        if(powerPlay){
+          let time = powerPlay.times?.[0] || "00:00";
+          line += ` ${time} UTC Power Play`;
+        } else {
+          // 🔥 FIX: show ALL events + 00:00 UTC
+          let allEvents = [];
+
+          entries.forEach(e => {
+            if(e.events){
+              e.events.forEach(ev => {
+                if(!allEvents.includes(ev)){
+                  allEvents.push(ev);
+                }
+              });
+            }
+          });
+
+          let eventStr = allEvents.join(" + ");
+
+          line += ` 00:00 UTC ${eventStr}`;
+        }
+      }
+
+      result.push(line);
+
+    });
+
+    return result;
+  }
+
+  let t1 = processGroup(groupByTask(triple), "Triple");
+  let t2 = processGroup(groupByTask(double), "Double");
+  let t3 = processGroup(groupByTask(dayExclusive), "Exclusive");
+
+  return [...t1, ...t2, ...t3]
+  .map(line => `• ${line}`)
+  .join("\n");
+}
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  const btn = document.getElementById("copyTodayBtn");
+  if(!btn) return;
+
+  btn.addEventListener("click", function(){
+
+    let text = buildTodayTasksText();
+
+    if(!text){
+      btn.innerText = "No Data";
+      setTimeout(()=> btn.innerText = "R4", 1500);
+      return;
+    }
+
+    // clipboard (safe)
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(text);
+    } else {
+      let textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    }
+
+    btn.innerText = "Copied!";
+    setTimeout(()=> btn.innerText = "R4", 1500);
+
+  });
+
+});
+  
+</script>
+
+</div>
+
+ <div id="maintenanceScreen" style="display:none; position:fixed; inset:0; background:#000; z-index:9999; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+
+  <div style="font-size:20px; margin-bottom:10px;">
+    🚧 Maintenance in Progress
+  </div>
+
+  <div id="maintenanceMessage" style="font-size:14px; color:#aaa; margin-bottom:10px;"></div>
+
+  <div id="maintenanceTimer" style="font-size:13px; color:#ccc;"></div>
+
+</div> 
+  
+<button id="copyTodayBtn" class="r4Btn">R4</button>
+  
+</body>
+</html>
