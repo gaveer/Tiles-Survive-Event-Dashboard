@@ -1,464 +1,200 @@
-﻿[
-    {
-        "task": {
-            "en": "S Tier Dispatch",
-            "ru": "S Tier Dispatch",
-            "ar": "S Tier Dispatch"
-        },
-        "itemPrep": true,
-        "activityPrep": false,
-        "allianceHelp": true,
-        "saveItemType": "Refresh Hourglass",
-        "prepComment": {
-            "en": "Obtain refresh items from truck raids and daily task chests.",
-            "ru": "Obtain refresh items from truck raids and daily task chests.",
-            "ar": "Obtain refresh items from truck raids and daily task chests."
-        },
-        "tip": {
-            "en": "Obtain refresh items from truck raids and daily task chests\r\n- Use them during event to improve task quality\r\nRequest alliance assistance and share in alliance chat\r\n- Each member can assist once per task and uses limited assist chances to improve task speed",
-            "ru": "Obtain refresh items from truck raids and daily task chests\r\n- Use them during event to improve task quality\r\nRequest alliance assistance and share in alliance chat\r\n- Each member can assist once per task and uses limited assist chances to improve task speed",
-            "ar": "Obtain refresh items from truck raids and daily task chests\r\n- Use them during event to improve task quality\r\nRequest alliance assistance and share in alliance chat\r\n- Each member can assist once per task and uses limited assist chances to improve task speed"
-        }
-    },
-    {
-        "task": {
-            "en": "Hero Frags",
-            "ru": "Hero Frags",
-            "ar": "Hero Frags"
-        },
-        "itemPrep": true,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Hero Fragments",
-        "prepComment": {
-            "en": "Obtain fragments from recruitment, events, and stores.\r\ncomplete free recruitments.",
-            "ru": "Obtain fragments from recruitment, events, and stores.\r\ncomplete free recruitments.",
-            "ar": "Obtain fragments from recruitment, events, and stores.\r\ncomplete free recruitments."
-        },
-        "tip": {
-            "en": "Obtain fragments from recruitment, events, and stores\r\n- Check stores regularly for discounted fragments\r\nUse free recruitment daily\r\n- Save fragments for event usage",
-            "ru": "Obtain fragments from recruitment, events, and stores\r\n- Check stores regularly for discounted fragments\r\nUse free recruitment daily\r\n- Save fragments for event usage",
-            "ar": "Obtain fragments from recruitment, events, and stores\r\n- Check stores regularly for discounted fragments\r\nUse free recruitment daily\r\n- Save fragments for event usage"
-        }
-    },
-    {
-        "task": {
-            "en": "Train Speed",
-            "ru": "Train Speed",
-            "ar": "Train Speed"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Speed ups",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nUse power plant training boost when multiple queues are active\r\n- Maximizes total time reduction\r\nKeep barracks running continuously\r\n- Maintain steady troop production",
-            "ru": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nUse power plant training boost when multiple queues are active\r\n- Maximizes total time reduction\r\nKeep barracks running continuously\r\n- Maintain steady troop production",
-            "ar": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nUse power plant training boost when multiple queues are active\r\n- Maximizes total time reduction\r\nKeep barracks running continuously\r\n- Maintain steady troop production"
-        }
-    },
-    {
-        "task": {
-            "en": "Train Power",
-            "ru": "Train Power",
-            "ar": "Train Power"
-        },
-        "itemPrep": false,
-        "activityPrep": true,
-        "allianceHelp": false,
-        "saveItemType": "Speed ups",
-        "prepComment": {
-            "en": "Queue troop training in advance\r\n- Activate training capacity boost before queueing troops.",
-            "ru": "Queue troop training in advance\r\n- Activate training capacity boost before queueing troops.",
-            "ar": "Queue troop training in advance\r\n- Activate training capacity boost before queueing troops."
-        },
-        "tip": {
-            "en": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nQueue troop training in advance\r\n- Complete during event for maximum points\r\nUse power plant boost after queues are active\r\n- Improves efficiency across all queues",
-            "ru": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nQueue troop training in advance\r\n- Complete during event for maximum points\r\nUse power plant boost after queues are active\r\n- Improves efficiency across all queues",
-            "ar": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nQueue troop training in advance\r\n- Complete during event for maximum points\r\nUse power plant boost after queues are active\r\n- Improves efficiency across all queues"
-        }
-    },
-    {
-        "task": {
-            "en": "A-Class Truck",
-            "ru": "A-Class Truck",
-            "ar": "A-Class Truck"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Supply refresh Vouchers",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Obtain supply refresh vouchers from daily task chests\r\n- Use vouchers to get better tasks\r\nDispatch during event window for maximum value",
-            "ru": "Obtain supply refresh vouchers from daily task chests\r\n- Use vouchers to get better tasks\r\nDispatch during event window for maximum value",
-            "ar": "Obtain supply refresh vouchers from daily task chests\r\n- Use vouchers to get better tasks\r\nDispatch during event window for maximum value"
-        }
-    },
-    {
-        "task": {
-            "en": "Kill Infected",
-            "ru": "Kill Infected",
-            "ar": "Kill Infected"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "NA",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Participate in rallies and enable auto-join\r\n- Ensures consistent participation rewards\r\nFocus on efficient participation rather than individual kills",
-            "ru": "Participate in rallies and enable auto-join\r\n- Ensures consistent participation rewards\r\nFocus on efficient participation rather than individual kills",
-            "ar": "Participate in rallies and enable auto-join\r\n- Ensures consistent participation rewards\r\nFocus on efficient participation rather than individual kills"
-        }
-    },
-    {
-        "task": {
-            "en": "Hero Gear",
-            "ru": "Hero Gear",
-            "ar": "Hero Gear"
-        },
-        "itemPrep": true,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Gear Scraps",
-        "prepComment": {
-            "en": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events.",
-            "ru": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events.",
-            "ar": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events."
-        },
-        "tip": {
-            "en": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events\r\nSave materials for event usage",
-            "ru": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events\r\nSave materials for event usage",
-            "ar": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events\r\nSave materials for event usage"
-        }
-    },
-    {
-        "task": {
-            "en": "Build Speed",
-            "ru": "Build Speed",
-            "ar": "Build Speed"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": true,
-        "saveItemType": "Speed ups",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Activate power plant construction boost after starting builds\r\n- Use when multiple constructions are active\r\n- Use for longer timers\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups",
-            "ru": "Activate power plant construction boost after starting builds\r\n- Use when multiple constructions are active\r\n- Use for longer timers\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups",
-            "ar": "Activate power plant construction boost after starting builds\r\n- Use when multiple constructions are active\r\n- Use for longer timers\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups"
-        }
-    },
-    {
-        "task": {
-            "en": "Build Power",
-            "ru": "Build Power",
-            "ar": "Build Power"
-        },
-        "itemPrep": false,
-        "activityPrep": true,
-        "allianceHelp": true,
-        "saveItemType": "Speed ups",
-        "prepComment": {
-            "en": "Queue long constructions in advance.",
-            "ru": "Queue long constructions in advance.",
-            "ar": "Queue long constructions in advance."
-        },
-        "tip": {
-            "en": "Queue long constructions in advance\r\n- Complete during event for higher points\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups\r\nUse power plant construction boost after builds are active\r\n- Improves overall efficiency, \r\n- Use for longer timers",
-            "ru": "Queue long constructions in advance\r\n- Complete during event for higher points\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups\r\nUse power plant construction boost after builds are active\r\n- Improves overall efficiency, \r\n- Use for longer timers",
-            "ar": "Queue long constructions in advance\r\n- Complete during event for higher points\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups\r\nUse power plant construction boost after builds are active\r\n- Improves overall efficiency, \r\n- Use for longer timers"
-        }
-    },
-    {
-        "task": {
-            "en": "Hero Skill",
-            "ru": "Hero Skill",
-            "ar": "Hero Skill"
-        },
-        "itemPrep": true,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Hero Skill Manuals",
-        "prepComment": {
-            "en": "Obtain Hero Skill Manuals from events, hero academy and rewards.",
-            "ru": "Obtain Hero Skill Manuals from events, hero academy and rewards.",
-            "ar": "Obtain Hero Skill Manuals from events, hero academy and rewards."
-        },
-        "tip": {
-            "en": "Obtain skill books from events, hero academy and rewards\r\nSave skill books for event usage\r\n- Upgrade during event window\r\nPrioritize key heroes",
-            "ru": "Obtain skill books from events, hero academy and rewards\r\nSave skill books for event usage\r\n- Upgrade during event window\r\nPrioritize key heroes",
-            "ar": "Obtain skill books from events, hero academy and rewards\r\nSave skill books for event usage\r\n- Upgrade during event window\r\nPrioritize key heroes"
-        }
-    },
-    {
-        "task": {
-            "en": "Chief Gear",
-            "ru": "Chief Gear",
-            "ar": "Chief Gear"
-        },
-        "itemPrep": true,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "General parts and Precision Blueprints",
-        "prepComment": {
-            "en": "Obtain General parts and Precision Blueprints from Ghoulion and Events like Partner Paradise.",
-            "ru": "Obtain General parts and Precision Blueprints from Ghoulion and Events like Partner Paradise.",
-            "ar": "Obtain General parts and Precision Blueprints from Ghoulion and Events like Partner Paradise."
-        },
-        "tip": {
-            "en": "Obtain materials from Ghoulion and Events like Partner Paradise\r\nSave materials for Power Play\r\n- Use as fallback to complete remaining rewards",
-            "ru": "Obtain materials from Ghoulion and Events like Partner Paradise\r\nSave materials for Power Play\r\n- Use as fallback to complete remaining rewards",
-            "ar": "Obtain materials from Ghoulion and Events like Partner Paradise\r\nSave materials for Power Play\r\n- Use as fallback to complete remaining rewards"
-        }
-    },
-    {
-        "task": {
-            "en": "Research Speed",
-            "ru": "Research Speed",
-            "ar": "Research Speed"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": true,
-        "saveItemType": "Speed ups",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Start research before applying boosts\r\nActivate power plant research boost after research starts\r\n- Use for longer timers\r\nRequest alliance help after starting research\r\n- Reduce time before using speedups",
-            "ru": "Start research before applying boosts\r\nActivate power plant research boost after research starts\r\n- Use for longer timers\r\nRequest alliance help after starting research\r\n- Reduce time before using speedups",
-            "ar": "Start research before applying boosts\r\nActivate power plant research boost after research starts\r\n- Use for longer timers\r\nRequest alliance help after starting research\r\n- Reduce time before using speedups"
-        }
-    },
-    {
-        "task": {
-            "en": "Research Power",
-            "ru": "Research Power",
-            "ar": "Research Power"
-        },
-        "itemPrep": false,
-        "activityPrep": true,
-        "allianceHelp": true,
-        "saveItemType": "Speed ups",
-        "prepComment": {
-            "en": "Queue long research in advance.",
-            "ru": "Queue long research in advance.",
-            "ar": "Queue long research in advance."
-        },
-        "tip": {
-            "en": "Queue long research in advance\r\n- Compare and choose research with higher battle points\r\n- Choose researches that will also help with current week events\r\n- Complete during event for maximum points\r\nActivate power plant research boost after research starts\r\n- Improves efficiency",
-            "ru": "Queue long research in advance\r\n- Compare and choose research with higher battle points\r\n- Choose researches that will also help with current week events\r\n- Complete during event for maximum points\r\nActivate power plant research boost after research starts\r\n- Improves efficiency",
-            "ar": "Queue long research in advance\r\n- Compare and choose research with higher battle points\r\n- Choose researches that will also help with current week events\r\n- Complete during event for maximum points\r\nActivate power plant research boost after research starts\r\n- Improves efficiency"
-        }
-    },
-    {
-        "task": {
-            "en": "Clash Medals",
-            "ru": "Clash Medals",
-            "ar": "Clash Medals"
-        },
-        "itemPrep": true,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Clash Medals",
-        "prepComment": {
-            "en": "Obtain medals from Alliance Duel chests and rankings.",
-            "ru": "Obtain medals from Alliance Duel chests and rankings.",
-            "ar": "Obtain medals from Alliance Duel chests and rankings."
-        },
-        "tip": {
-            "en": "Obtain medals from Alliance Duel chests and rankings\r\nSpend medals during event on alliance duel research\r\nEarn points for both spending and research completion",
-            "ru": "Obtain medals from Alliance Duel chests and rankings\r\nSpend medals during event on alliance duel research\r\nEarn points for both spending and research completion",
-            "ar": "Obtain medals from Alliance Duel chests and rankings\r\nSpend medals during event on alliance duel research\r\nEarn points for both spending and research completion"
-        }
-    },
-    {
-        "task": {
-            "en": "Kill Troops",
-            "ru": "Kill Troops",
-            "ar": "Kill Troops"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "NA",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Engage in burrows, cities, Arcadia, or settlements\r\n- Both attacking and defending count\r\nCoordinate with alliance for safer execution",
-            "ru": "Engage in burrows, cities, Arcadia, or settlements\r\n- Both attacking and defending count\r\nCoordinate with alliance for safer execution",
-            "ar": "Engage in burrows, cities, Arcadia, or settlements\r\n- Both attacking and defending count\r\nCoordinate with alliance for safer execution"
-        }
-    },
-    {
-        "task": {
-            "en": "Heal Speed",
-            "ru": "Heal Speed",
-            "ar": "Heal Speed"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": true,
-        "saveItemType": "Speed ups",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Obtain speedups from Dire Dispatch assists\r\nHeal troops in batches of 800-1000 troops using alliance help\r\n- Reduces speedup usage \u0026 save for RR",
-            "ru": "Obtain speedups from Dire Dispatch assists\r\nHeal troops in batches of 800-1000 troops using alliance help\r\n- Reduces speedup usage \u0026 save for RR",
-            "ar": "Obtain speedups from Dire Dispatch assists\r\nHeal troops in batches of 800-1000 troops using alliance help\r\n- Reduces speedup usage \u0026 save for RR"
-        }
-    },
-    {
-        "task": {
-            "en": "Use Stamina",
-            "ru": "Use Stamina",
-            "ar": "Use Stamina"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Stamina packs",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Obtain stamina packs from daily chests and stores\r\nSave stamina packs for event usage\r\n- Avoid unnecessary usage outside event",
-            "ru": "Obtain stamina packs from daily chests and stores\r\nSave stamina packs for event usage\r\n- Avoid unnecessary usage outside event",
-            "ar": "Obtain stamina packs from daily chests and stores\r\nSave stamina packs for event usage\r\n- Avoid unnecessary usage outside event"
-        }
-    },
-    {
-        "task": {
-            "en": "Intel",
-            "ru": "Intel",
-            "ar": "Intel"
-        },
-        "itemPrep": true,
-        "activityPrep": true,
-        "allianceHelp": false,
-        "saveItemType": "To auto store missions, don not touch any other missions except venture/maddie quest",
-        "prepComment": {
-            "en": "Complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
-            "ru": "Complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
-            "ar": "Complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time."
-        },
-        "tip": {
-            "en": "Complete stored missions on event day\r\nOn non-event days complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
-            "ru": "Complete stored missions on event day\r\nOn non-event days complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
-            "ar": "Complete stored missions on event day\r\nOn non-event days complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time."
-        }
-    },
-    {
-        "task": {
-            "en": "Collect Eggs",
-            "ru": "Collect Eggs",
-            "ar": "Collect Eggs"
-        },
-        "itemPrep": false,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "NA",
-        "prepComment": {
-            "en": "",
-            "ru": "",
-            "ar": ""
-        },
-        "tip": {
-            "en": "Release 5-minute eggs only\r\n- Focus on collecting 10 and 20-minute eggs\r\n\r\nIf there are no puppets to attack\r\n-Use 1 hero marches to collect 5min eggs once they are revealed",
-            "ru": "Release 5-minute eggs only\r\n- Focus on collecting 10 and 20-minute eggs\r\n\r\nIf there are no puppets to attack\r\n-Use 1 hero marches to collect 5min eggs once they are revealed",
-            "ar": "Release 5-minute eggs only\r\n- Focus on collecting 10 and 20-minute eggs\r\n\r\nIf there are no puppets to attack\r\n-Use 1 hero marches to collect 5min eggs once they are revealed"
-        }
-    },
-    {
-        "task": {
-            "en": "Behemoth",
-            "ru": "Behemoth",
-            "ar": "Behemoth"
-        },
-        "itemPrep": true,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Behemoth Cells and XP",
-        "prepComment": {
-            "en": "Obtain Behemoth Cells and XP from Kraken, events and truck raids.",
-            "ru": "Obtain Behemoth Cells and XP from Kraken, events and truck raids.",
-            "ar": "Obtain Behemoth Cells and XP from Kraken, events and truck raids."
-        },
-        "tip": {
-            "en": "Obtain Behemoth Cells and XP from Kraken, events and truck raids\r\nSave for event usage",
-            "ru": "Obtain Behemoth Cells and XP from Kraken, events and truck raids\r\nSave for event usage",
-            "ar": "Obtain Behemoth Cells and XP from Kraken, events and truck raids\r\nSave for event usage"
-        }
-    },
-    {
-        "task": {
-            "en": "Recruit",
-            "ru": "Recruit",
-            "ar": "Recruit"
-        },
-        "itemPrep": true,
-        "activityPrep": false,
-        "allianceHelp": false,
-        "saveItemType": "Recruitment Cards",
-        "prepComment": {
-            "en": "Get Recruitment Cards from events, stores, Infected kills.",
-            "ru": "Get Recruitment Cards from events, stores, Infected kills.",
-            "ar": "Get Recruitment Cards from events, stores, Infected kills."
-        },
-        "tip": {
-            "en": "Get from events, stores, Infected kills. \r\nSave cards for event usage\r\n- Spend in pack of 10 during events for better fragment yeild \r\n- Use the 9/10 recruiment discount.",
-            "ru": "Get from events, stores, Infected kills. \r\nSave cards for event usage\r\n- Spend in pack of 10 during events for better fragment yeild \r\n- Use the 9/10 recruiment discount.",
-            "ar": "Get from events, stores, Infected kills. \r\nSave cards for event usage\r\n- Spend in pack of 10 during events for better fragment yeild \r\n- Use the 9/10 recruiment discount."
-        }
-    },
-    {
-        "task": {
-            "en": "Gather RSS",
-            "ru": "Gather RSS",
-            "ar": "Gather RSS"
-        },
-        "itemPrep": false,
-        "activityPrep": true,
-        "allianceHelp": false,
-        "saveItemType": "NA",
-        "prepComment": {
-            "en": "Enable 24 hour Gathering boost, then check gathering time on resource.\r\nEnsure gathering ends atleast one hour into event day. \r\nSend multiple marches simultaneously\r\n- Use all available marches, split heroes across all marches for maximum efficiency",
-            "ru": "Enable 24 hour Gathering boost, then check gathering time on resource.\r\nEnsure gathering ends atleast one hour into event day. \r\nSend multiple marches simultaneously\r\n- Use all available marches, split heroes across all marches for maximum efficiency",
-            "ar": "Enable 24 hour Gathering boost, then check gathering time on resource.\r\nEnsure gathering ends atleast one hour into event day. \r\nSend multiple marches simultaneously\r\n- Use all available marches, split heroes across all marches for maximum efficiency"
-        },
-        "tip": {
-            "en": "Enable 24 hour Gathering boost, then check gathering time on resource.\r\nSend multiple marches simultaneously\r\n- Use all available marches, split heroes across all marches for maximum efficiency\r\nNote: Ensure to reconfigure your marches for max battlepower for other tasks if you had split heroes for multiple resource gathering earlier unless you want to continue gathering.",
-            "ru": "Enable 24 hour Gathering boost, then check gathering time on resource.\r\nSend multiple marches simultaneously\r\n- Use all available marches, split heroes across all marches for maximum efficiency\r\nNote: Ensure to reconfigure your marches for max battlepower for other tasks if you had split heroes for multiple resource gathering earlier unless you want to continue gathering.",
-            "ar": "Enable 24 hour Gathering boost, then check gathering time on resource.\r\nSend multiple marches simultaneously\r\n- Use all available marches, split heroes across all marches for maximum efficiency\r\nNote: Ensure to reconfigure your marches for max battlepower for other tasks if you had split heroes for multiple resource gathering earlier unless you want to continue gathering."
-        }
-    }
+[
+  {
+    "task": "S Tier Dispatch",
+    "itemPrep": true,
+    "activityPrep": false,
+    "allianceHelp": true,
+    "saveItemType": "Refresh Hourglass",
+    "prepComment": "Obtain refresh items from truck raids and daily task chests.",
+    "tip": "Obtain refresh items from truck raids and daily task chests\r\n- Use them during event to improve task quality\r\nRequest alliance assistance and share in alliance chat\r\n- Each member can assist once per task and uses limited assist chances to improve task speed"
+  },
+  {
+    "task": "Hero Frags",
+    "itemPrep": true,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Hero Fragments",
+    "prepComment": "Obtain fragments from recruitment, events, and stores.\r\ncomplete free recruitments.",
+    "tip": "Obtain fragments from recruitment, events, and stores\r\n- Check stores regularly for discounted fragments\r\nUse free recruitment daily\r\n- Save fragments for event usage"
+  },
+  {
+    "task": "Train Speed",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Speed ups",
+    "prepComment": "",
+    "tip": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nUse power plant training boost when multiple queues are active\r\n- Maximizes total time reduction\r\nKeep barracks running continuously\r\n- Maintain steady troop production"
+  },
+  {
+    "task": "Train Power",
+    "itemPrep": false,
+    "activityPrep": true,
+    "allianceHelp": false,
+    "saveItemType": "Speed ups",
+    "prepComment": "Queue troop training in advance\r\n- Activate training capacity boost before queueing troops.",
+    "tip": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nQueue troop training in advance\r\n- Complete during event for maximum points\r\nUse power plant boost after queues are active\r\n- Improves efficiency across all queues"
+  },
+  {
+    "task": "A-Class Truck",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Supply refresh Vouchers",
+    "prepComment": "",
+    "tip": "Obtain supply refresh vouchers from daily task chests\r\n- Use vouchers to get better tasks\r\nDispatch during event window for maximum value"
+  },
+  {
+    "task": "Kill Infected",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "NA",
+    "prepComment": "",
+    "tip": "Participate in rallies and enable auto-join\r\n- Ensures consistent participation rewards\r\nFocus on efficient participation rather than individual kills"
+  },
+  {
+    "task": "Hero Gear",
+    "itemPrep": true,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Gear Scraps",
+    "prepComment": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events.",
+    "tip": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events\r\nSave materials for event usage"
+  },
+  {
+    "task": "Build Speed",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": true,
+    "saveItemType": "Speed ups",
+    "prepComment": "",
+    "tip": "Activate power plant construction boost after starting builds\r\n- Use when multiple constructions are active\r\n- Use for longer timers\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups"
+  },
+  {
+    "task": "Build Power",
+    "itemPrep": false,
+    "activityPrep": true,
+    "allianceHelp": true,
+    "saveItemType": "Speed ups",
+    "prepComment": "Queue long constructions in advance.",
+    "tip": "Queue long constructions in advance\r\n- Complete during event for higher points\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups\r\nUse power plant construction boost after builds are active\r\n- Improves overall efficiency, \r\n- Use for longer timers"
+  },
+  {
+    "task": "Hero Skill",
+    "itemPrep": true,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Hero Skill Manuals",
+    "prepComment": "Obtain Hero Skill Manuals from events, hero academy and rewards.",
+    "tip": "Obtain skill books from events, hero academy and rewards\r\nSave skill books for event usage\r\n- Upgrade during event window\r\nPrioritize key heroes"
+  },
+  {
+    "task": "Chief Gear",
+    "itemPrep": true,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "General parts and Precision Blueprints",
+    "prepComment": "Obtain General parts and Precision Blueprints from Ghoulion and Events like Partner Paradise.",
+    "tip": "Obtain materials from Ghoulion and Events like Partner Paradise\r\nSave materials for Power Play\r\n- Use as fallback to complete remaining rewards"
+  },
+  {
+    "task": "Research Speed",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": true,
+    "saveItemType": "Speed ups",
+    "prepComment": "",
+    "tip": "Start research before applying boosts\r\nActivate power plant research boost after research starts\r\n- Use for longer timers\r\nRequest alliance help after starting research\r\n- Reduce time before using speedups"
+  },
+  {
+    "task": "Research Power",
+    "itemPrep": false,
+    "activityPrep": true,
+    "allianceHelp": true,
+    "saveItemType": "Speed ups",
+    "prepComment": "Queue long research in advance.",
+    "tip": "Queue long research in advance\r\n- Compare and choose research with higher battle points\r\n- Choose researches that will also help with current week events\r\n- Complete during event for maximum points\r\nActivate power plant research boost after research starts\r\n- Improves efficiency"
+  },
+  {
+    "task": "Clash Medals",
+    "itemPrep": true,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Clash Medals",
+    "prepComment": "Obtain medals from Alliance Duel chests and rankings.",
+    "tip": "Obtain medals from Alliance Duel chests and rankings\r\nSpend medals during event on alliance duel research\r\nEarn points for both spending and research completion"
+  },
+  {
+    "task": "Kill Troops",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "NA",
+    "prepComment": "",
+    "tip": "Engage in burrows, cities, Arcadia, or settlements\r\n- Both attacking and defending count\r\nCoordinate with alliance for safer execution"
+  },
+  {
+    "task": "Heal Speed",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": true,
+    "saveItemType": "Speed ups",
+    "prepComment": "",
+    "tip": "Obtain speedups from Dire Dispatch assists\r\nHeal troops in batches of 800-1000 troops using alliance help\r\n- Reduces speedup usage & save for RR"
+  },
+  {
+    "task": "Use Stamina",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Stamina packs",
+    "prepComment": "",
+    "tip": "Obtain stamina packs from daily chests and stores\r\nSave stamina packs for event usage\r\n- Avoid unnecessary usage outside event"
+  },
+  {
+    "task": "Intel",
+    "itemPrep": true,
+    "activityPrep": true,
+    "allianceHelp": false,
+    "saveItemType": "To auto store missions, don not touch any other missions except venture/maddie quest",
+    "prepComment": "Complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
+    "tip": "Complete stored missions on event day\r\nOn non-event days complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time."
+  },
+  {
+    "task": "Collect Eggs",
+    "itemPrep": false,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "NA",
+    "prepComment": "",
+    "tip": "Release 5-minute eggs only\r\n- Focus on collecting 10 and 20-minute eggs\r\n\r\nIf there are no puppets to attack\r\n-Use 1 hero marches to collect 5min eggs once they are revealed"
+  },
+  {
+    "task": "Behemoth",
+    "itemPrep": true,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Behemoth Cells and XP",
+    "prepComment": "Obtain Behemoth Cells and XP from Kraken, events and truck raids.",
+    "tip": "Obtain Behemoth Cells and XP from Kraken, events and truck raids\r\nSave for event usage"
+  },
+  {
+    "task": "Recruit",
+    "itemPrep": true,
+    "activityPrep": false,
+    "allianceHelp": false,
+    "saveItemType": "Recruitment Cards",
+    "prepComment": "Get Recruitment Cards from events, stores, Infected kills.",
+    "tip": "Get from events, stores, Infected kills. \r\nSave cards for event usage\r\n- Spend in pack of 10 during events for better fragment yeild \r\n- Use the 9/10 recruiment discount."
+  },
+  {
+    "task": "Gather RSS",
+    "itemPrep": false,
+    "activityPrep": true,
+    "allianceHelp": false,
+    "saveItemType": "NA",
+    "prepComment": "Enable 24 hour Gathering boost, then check gathering time on resource.\r\nEnsure gathering ends atleast one hour into event day. \r\nSend multiple marches simultaneously\r\n- Use all available marches, split heroes across all marches for maximum efficiency",
+    "tip": "Enable 24 hour Gathering boost, then check gathering time on resource.\r\nSend multiple marches simultaneously\r\n- Use all available marches, split heroes across all marches for maximum efficiency\r\nNote: Ensure to reconfigure your marches for max battlepower for other tasks if you had split heroes for multiple resource gathering earlier unless you want to continue gathering."
+  }
 ]

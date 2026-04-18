@@ -30,7 +30,7 @@ z-index:999;
   display:inline-block;
   padding:6px 0;
   white-space:nowrap;
-  animation: scrollTicker 18s linear infinite;   /* 🔥 slower */
+  animation: scrollTicker 22s linear infinite;   /* 🔥 slower */
 }
 
 /* animation */
@@ -49,7 +49,7 @@ box-shadow:0 0 12px rgba(255,0,0,0.7);
 
 /* faster scroll */
 #ticker.emergency .tickerText{
-animation-duration:6s;
+animation-duration:10s;
 }
 
 /* 🔥 add pulse effect (NEW) */
@@ -85,12 +85,24 @@ height:32px;               /* controlled height */
 .eventScroll{
   display:inline-flex;          /* 🔥 key change */
   white-space:nowrap;
-  animation: scrollTicker 20s linear infinite;  /* slower */
+  animation: scrollTicker 32s linear infinite;  /* slower */
 }
 
 .scrollInner{
   display:inline-flex;
 }  
+
+/* Prevent RTL mode from reversing long-event ticker item order. */
+html[dir="rtl"] #eventTicker,
+html[dir="rtl"] .eventScroll,
+html[dir="rtl"] .scrollInner{
+  direction:ltr;
+}
+
+html[dir="rtl"] .eventItem{
+  direction:rtl;
+  unicode-bidi:plaintext;
+}
 
   
 .eventItem{
@@ -785,7 +797,7 @@ height:80px;
   font-size: 13px;   /* 🔧 adjust this */
 }
 
-/* "Hero Frags" */
+/* "Hero Fragments" */
 .hunterTask{
   font-size: 15px;   /* 🔧 adjust this */
   font-weight: bold;
@@ -954,6 +966,18 @@ height:80px;
   align-items:center;
   gap:12px;
   flex-wrap:nowrap;
+}
+
+/* Keep short-event sequence stable in Arabic (RTL flips flex visual order). */
+html[dir="rtl"] #shortEventsRow{
+  direction:ltr;
+}
+
+html[dir="rtl"] #shortEventsRow .seName,
+html[dir="rtl"] #shortEventsRow .seTimer,
+html[dir="rtl"] #shortEventsRow .seTime{
+  direction:rtl;
+  unicode-bidi:plaintext;
 }
 
 .seItem{
@@ -2018,7 +2042,7 @@ height:80px;
 </div>
   
 <div class="card triple">
-  <h2 id="tripleListTitle">◆ Triple Chain List</h2>
+  <h2 id="tripleListTitle">✨ Triple Chain List</h2>
   <div id="tripleList"></div>
 </div>
 
@@ -2028,7 +2052,7 @@ height:80px;
 </div>
 
 <div class="card save">
-<h2 id="dayExclusiveTitle">◆ Day Exclusive</h2>
+<h2 id="dayExclusiveTitle">🎇 Day Exclusive</h2>
 <div id="dayExclusiveList"></div>
 </div>
 
@@ -2080,145 +2104,41 @@ let maintenanceLastSwitch = 0;
 let currentMaintenanceState = null;  
 let currentLang = localStorage.getItem("dashboardLang") || "en";
 
-const translations = {
-  en: {
-    language: "Language",
-    appTitle: "Tiles Survive",
-    appSubtitle: "Alliance Event Planner",
-    leaderTitle: "Alliance Leader",
-    goldmineBanner: "💰 Refresh Gold Mine!",
-    hunterTitle: "Task Hunter",
-    tripleChain: "Triple Chain",
-    doubleChain: "Double Chain",
-    today: "📅 Today",
-    prep: "🧠 Prep",
-    tripleList: "◆ Triple Chain List",
-    doubleList: "◆ Double Chain List",
-    dayExclusive: "◆ Day Exclusive",
-    saveResources: "◆ Save Resources",
-    casualTasks: "⚔️ Casual Tasks",
-    feedbackText: "For feedback, suggestions or bug reports contact:",
-    loading: "Loading...",
-    noPrepNeeded: "No prep needed",
-    active: "ACTIVE",
-    upcoming: "Upcoming",
-    completed: "Completed",
-    startsIn: "Starts in",
-    endsIn: "Ends in",
-    next: "Next",
-    starts: "Starts",
-    ends: "Ends",
-    noPriorityTasks: "No priority tasks today",
-    maintenanceInProgress: "Maintenance in progress",
-    maintenanceOngoing: "Maintenance ongoing",
-    emergencyMaintenance: "🚧 Emergency Maintenance",
-    scheduledMaintenance: "🔧 Maintenance in progress",
-    supportMe: "Support Me",
-    supportTitle: "Support me with a top up 🎁",
-    copyId: "Copy ID",
-    copied: "Copied!",
-    noData: "No Data"
-  },
-  ru: {
-    language: "Язык",
-    appTitle: "Tiles Survive",
-    appSubtitle: "Планировщик событий альянса",
-    leaderTitle: "Лидер альянса",
-    goldmineBanner: "💰 Обновите Золотую Шахту!",
-    hunterTitle: "Охотник за заданиями",
-    tripleChain: "Тройная цепочка",
-    doubleChain: "Двойная цепочка",
-    today: "📅 Сегодня",
-    prep: "🧠 Подготовка",
-    tripleList: "◆ Список тройной цепочки",
-    doubleList: "◆ Список двойной цепочки",
-    dayExclusive: "◆ Эксклюзив дня",
-    saveResources: "◆ Сохраняйте ресурсы",
-    casualTasks: "⚔️ Обычные задания",
-    feedbackText: "Для отзывов, предложений или сообщений об ошибках:",
-    loading: "Загрузка...",
-    noPrepNeeded: "Подготовка не требуется",
-    active: "АКТИВНО",
-    upcoming: "Скоро",
-    completed: "Завершено",
-    startsIn: "Начнется через",
-    endsIn: "Закончится через",
-    next: "След.",
-    starts: "Старт",
-    ends: "Конец",
-    noPriorityTasks: "Сегодня нет приоритетных задач",
-    maintenanceInProgress: "Техобслуживание в процессе",
-    maintenanceOngoing: "Техобслуживание активно",
-    emergencyMaintenance: "🚧 Экстренное техобслуживание",
-    scheduledMaintenance: "🔧 Техобслуживание в процессе",
-    supportMe: "Поддержать",
-    supportTitle: "Поддержите меня донатом 🎁",
-    copyId: "Копировать ID",
-    copied: "Скопировано!",
-    noData: "Нет данных"
-  },
-  ar: {
-    language: "اللغة",
-    appTitle: "Tiles Survive",
-    appSubtitle: "مخطط فعاليات التحالف",
-    leaderTitle: "قائد التحالف",
-    goldmineBanner: "💰 حدّث منجم الذهب!",
-    hunterTitle: "متعقب المهام",
-    tripleChain: "السلسلة الثلاثية",
-    doubleChain: "السلسلة المزدوجة",
-    today: "📅 اليوم",
-    prep: "🧠 التحضير",
-    tripleList: "◆ قائمة السلسلة الثلاثية",
-    doubleList: "◆ قائمة السلسلة المزدوجة",
-    dayExclusive: "◆ مهمة اليوم الحصرية",
-    saveResources: "◆ حفظ الموارد",
-    casualTasks: "⚔️ مهام عادية",
-    feedbackText: "للملاحظات أو الاقتراحات أو الإبلاغ عن الأخطاء:",
-    loading: "جارٍ التحميل...",
-    noPrepNeeded: "لا يوجد تحضير مطلوب",
-    active: "نشط",
-    upcoming: "قادم",
-    completed: "مكتمل",
-    startsIn: "يبدأ خلال",
-    endsIn: "ينتهي خلال",
-    next: "التالي",
-    starts: "يبدأ",
-    ends: "ينتهي",
-    noPriorityTasks: "لا توجد مهام أولوية اليوم",
-    maintenanceInProgress: "الصيانة جارية",
-    maintenanceOngoing: "الصيانة مستمرة",
-    emergencyMaintenance: "🚧 صيانة طارئة",
-    scheduledMaintenance: "🔧 الصيانة جارية",
-    supportMe: "ادعمني",
-    supportTitle: "ادعمني بشحن هدية 🎁",
-    copyId: "نسخ المعرف",
-    copied: "تم النسخ!",
-    noData: "لا توجد بيانات"
+let translations = {};
+let eventNameTranslations = {};
+let taskNameTranslations = {};
+let prepTranslations = {};
+let translationsLoadedPromise = null;
+
+async function loadTranslations(){
+  try{
+    const res = await fetch("data/translations.json");
+    const data = await res.json();
+
+    translations = data.ui || {};
+    eventNameTranslations = data.eventNames || {};
+    taskNameTranslations = data.taskNames || {};
+    prepTranslations = data.prep || {};
+
+    if(Array.isArray(data.supportedLangs) && data.supportedLangs.length){
+      SUPPORTED_LANGS = data.supportedLangs;
+    }
+  }catch(e){
+    console.log("Translations load error", e);
   }
-};
+}
 
-const eventNameTranslations = {
-  "Ghoulion Pursuit": { ru: "Погоня на Гулиона", ar: "مطاردة الغوليون" },
-  "Alliance Duel": { ru: "Дуэль Альянсов", ar: "مبارزة التحالف" },
-  "Power Play": { ru: "Силовая игра", ar: "قوة التحالف" },
-  "Reservoir Raid": { ru: "Рейд на Резервуар", ar: "غارة الخزان" },
-  "Arcadian Conquest": { ru: "Аркадийское Завоевание", ar: "فتح أركاديا" },
-  "Terror Purge": { ru: "Зачистка Террора", ar: "تطهير الرعب" },
-  "Underground Goldmine": { ru: "Подземный Рудник", ar: "منجم الذهب السفلي" },
-  "Lost Frontier": { ru: "Потерянный Фронтир", ar: "الحدود المفقودة" }
-};
-
-const taskNameTranslations = {
-  "Hero Frags": { ru: "Осколки Героя", ar: "شظايا البطل" },
-  "Train Speed": { ru: "Скорость Обучения", ar: "تسريع التدريب" },
-  "Build Speed": { ru: "Скорость Стройки", ar: "تسريع البناء" },
-  "Research Speed": { ru: "Скорость Исследования", ar: "تسريع البحث" },
-  "Use Stamina": { ru: "Трата Выносливости", ar: "استخدام الطاقة" },
-  "Gather RSS": { ru: "Сбор Ресурсов", ar: "جمع الموارد" }
-};
+function ensureTranslationsLoaded(){
+  if(!translationsLoadedPromise){
+    translationsLoadedPromise = loadTranslations();
+  }
+  return translationsLoadedPromise;
+}
 
 function tr(key){
-  return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key;
+  return (translations[currentLang] && translations[currentLang][key]) ||
+         (translations.en && translations.en[key]) ||
+         key;
 }
 
 function trTask(name){
@@ -2257,9 +2177,9 @@ function getLocalizedText(value, fallback = ""){
   return fallback;
 }
 
-const SUPPORTED_LANGS = ["en", "ru", "ar"];
+let SUPPORTED_LANGS = ["en", "ru", "ar"];
 const ANNOUNCEMENT_TRANSLATABLE_FIELDS = ["message"];
-const PREP_TRANSLATABLE_FIELDS = ["task", "prepComment", "tip"];
+const PREP_TRANSLATABLE_FIELDS = ["task", "prepComment", "tip", "saveItemType"];
 
 function toTranslationObject(value){
   const emptyTranslations = SUPPORTED_LANGS.reduce((acc, lang) => {
@@ -2306,6 +2226,25 @@ function normalizePrepTranslations(items){
   });
 }
 
+function applyPrepTranslationsFromCatalog(items){
+  if(!Array.isArray(items)) return [];
+
+  return items.map(item => {
+    const key = getPrepTaskKey(item.task);
+    const row = prepTranslations[key];
+
+    if(!row) return item;
+
+    PREP_TRANSLATABLE_FIELDS.forEach(field => {
+      if(row[field] != null){
+        item[field] = toTranslationObject(row[field]);
+      }
+    });
+
+    return item;
+  });
+}
+
 function getPrepTaskKey(taskValue){
   if(typeof taskValue === "string"){
     return taskValue;
@@ -2329,7 +2268,7 @@ function getPrepTaskLabel(taskValue, fallbackTask){
 }
 
 function applyLanguage(lang){
-  currentLang = translations[lang] ? lang : "en";
+  currentLang = ((translations[lang] || SUPPORTED_LANGS.includes(lang)) ? lang : "en");
   localStorage.setItem("dashboardLang", currentLang);
   document.documentElement.lang = currentLang;
   document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
@@ -2375,7 +2314,8 @@ document.addEventListener("DOMContentLoaded", function(){
   const langSelect = document.getElementById("langSelect");
   if(langSelect){
     langSelect.value = currentLang;
-    langSelect.addEventListener("change", function(e){
+    langSelect.addEventListener("change", async function(e){
+      await ensureTranslationsLoaded();
       applyLanguage(e.target.value);
       updateTimer();
       updateDoubleTimer();
@@ -2392,7 +2332,10 @@ document.addEventListener("DOMContentLoaded", function(){
       applyMaintenanceUI(true);
     });
   }
-  applyLanguage(currentLang);
+
+  ensureTranslationsLoaded().then(() => {
+    applyLanguage(currentLang);
+  });
 });
 
 function getMaintenanceState(){
@@ -3039,8 +2982,10 @@ console.log("Tasks load error", e);
 
 async function loadPrep(){
 try{
+await ensureTranslationsLoaded();
 let res = await fetch("data/prep.json");
 prepData = normalizePrepTranslations(await res.json());
+prepData = applyPrepTranslationsFromCatalog(prepData);
 prepMap = {};
 
 prepData.forEach(p => {
@@ -3120,6 +3065,7 @@ if(!p) return;
 
 const prepTaskLabel = getPrepTaskLabel(p.task, t.task);
 const prepComment = getLocalizedText(p.prepComment, "");
+const prepSaveItem = getLocalizedText(p.saveItemType, "");
 
 // 🔥 only if prep required
 if(!(p.itemPrep || p.activityPrep)) return;
@@ -3127,7 +3073,7 @@ if(!(p.itemPrep || p.activityPrep)) return;
 html += `
 <div class="prepRow">
   <div class="prepTitle">${prepTaskLabel} (${type}) • ${timeStr} • ${countdown}</div>
-  ${p.saveItemType ? `<div class="prepItem">Save: ${p.saveItemType}</div>` : ""}
+  ${prepSaveItem ? `<div class="prepItem">Save: ${prepSaveItem}</div>` : ""}
   ${prepComment ? `<div class="prepComment">${prepComment}</div>` : ""}
 </div>
 `;
@@ -3563,7 +3509,7 @@ container.appendChild(row);
 let item = document.createElement("div");
 item.className = "prepComment saveItem";
 item.style.marginLeft = "6px";
-item.innerText = "Save: " + map[task].item;
+item.innerText = "Save: " + getLocalizedText(map[task].item, "");
 
 container.appendChild(item);
 
@@ -3835,6 +3781,7 @@ setInterval(loadTicker, 60000); // every 1 min
 
 // 🔹 LOAD ALL CORE DATA FIRST (CRITICAL FIX)
 Promise.all([
+  ensureTranslationsLoaded(),
   loadTasks(),
   loadPrep(),
   loadSpecialEvents(),
@@ -3960,7 +3907,7 @@ function updateTodayPanel(){
           s.status === "ACTIVE" ? "activeRow" :
           s.status === "UPCOMING" ? "nextRow" : ""
         }">
-          <span><b>◆ ${label}</b> - ${trTask(t.task)}</span>
+          <span><b> ${label}</b> - ${trTask(t.task)}</span>
           <span>${status}</span>
         </div>
         ${getLocalizedText(p?.tip, "") ? `<div class="prepTip saveItem">${getLocalizedText(p.tip, "")}</div>` : ""}
@@ -4263,7 +4210,9 @@ document.addEventListener("DOMContentLoaded", function(){
     panel.style.display = "none";
   });
 
-  applyLanguage(currentLang);
+  ensureTranslationsLoaded().then(() => {
+    applyLanguage(currentLang);
+  });
 
 }); 
 

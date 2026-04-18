@@ -254,7 +254,7 @@
   {
     "d": "Thu",
     "e": "Power Play",
-    "t": "Hero Frags",
+    "t": "Hero Fragments",
     "category": "Triple",
     "utc": "12:00",
     "duration": 4,
@@ -263,7 +263,7 @@
   {
     "d": "Thu",
     "e": "Alliance Duel",
-    "t": "Hero Frags",
+    "t": "Hero Fragments",
     "category": "Triple",
     "utc": "00:00",
     "duration": 24,
@@ -290,7 +290,7 @@
   {
     "d": "Thu",
     "e": "Turbo Turtle",
-    "t": "Hero Frags",
+    "t": "Hero Fragments",
     "category": "Triple",
     "utc": "00:00",
     "duration": 24,
@@ -461,7 +461,7 @@
   {
     "d": "Sat",
     "e": "Power Play",
-    "t": "Hero Frags",
+    "t": "Hero Fragments",
     "category": "Double",
     "utc": "04:00",
     "duration": 4,
@@ -471,7 +471,7 @@
     "d": "Sat",
     "e": "Power Play",
     "t": "Build Speed",
-    "category": "Triple",
+    "category": "Double",
     "utc": "08:00",
     "duration": 4,
     "priority": 1
@@ -498,7 +498,7 @@
     "d": "Sat",
     "e": "Alliance Duel",
     "t": "Build Speed",
-    "category": "Triple",
+    "category": "Double",
     "utc": "00:00",
     "duration": 24,
     "priority": 2
@@ -560,16 +560,7 @@
   {
     "d": "Sat",
     "e": "Turbo Turtle",
-    "t": "Build Speed",
-    "category": "Triple",
-    "utc": "00:00",
-    "duration": 24,
-    "priority": 3
-  },
-  {
-    "d": "Sat",
-    "e": "Turbo Turtle",
-    "t": "Hero Frags",
+    "t": "Hero Fragments",
     "category": "Double",
     "utc": "00:00",
     "duration": 24,
@@ -587,7 +578,7 @@
   {
     "d": "Sun",
     "e": "Power Play",
-    "t": "Hero Frags",
+    "t": "Hero Fragments",
     "category": "Double",
     "utc": "00:00",
     "duration": 4,
@@ -677,7 +668,7 @@
   {
     "d": "Sun",
     "e": "Turbo Turtle",
-    "t": "Hero Frags",
+    "t": "Hero Fragments",
     "category": "Double",
     "utc": "00:00",
     "duration": 24,
