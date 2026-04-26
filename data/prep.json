@@ -190,7 +190,7 @@
   },
   {
     "task": "Gather RSS",
-    "itemPrep": false,
+    "itemPrep": true,
     "activityPrep": true,
     "allianceHelp": false,
     "saveItemType": "NA",
