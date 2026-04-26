@@ -46,7 +46,7 @@
   },
   {
     "task": "Kill Infected",
-    "itemPrep": false,
+    "itemPrep": true,
     "activityPrep": false,
     "allianceHelp": false,
     "saveItemType": "NA",
@@ -145,7 +145,7 @@
   },
   {
     "task": "Use Stamina",
-    "itemPrep": false,
+    "itemPrep": true,
     "activityPrep": false,
     "allianceHelp": false,
     "saveItemType": "Stamina packs",
