@@ -3350,7 +3350,7 @@ console.log("Tasks load error", e);
 async function loadPrep(){
 try{
 await ensureTranslationsLoaded();
-let res = await fetch("data/prep.json");
+let res = await fetch(`data/prep.json?v=${Date.now()}`, { cache:"no-store" });
 prepData = normalizePrepTranslations(await res.json());
 prepData = applyPrepTranslationsFromCatalog(prepData);
 prepMap = {};

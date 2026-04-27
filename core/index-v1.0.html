@@ -2514,7 +2514,7 @@ console.log("Tasks load error", e);
 
 async function loadPrep(){
 try{
-let res = await fetch("data/prep.json");
+let res = await fetch(`data/prep.json?v=${Date.now()}`, { cache:"no-store" });
 prepData = await res.json();
 prepMap = {};
 
