@@ -10,6 +10,10 @@
   gtag('config', 'G-P41P2Y6L3F');
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Tiles Survive Alliance Planner</title>
   
 <style>
@@ -207,6 +211,71 @@ margin-bottom:16px;
   color:#9fd1ff;
   text-decoration:underline;
 }
+
+.mobileAlertCard{
+  display:none;
+  border:1px solid rgba(255,213,74,0.28);
+  background:linear-gradient(180deg, rgba(255,213,74,0.12), rgba(17,17,17,0.96));
+}
+
+.mobileAlertCard.show{
+  display:block;
+}
+
+.mobileAlertTitle{
+  font-size:14px;
+  font-weight:700;
+  color:#ffd54a;
+}
+
+.mobileAlertText,
+.mobileAlertStatus{
+  font-size:12px;
+  line-height:1.45;
+  color:#d9d9d9;
+}
+
+.mobileAlertStatus{
+  margin-top:8px;
+  color:#9fd1ff;
+}
+
+.mobileAlertActions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+
+.mobileAlertBtn{
+  width:auto;
+  margin-top:0;
+  padding:8px 12px;
+  font-size:12px;
+  flex:1 1 180px;
+}
+
+/*
+.promoAdCard{
+  margin-top:10px;
+  padding:0;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.08);
+  background:#101010;
+}
+
+.promoAdLink{
+  display:block;
+  text-decoration:none;
+}
+
+.promoAdImage{
+  display:block;
+  width:100%;
+  aspect-ratio: 16 / 6;
+  object-fit:cover;
+}
+*/
 
 .card h2{
   margin:0 0 4px 0;   /* tighter than before */
@@ -591,9 +660,123 @@ opacity:.7;
 display:flex;
 justify-content:center;
 align-items:center;
+flex-wrap:wrap;
 gap:8px;
 margin:8px 0 10px;
 font-size:12px;
+}
+
+.alertSettingsBtn{
+width:auto;
+margin-top:0;
+padding:8px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+cursor:pointer;
+flex-shrink:0;
+}
+
+.soundToggleBtn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+min-width:136px;
+padding:7px 12px 7px 9px;
+border:1px solid rgba(255,255,255,0.16);
+background:linear-gradient(135deg, rgba(34,34,34,0.96), rgba(14,14,14,0.98));
+color:#f2f2f2;
+border-radius:999px;
+font-weight:700;
+box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);
+transition:all 0.2s ease;
+cursor:pointer;
+}
+
+.soundToggleVisual{
+display:inline-flex;
+align-items:center;
+width:34px;
+height:20px;
+padding:3px;
+border-radius:999px;
+background:rgba(255,255,255,0.12);
+box-sizing:border-box;
+transition:background 0.2s ease;
+flex-shrink:0;
+}
+
+.soundToggleKnob{
+width:14px;
+height:14px;
+border-radius:50%;
+background:#f6f6f6;
+box-shadow:0 1px 4px rgba(0,0,0,0.35);
+transform:translateX(0);
+transition:transform 0.2s ease, background 0.2s ease;
+}
+
+.soundToggleText{
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+line-height:1.05;
+text-align:left;
+}
+
+.soundToggleState{
+font-size:12px;
+font-weight:800;
+}
+
+.soundToggleHint{
+font-size:10px;
+color:#a8a8a8;
+}
+
+.soundToggleBtn.sound-on{
+background:linear-gradient(135deg, rgba(42,84,53,0.92), rgba(19,24,21,0.98));
+border-color:rgba(100,255,165,0.34);
+color:#dcffe8;
+box-shadow:0 0 14px rgba(76,255,136,0.12);
+}
+
+.soundToggleBtn.sound-on .soundToggleVisual{
+background:rgba(76,255,136,0.28);
+}
+
+.soundToggleBtn.sound-on .soundToggleKnob{
+background:#98ffbe;
+transform:translateX(14px);
+}
+
+.soundToggleBtn.sound-on .soundToggleHint{
+color:#90c8a4;
+}
+
+.soundToggleBtn.sound-off{
+background:linear-gradient(135deg, rgba(56,32,32,0.92), rgba(18,14,14,0.98));
+border-color:rgba(255,110,110,0.24);
+color:#ffd8d8;
+box-shadow:none;
+}
+
+.soundToggleBtn.sound-off .soundToggleVisual{
+background:rgba(255,255,255,0.08);
+}
+
+.soundToggleBtn.sound-off .soundToggleKnob{
+background:#ffd0d0;
+}
+
+.soundToggleBtn.sound-off .soundToggleHint{
+color:#c69b9b;
+}
+
+.soundToggleBtn:hover{
+transform:translateY(-1px);
+filter:brightness(1.04);
 }
 
 #langSelect{
@@ -1747,10 +1930,11 @@ html[dir="rtl"] #shortEventsRow .seTime{
   left:0;
   right:0;
 
-  height:36px;
+  min-height:42px;
   display:flex;
   align-items:center;
   justify-content:center;
+  padding:4px 10px;
 
   font-weight:bold;
   font-size:13px;
@@ -1781,6 +1965,56 @@ html[dir="rtl"] #shortEventsRow .seTime{
 .goldmineBanner.active{
   opacity:1;
   transform:translateY(0);
+  pointer-events:auto;
+}
+
+.goldmineBannerInner{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.goldmineBannerMain{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+  min-width:0;
+}
+
+.goldmineBannerText{
+  white-space:nowrap;
+}
+
+.goldmineBannerCountdown{
+  font-size:11px;
+  color:#fff4b0;
+  text-shadow:none;
+  white-space:nowrap;
+}
+
+.goldmineSoundToggle{
+  border:1px solid rgba(255,215,0,0.45);
+  background:rgba(0,0,0,0.35);
+  color:#fff2a6;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  width:auto;
+  margin-top:0;
+  flex-shrink:0;
+}
+
+.goldmineSoundToggle:hover{
+  background:rgba(255,215,0,0.18);
+}
+
+html[dir="rtl"] .goldmineBannerMain{
+  align-items:flex-end;
 }
 
 /* subtle pulse */
@@ -1805,6 +2039,25 @@ html[dir="rtl"] #shortEventsRow .seTime{
 .goldmineBanner.active{
   animation: goldPulse 2s infinite, goldShake 1.5s infinite;
 }  
+
+@media (max-width: 600px){
+  .goldmineBannerInner{
+    gap:8px;
+  }
+
+  .goldmineBannerText{
+    font-size:12px;
+  }
+
+  .goldmineBannerCountdown{
+    font-size:10px;
+  }
+
+  .goldmineSoundToggle{
+    padding:4px 8px;
+    font-size:10px;
+  }
+}
 
 /* =========================================
    Responsive: Tablet + Phone support
@@ -1983,6 +2236,43 @@ html[dir="rtl"] #shortEventsRow .seTime{
     <option value="ar">Arabic</option>
   </select>
 </div>
+
+<!--
+  Promo/Advertisement image placeholder
+  1. Remove this comment block when you want to show it
+  2. Replace images/ads/your-ad-image.jpg with your real image path
+  3. Replace https://discord.gg/YOUR_LINK with your real Discord link
+-->
+<!--
+<div class="card promoAdCard">
+  <a
+    class="promoAdLink"
+    href="https://discord.gg/YOUR_LINK"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      class="promoAdImage"
+      src="images/ads/your-ad-image.jpg"
+      alt="Discord promotion"
+    >
+  </a>
+</div>
+-->
+
+<div id="mobileAlertCard" class="card mobileAlertCard">
+  <div id="mobileAlertTitle" class="mobileAlertTitle">Mobile Alerts</div>
+  <div id="mobileAlertText" class="mobileAlertText"></div>
+  <div class="mobileAlertActions">
+    <button id="mobileArmSoundBtn" class="mobileAlertBtn" type="button"></button>
+    <button id="mobileSoundToggleBtn" class="mobileAlertBtn soundToggleBtn sound-on" type="button" aria-pressed="true">
+      <span class="soundToggleVisual" aria-hidden="true"><span class="soundToggleKnob"></span></span>
+      <span class="soundToggleText"><span class="soundToggleState">Sound On</span><span class="soundToggleHint">Alert audio</span></span>
+    </button>
+    <button id="mobileNotifyBtn" class="mobileAlertBtn" type="button"></button>
+  </div>
+  <div id="mobileAlertStatus" class="mobileAlertStatus"></div>
+</div>
   
 <div id="activeBanner" class="activeBanner"></div>
   
@@ -2010,7 +2300,16 @@ html[dir="rtl"] #shortEventsRow .seTime{
 <div style="position:relative">
 
   <div id="goldmineBanner" class="goldmineBanner">
-    <span id="goldmineBannerText"> 💰 Refresh Gold Mine!</span>
+    <div class="goldmineBannerInner">
+      <div class="goldmineBannerMain">
+        <span id="goldmineBannerText" class="goldmineBannerText"> 💰 Refresh Gold Mine!</span>
+        <span id="goldmineBannerCountdown" class="goldmineBannerCountdown"></span>
+      </div>
+      <button id="goldmineSoundToggle" class="goldmineSoundToggle soundToggleBtn sound-on" type="button" aria-pressed="true">
+        <span class="soundToggleVisual" aria-hidden="true"><span class="soundToggleKnob"></span></span>
+        <span class="soundToggleText"><span class="soundToggleState">Sound On</span><span class="soundToggleHint">Alert audio</span></span>
+      </button>
+    </div>
   </div>
 
   <div id="taskHunter" class="card hunterUnified">
@@ -2108,6 +2407,7 @@ let translations = {};
 let eventNameTranslations = {};
 let taskNameTranslations = {};
 let prepTranslations = {};
+let announcementTranslations = {};
 let translationsLoadedPromise = null;
 
 async function loadTranslations(){
@@ -2119,6 +2419,7 @@ async function loadTranslations(){
     eventNameTranslations = data.eventNames || {};
     taskNameTranslations = data.taskNames || {};
     prepTranslations = data.prep || {};
+    announcementTranslations = data.announcement || {};
 
     if(Array.isArray(data.supportedLangs) && data.supportedLangs.length){
       SUPPORTED_LANGS = data.supportedLangs;
@@ -2209,9 +2510,26 @@ function toTranslationObject(value){
 }
 
 function normalizeAnnouncementTranslations(data){
+  if(announcementTranslations.message != null){
+    data.message = announcementTranslations.message;
+  }
+
+  if(announcementTranslations.normalMessage != null){
+    data.normalMessage = announcementTranslations.normalMessage;
+  }
+
+  if(Array.isArray(announcementTranslations.templates)){
+    data.templates = announcementTranslations.templates;
+  }
+
   ANNOUNCEMENT_TRANSLATABLE_FIELDS.forEach(field => {
     data[field] = toTranslationObject(data[field]);
   });
+
+  if(Array.isArray(data.templates)){
+    data.templates = data.templates.map(item => toTranslationObject(item));
+  }
+
   return data;
 }
 
@@ -2285,7 +2603,9 @@ function applyLanguage(lang){
   setText("appTitle", tr("appTitle"));
   setText("appSubtitle", tr("appSubtitle"));
   setText("leaderTitle", tr("leaderTitle"));
+  setText("mobileAlertTitle", tr("mobileAlertTitle"));
   setText("goldmineBannerText", tr("goldmineBanner"));
+  setText("goldmineBannerCountdown", "");
   setText("hunterTitle", tr("hunterTitle"));
   setText("tripleLabel", tr("tripleChain"));
   setText("doubleLabel", tr("doubleChain"));
@@ -2294,6 +2614,8 @@ function applyLanguage(lang){
   setText("tripleListTitle", tr("tripleList"));
   setText("doubleListTitle", tr("doubleList"));
   setText("dayExclusiveTitle", tr("dayExclusive"));
+  updateGoldmineSoundToggle();
+  updateGoldmineBanner();
   setText("saveResourcesTitle", tr("saveResources"));
   setText("casualTasksTitle", tr("casualTasks"));
   setText("feedbackText", tr("feedbackText"));
@@ -2308,9 +2630,14 @@ function applyLanguage(lang){
   if(prepContent && prepContent.innerText.trim() === "Loading..."){
     prepContent.innerText = tr("loading");
   }
+
+  updateMobileAlertUI();
 }
 
 document.addEventListener("DOMContentLoaded", function(){
+  isMobileBrowser = detectMobileBrowser();
+  registerPwaSupport();
+
   const langSelect = document.getElementById("langSelect");
   if(langSelect){
     langSelect.value = currentLang;
@@ -2336,6 +2663,38 @@ document.addEventListener("DOMContentLoaded", function(){
   ensureTranslationsLoaded().then(() => {
     applyLanguage(currentLang);
   });
+
+  const mobileArmSoundBtn = document.getElementById("mobileArmSoundBtn");
+  if(mobileArmSoundBtn){
+    mobileArmSoundBtn.addEventListener("click", function(){
+      unlockGoldmineAudio();
+      updateMobileAlertUI();
+    });
+  }
+
+  const mobileSoundToggleBtn = document.getElementById("mobileSoundToggleBtn");
+  if(mobileSoundToggleBtn){
+    mobileSoundToggleBtn.addEventListener("click", function(){
+      toggleGoldmineSound();
+    });
+  }
+
+  const desktopSoundToggleBtn = document.getElementById("desktopSoundToggleBtn");
+  if(desktopSoundToggleBtn){
+    desktopSoundToggleBtn.addEventListener("click", function(){
+      toggleGoldmineSound();
+    });
+  }
+
+  const mobileNotifyBtn = document.getElementById("mobileNotifyBtn");
+  if(mobileNotifyBtn){
+    mobileNotifyBtn.addEventListener("click", function(){
+      requestNotificationPermission();
+    });
+  }
+
+  document.addEventListener("visibilitychange", updateMobileAlertUI);
+  updateMobileAlertUI();
 });
 
 function getMaintenanceState(){
@@ -3803,6 +4162,13 @@ Promise.all([
   updateTimer();
   updateDoubleTimer();
   updateTodayPanel();
+  updateGoldmineSoundToggle();
+  updateGoldmineBanner();
+
+  const goldmineSoundToggleBtn = document.getElementById("goldmineSoundToggle");
+  if(goldmineSoundToggleBtn){
+    goldmineSoundToggleBtn.addEventListener("click", toggleGoldmineSound);
+  }
 
   // 🔹 FAST LOOP (timers only)
 setInterval(function(){
@@ -3952,10 +4318,392 @@ function updateTodayPanel(){
 updateTodayPanel();
 
 let goldBannerActive = false;
+let goldmineAudioUnlocked = false;
+let goldmineSoundEnabled = true;
+let isMobileBrowser = false;
+
+const GOLDMINE_BANNER_CONFIG = {
+  refreshIntervalMinutes: 1,
+  visibleWindowMinutes: 5,
+  customSoundSrc: "sounds/goldmine-alert.mp3"
+};
+
+let goldmineSound = null;
+let goldmineCustomSoundAvailable = true;
+
+function trGoldmineSoundState(enabled){
+  return enabled ? tr("goldmineSoundOn") : tr("goldmineSoundOff");
+}
+
+function setCookie(name, value, days = 365){
+  const expires = new Date(Date.now() + (days * 86400000)).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+}
+
+function getCookie(name){
+  const prefix = `${name}=`;
+  const cookies = document.cookie ? document.cookie.split("; ") : [];
+
+  for(const cookie of cookies){
+    if(cookie.startsWith(prefix)){
+      return decodeURIComponent(cookie.slice(prefix.length));
+    }
+  }
+
+  return null;
+}
+
+const savedGoldmineSound = getCookie("goldmineSoundEnabled");
+if(savedGoldmineSound === "true"){
+  goldmineSoundEnabled = true;
+}else if(savedGoldmineSound === "false"){
+  goldmineSoundEnabled = false;
+}
+
+function getSoundToggleMeta(enabled){
+  if(!enabled){
+    return {
+      stateText: tr("goldmineSoundOff"),
+      hintText: "Alerts muted",
+      toneClass: "sound-off"
+    };
+  }
+
+  return {
+    stateText: tr("goldmineSoundOn"),
+    hintText: "Alerts active",
+    toneClass: "sound-on"
+  };
+}
+
+function getSoundToggleMarkup(enabled){
+  const { stateText, hintText } = getSoundToggleMeta(enabled);
+  return `
+    <span class="soundToggleVisual" aria-hidden="true"><span class="soundToggleKnob"></span></span>
+    <span class="soundToggleText">
+      <span class="soundToggleState">${stateText}</span>
+      <span class="soundToggleHint">${hintText}</span>
+    </span>
+  `;
+}
+
+function ensureGoldmineSound(){
+  if(!GOLDMINE_BANNER_CONFIG.customSoundSrc || !goldmineCustomSoundAvailable){
+    return null;
+  }
+
+  if(!goldmineSound){
+    goldmineSound = new Audio(GOLDMINE_BANNER_CONFIG.customSoundSrc);
+    goldmineSound.preload = "auto";
+    goldmineSound.playsInline = true;
+    goldmineSound.addEventListener("error", () => {
+      goldmineCustomSoundAvailable = false;
+      goldmineSound = null;
+    }, { once:true });
+  }
+
+  return goldmineSound;
+}
+
+function isStandaloneApp(){
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function detectMobileBrowser(){
+  return /Android|iPhone|iPad|iPod|Mobile|Opera Mini|IEMobile/i.test(navigator.userAgent || "");
+}
+
+function getNotificationPermissionState(){
+  if(!("Notification" in window)) return "unsupported";
+  return Notification.permission;
+}
+
+function updateMobileAlertUI(){
+  const card = document.getElementById("mobileAlertCard");
+  const text = document.getElementById("mobileAlertText");
+  const status = document.getElementById("mobileAlertStatus");
+  const soundBtn = document.getElementById("mobileArmSoundBtn");
+  const soundToggleBtn = document.getElementById("mobileSoundToggleBtn");
+  const notifyBtn = document.getElementById("mobileNotifyBtn");
+
+  if(!card || !text || !status || !soundBtn || !soundToggleBtn || !notifyBtn) return;
+
+  if(!isMobileBrowser){
+    card.classList.remove("show");
+    return;
+  }
+
+  card.classList.add("show");
+  text.textContent = tr("mobileAlertText");
+  soundBtn.textContent = goldmineAudioUnlocked ? tr("mobileArmSoundReady") : tr("mobileArmSound");
+  const mobileToggleMeta = getSoundToggleMeta(goldmineSoundEnabled);
+  soundToggleBtn.innerHTML = getSoundToggleMarkup(goldmineSoundEnabled);
+  soundToggleBtn.classList.toggle("sound-on", mobileToggleMeta.toneClass === "sound-on");
+  soundToggleBtn.classList.toggle("sound-off", mobileToggleMeta.toneClass === "sound-off");
+  soundToggleBtn.setAttribute("aria-pressed", goldmineSoundEnabled ? "true" : "false");
+  soundToggleBtn.setAttribute("aria-label", `${mobileToggleMeta.stateText} ${mobileToggleMeta.hintText}`);
+
+  const permission = getNotificationPermissionState();
+  if(permission === "granted"){
+    notifyBtn.textContent = tr("mobileNotificationsReady");
+    notifyBtn.disabled = true;
+  }else{
+    notifyBtn.textContent = tr("mobileEnableNotifications");
+    notifyBtn.disabled = permission === "unsupported";
+  }
+
+  const parts = [];
+  parts.push(goldmineSoundEnabled ? tr("mobileStatusSoundEnabled") : tr("mobileStatusSoundDisabled"));
+
+  if(permission === "granted"){
+    parts.push(tr("mobileStatusNotificationsReady"));
+  }else if(permission === "denied"){
+    parts.push(tr("mobileStatusNotificationsBlocked"));
+  }else if(permission === "unsupported"){
+    parts.push(tr("mobileStatusNotificationsUnsupported"));
+  }else{
+    parts.push(tr("mobileStatusNotificationsPending"));
+  }
+
+  parts.push(isStandaloneApp() ? tr("mobileStatusPwaInstalled") : tr("mobileStatusPwaNotInstalled"));
+  status.textContent = `${tr("mobileLimitNote")} ${parts.join(" • ")}`;
+}
+
+async function requestNotificationPermission(){
+  if(!("Notification" in window)) return;
+
+  try{
+    await Notification.requestPermission();
+  }catch(e){
+    console.log("Notification permission request failed", e);
+  }
+
+  updateMobileAlertUI();
+}
+
+function triggerGoldmineVibration(){
+  if(typeof navigator.vibrate === "function"){
+    navigator.vibrate([200, 120, 220]);
+  }
+}
+
+async function showGoldmineSystemNotification(){
+  if(!("Notification" in window) || Notification.permission !== "granted") return;
+
+  const title = tr("goldmineBanner").replace(/^💰\s*/, "").trim();
+  const options = {
+    body: tr("goldmineNotificationBody"),
+    tag: "goldmine-refresh",
+    renotify: true,
+    icon: "gaver.png",
+    badge: "gaver.png"
+  };
+
+  try{
+    if("serviceWorker" in navigator){
+      const registration = await navigator.serviceWorker.getRegistration();
+      if(registration && typeof registration.showNotification === "function"){
+        await registration.showNotification(title, options);
+        return;
+      }
+    }
+
+    new Notification(title, options);
+  }catch(e){
+    console.log("Goldmine system notification blocked", e);
+  }
+}
+
+function registerPwaSupport(){
+  if(!("serviceWorker" in navigator)) return;
+
+  navigator.serviceWorker.register("sw.js").catch(e => {
+    console.log("Service worker registration failed", e);
+  });
+}
+
+function updateGoldmineSoundToggle(){
+  const buttonIds = [
+    "goldmineSoundToggle",
+    "mobileSoundToggleBtn",
+    "desktopSoundToggleBtn"
+  ];
+
+  buttonIds.forEach(id => {
+    const btn = document.getElementById(id);
+    if(!btn) return;
+
+    const toggleMeta = getSoundToggleMeta(goldmineSoundEnabled);
+    btn.innerHTML = getSoundToggleMarkup(goldmineSoundEnabled);
+    btn.classList.toggle("sound-on", toggleMeta.toneClass === "sound-on");
+    btn.classList.toggle("sound-off", toggleMeta.toneClass === "sound-off");
+    btn.setAttribute("aria-pressed", goldmineSoundEnabled ? "true" : "false");
+    btn.setAttribute("aria-label", `${toggleMeta.stateText} ${toggleMeta.hintText}`);
+  });
+}
+
+function playGoldmineSoundNow(){
+  if(!goldmineSoundEnabled) return;
+
+  const sound = ensureGoldmineSound();
+  if(!sound){
+    playGoldmineFallbackBeep();
+    return;
+  }
+
+  sound.muted = false;
+  sound.currentTime = 0;
+
+  const playAttempt = sound.play();
+  if(playAttempt && typeof playAttempt.catch === "function"){
+    playAttempt.catch(() => {
+      playGoldmineFallbackBeep();
+    });
+  }
+}
+
+function toggleGoldmineSound(){
+  unlockGoldmineAudio();
+  goldmineSoundEnabled = !goldmineSoundEnabled;
+  setCookie("goldmineSoundEnabled", String(goldmineSoundEnabled));
+  updateGoldmineSoundToggle();
+  updateMobileAlertUI();
+
+  if(goldmineSoundEnabled){
+    playGoldmineSoundNow();
+  }
+}
+
+function formatGoldmineCountdown(ms){
+  let totalSec = Math.max(0, Math.ceil(ms / 1000));
+  let mins = Math.floor(totalSec / 60);
+  let secs = totalSec % 60;
+  return `${mins}m ${String(secs).padStart(2, "0")}s`;
+}
+
+function updateGoldmineCountdownText(text){
+  const el = document.getElementById("goldmineBannerCountdown");
+  if(el) el.textContent = text || "";
+}
+
+function unlockGoldmineAudio(){
+  goldmineAudioUnlocked = true;
+  const sound = ensureGoldmineSound();
+
+  if(sound){
+    try{
+      sound.muted = true;
+      sound.currentTime = 0;
+
+      const unlockAttempt = sound.play();
+      if(unlockAttempt && typeof unlockAttempt.then === "function"){
+        unlockAttempt
+          .then(() => {
+            sound.pause();
+            sound.currentTime = 0;
+            sound.muted = false;
+          })
+          .catch(() => {
+            sound.muted = false;
+          });
+      }else{
+        sound.pause();
+        sound.currentTime = 0;
+        sound.muted = false;
+      }
+    }catch(e){
+      sound.muted = false;
+    }
+  }
+
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if(AudioCtx){
+    try{
+      if(!window.goldmineAudioCtx){
+        window.goldmineAudioCtx = new AudioCtx();
+      }
+
+      if(window.goldmineAudioCtx.state === "suspended"){
+        window.goldmineAudioCtx.resume();
+      }
+    }catch(e){
+      console.log("Goldmine audio context unlock failed", e);
+    }
+  }
+
+  window.removeEventListener("pointerdown", unlockGoldmineAudio);
+  window.removeEventListener("keydown", unlockGoldmineAudio);
+  updateMobileAlertUI();
+}
+
+window.addEventListener("pointerdown", unlockGoldmineAudio, { once:true });
+window.addEventListener("keydown", unlockGoldmineAudio, { once:true });
+
+function playGoldmineNotification(){
+  showGoldmineSystemNotification();
+
+  if(!goldmineAudioUnlocked || !goldmineSoundEnabled) return;
+
+  triggerGoldmineVibration();
+
+  try{
+    if(GOLDMINE_BANNER_CONFIG.customSoundSrc && goldmineCustomSoundAvailable){
+      playGoldmineSoundNow();
+      return;
+    }
+  }catch(e){
+    console.log("Goldmine custom sound blocked", e);
+  }
+
+  playGoldmineFallbackBeep();
+}
+
+function playGoldmineFallbackBeep(){
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if(!AudioCtx) return;
+
+  try{
+    if(!window.goldmineAudioCtx){
+      window.goldmineAudioCtx = new AudioCtx();
+    }
+
+    const ctx = window.goldmineAudioCtx;
+
+    if(ctx.state === "suspended"){
+      ctx.resume();
+    }
+
+    const now = ctx.currentTime;
+    const frequencies = [880, 1174.66];
+
+    frequencies.forEach((frequency, index) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.value = frequency;
+
+      gain.gain.setValueAtTime(0.0001, now + (index * 0.18));
+      gain.gain.exponentialRampToValueAtTime(0.12, now + 0.03 + (index * 0.18));
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22 + (index * 0.18));
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now + (index * 0.18));
+      osc.stop(now + 0.24 + (index * 0.18));
+    });
+  }catch(e){
+    console.log("Goldmine notification blocked", e);
+  }
+}
 
 function updateGoldmineBanner(){
 
-  if(!longEvents || !longEvents.length) return;
+  if(!longEvents || !longEvents.length){
+    updateGoldmineCountdownText("");
+    return;
+  }
 
   const banner = document.getElementById("goldmineBanner");
   if(!banner) return;
@@ -3963,27 +4711,44 @@ function updateGoldmineBanner(){
   let now = new Date();
 
   let goldmine = longEvents.find(e => 
-    e.name && e.name.toLowerCase().includes("goldmine")
+    e.name === "Underground Goldmine"
   );
 
-  if(!goldmine){
+  if(!goldmine || !goldmine.active){
     banner.classList.remove("active");
+    updateGoldmineCountdownText("");
     goldBannerActive = false;   // 🔥 FIX
     return;
   }
 
   let end = new Date(goldmine.end);
-  let isRunning = now < end;
+  let isRunning = !Number.isNaN(end.getTime()) && now < end;
 
-  let minute = now.getUTCMinutes();
-  let inWindow = minute < 5;   // 🔧 testing window
+  let minuteOfDay = (now.getUTCHours() * 60) + now.getUTCMinutes();
+  let minuteInCycle = minuteOfDay % GOLDMINE_BANNER_CONFIG.refreshIntervalMinutes;
+  let inWindow = minuteInCycle < GOLDMINE_BANNER_CONFIG.visibleWindowMinutes;
+  let secondsIntoMinute = now.getUTCSeconds();
+  let cycleSeconds = (minuteInCycle * 60) + secondsIntoMinute;
+  let refreshIntervalSeconds = GOLDMINE_BANNER_CONFIG.refreshIntervalMinutes * 60;
+  let visibleWindowSeconds = GOLDMINE_BANNER_CONFIG.visibleWindowMinutes * 60;
 
   let shouldShow = isRunning && inWindow;
 
+  if(!isRunning){
+    updateGoldmineCountdownText("");
+  }
+  else if(inWindow){
+    let windowRemainingMs = (visibleWindowSeconds - cycleSeconds) * 1000;
+    updateGoldmineCountdownText(`${tr("goldmineWindowEnds")} ${formatGoldmineCountdown(windowRemainingMs)}`);
+  }
+  else{
+    let nextRefreshMs = (refreshIntervalSeconds - cycleSeconds) * 1000;
+    updateGoldmineCountdownText(`${tr("goldmineNextRefresh")} ${formatGoldmineCountdown(nextRefreshMs)}`);
+  }
+
   if(shouldShow && !goldBannerActive){
     banner.classList.add("active");
-
-    
+    playGoldmineNotification();
     goldBannerActive = true;
   }
   else if(!shouldShow && goldBannerActive){

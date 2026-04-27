@@ -1,0 +1,22 @@
+{
+  "name": "Tiles Survive Alliance Planner",
+  "short_name": "Tiles Survive",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0b0b",
+  "theme_color": "#111111",
+  "description": "Alliance event planner with goldmine alerts, timers, and mobile-friendly notifications.",
+  "icons": [
+    {
+      "src": "gaver.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "gaver.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

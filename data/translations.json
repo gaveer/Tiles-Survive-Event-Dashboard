@@ -21,6 +21,26 @@
       "appSubtitle": "Alliance Event Planner",
       "leaderTitle": "Alliance Leader",
       "goldmineBanner": "💰 Refresh Gold Mine!",
+      "goldmineNextRefresh": "Next refresh in",
+      "goldmineWindowEnds": "Window ends in",
+      "goldmineSoundOn": "Sound: On",
+      "goldmineSoundOff": "Sound: Off",
+      "goldmineNotificationBody": "Refresh window is live now. Open the dashboard and refresh your gold mine.",
+      "mobileAlertTitle": "Mobile Alerts",
+      "mobileAlertText": "Mobile browsers can block background sound. Tap once to arm sound, enable notifications, and install the page to your home screen for the best alert behavior.",
+      "mobileArmSound": "Arm Sound",
+      "mobileArmSoundReady": "Sound Ready",
+      "mobileEnableNotifications": "Enable Notifications",
+      "mobileNotificationsReady": "Notifications Ready",
+      "mobileLimitNote": "Mobile background alerts are limited.",
+      "mobileStatusSoundEnabled": "sound enabled",
+      "mobileStatusSoundDisabled": "sound disabled",
+      "mobileStatusNotificationsReady": "notifications enabled",
+      "mobileStatusNotificationsPending": "notifications pending",
+      "mobileStatusNotificationsBlocked": "notifications blocked",
+      "mobileStatusNotificationsUnsupported": "notifications unsupported",
+      "mobileStatusPwaInstalled": "installed to home screen",
+      "mobileStatusPwaNotInstalled": "not installed to home screen",
       "hunterTitle": "Task Hunter",
       "tripleChain": "Triple Chain",
       "doubleChain": "Double Chain",
@@ -60,6 +80,26 @@
       "appSubtitle": "Планировщик событий альянса",
       "leaderTitle": "Лидер альянса",
       "goldmineBanner": "💰 Обновите Золотую Шахту!",
+      "goldmineNextRefresh": "След. обновление через",
+      "goldmineWindowEnds": "Окно закроется через",
+      "goldmineSoundOn": "Звук: Вкл.",
+      "goldmineSoundOff": "Звук: Выкл.",
+      "goldmineNotificationBody": "Окно обновления активно. Откройте панель и обновите золотую шахту.",
+      "mobileAlertTitle": "Мобильные оповещения",
+      "mobileAlertText": "Мобильные браузеры могут блокировать звук в фоне. Нажмите один раз, чтобы активировать звук, включите уведомления и установите страницу на главный экран для лучших оповещений.",
+      "mobileArmSound": "Включить звук",
+      "mobileArmSoundReady": "Звук готов",
+      "mobileEnableNotifications": "Включить уведомления",
+      "mobileNotificationsReady": "Уведомления готовы",
+      "mobileLimitNote": "Фоновые оповещения в мобильном браузере ограничены.",
+      "mobileStatusSoundEnabled": "звук включен",
+      "mobileStatusSoundDisabled": "звук выключен",
+      "mobileStatusNotificationsReady": "уведомления включены",
+      "mobileStatusNotificationsPending": "уведомления ожидают разрешения",
+      "mobileStatusNotificationsBlocked": "уведомления заблокированы",
+      "mobileStatusNotificationsUnsupported": "уведомления не поддерживаются",
+      "mobileStatusPwaInstalled": "установлено на главный экран",
+      "mobileStatusPwaNotInstalled": "не установлено на главный экран",
       "hunterTitle": "Охотник за заданиями",
       "tripleChain": "Тройная цепочка",
       "doubleChain": "Двойная цепочка",
@@ -99,6 +139,26 @@
       "appSubtitle": "مخطط فعاليات التحالف",
       "leaderTitle": "قائد التحالف",
       "goldmineBanner": "💰 حدّث منجم الذهب!",
+      "goldmineNextRefresh": "التحديث التالي خلال",
+      "goldmineWindowEnds": "ينتهي التنبيه خلال",
+      "goldmineSoundOn": "الصوت: تشغيل",
+      "goldmineSoundOff": "الصوت: إيقاف",
+      "goldmineNotificationBody": "نافذة التحديث نشطة الآن. افتح اللوحة وحدّث منجم الذهب.",
+      "mobileAlertTitle": "تنبيهات الجوال",
+      "mobileAlertText": "قد تمنع متصفحات الجوال الصوت في الخلفية. انقر مرة واحدة لتفعيل الصوت، وفعّل الإشعارات، وثبّت الصفحة على الشاشة الرئيسية للحصول على أفضل تنبيهات.",
+      "mobileArmSound": "تفعيل الصوت",
+      "mobileArmSoundReady": "الصوت جاهز",
+      "mobileEnableNotifications": "تفعيل الإشعارات",
+      "mobileNotificationsReady": "الإشعارات جاهزة",
+      "mobileLimitNote": "تنبيهات الخلفية في متصفح الجوال محدودة.",
+      "mobileStatusSoundEnabled": "الصوت مفعّل",
+      "mobileStatusSoundDisabled": "الصوت متوقف",
+      "mobileStatusNotificationsReady": "تم تفعيل الإشعارات",
+      "mobileStatusNotificationsPending": "الإشعارات بانتظار الإذن",
+      "mobileStatusNotificationsBlocked": "الإشعارات محظورة",
+      "mobileStatusNotificationsUnsupported": "الإشعارات غير مدعومة",
+      "mobileStatusPwaInstalled": "مثبّت على الشاشة الرئيسية",
+      "mobileStatusPwaNotInstalled": "غير مثبّت على الشاشة الرئيسية",
       "hunterTitle": "متعقب المهام",
       "tripleChain": "الفائدة الثلاثية",
       "doubleChain": "الفائدة المزدوجة",
@@ -165,6 +225,58 @@
     "Lost Frontier": {
       "ru": "Потерянный Фронтир",
       "ar": "الحدود المفقودة"
+    },
+    "Alliance Siege": {
+      "ru": "Осада Альянса",
+      "ar": "حصار التحالف"
+    },
+    "Future Tycoon": {
+      "ru": "Будущий магнат",
+      "ar": "رجل أعمال المستقبل"
+    },
+    "Gourmet Rush": {
+      "ru": "Кулинарная гонка",
+      "ar": "سباق الذواقة"
+    },
+    "Leprechaun": {
+      "ru": "Лепрекон",
+      "ar": "ليبريكون"
+    },
+    "Leprechaun Store": {
+      "ru": "Магазин Лепрекона",
+      "ar": "متجر ليبريكون"
+    },
+    "Partner Paradise": {
+      "ru": "Рай Партнеров",
+      "ar": "جنة الشركاء"
+    },
+    "Sawblade Waltz": {
+      "ru": "Вальс Пилы",
+      "ar": "رقصة المنشار"
+    },
+    "Sign In": {
+      "ru": "Вход",
+      "ar": "تسجيل الدخول"
+    },
+    "Wasteland Album": {
+      "ru": "Альбом Пустошей",
+      "ar": "ألبوم الأراضي القاحلة"
+    },
+    "Chamber of Secrets": {
+      "ru": "Тайная Комната",
+      "ar": "غرفة الأسرار"
+    },
+    "Player Bash": {
+      "ru": "Схватка Игроков",
+      "ar": "مواجهة اللاعبين"
+    },
+    "Pawsome Puzzle Party": {
+      "ru": "Лапастый Пазл-Праздник",
+      "ar": "حفلة ألغاز مذهلة"
+    },
+    "Burrow Conquest": {
+      "ru": "Завоевание Норы",
+      "ar": "فتح الجحر"
     }
   },
   "taskNames": {
@@ -678,5 +790,84 @@
         "ar": "NA"
       }
     }
+  },
+  "announcement": {
+    "message": {
+      "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
+      "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
+      "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>"
+    },
+    "normalMessage": {
+      "en": "",
+      "ru": "",
+      "ar": ""
+    },
+    "templates": [
+      {
+        "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>",
+        "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>",
+        "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>"
+      },
+      {
+        "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#7DF9FF'>Shield up</b> for defense, its <span class='highlight'>Alliance Duel </span><b style='color:#ff4d4d'> Kill Event</b>",
+        "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#7DF9FF'>Shield up</b> for defense, its <span class='highlight'>Alliance Duel </span><b style='color:#ff4d4d'> Kill Event</b>",
+        "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#7DF9FF'>Shield up</b> for defense, its <span class='highlight'>Alliance Duel </span><b style='color:#ff4d4d'> Kill Event</b>"
+      },
+      {
+        "en": "<b style='color:#ff4d4d'>WAR ALERT</b> — Gather for defense at  <span class='highlight'>Metropolis 4</span>",
+        "ru": "<b style='color:#ff4d4d'>WAR ALERT</b> — Gather for defense at  <span class='highlight'>Metropolis 4</span>",
+        "ar": "<b style='color:#ff4d4d'>WAR ALERT</b> — Gather for defense at  <span class='highlight'>Metropolis 4</span>"
+      },
+      {
+        "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online",
+        "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online",
+        "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online"
+      },
+      {
+        "en": "⚔️ Alliance War in 30 mins — Activate shields and prepare troops",
+        "ru": "⚔️ Alliance War in 30 mins — Activate shields and prepare troops",
+        "ar": "⚔️ Alliance War in 30 mins — Activate shields and prepare troops"
+      },
+      {
+        "en": "📢 Power Play live — Focus on <b>Research Speed</b> and <b>Hero Fragments</b>",
+        "ru": "📢 Power Play live — Focus on <b>Research Speed</b> and <b>Hero Fragments</b>",
+        "ar": "📢 Power Play live — Focus on <b>Research Speed</b> and <b>Hero Fragments</b>"
+      },
+      {
+        "en": "📢 <b style='color:#FFD700'>Good try Everyone </b>,<b> Better luck next time for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
+        "ru": "📢 <b style='color:#FFD700'>Good try Everyone </b>,<b> Better luck next time for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
+        "ar": "📢 <b style='color:#FFD700'>Good try Everyone </b>,<b> Better luck next time for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>"
+      },
+      {
+        "en": "🏆 Congrats <b>Ranjan</b> for Top Rank — Keep pushing team!",
+        "ru": "🏆 Congrats <b>Ranjan</b> for Top Rank — Keep pushing team!",
+        "ar": "🏆 Congrats <b>Ranjan</b> for Top Rank — Keep pushing team!"
+      },
+      {
+        "en": "🏆 Kudos to <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> for Top Ranks in Reservoir Raid — Keep pushing team!",
+        "ru": "🏆 Kudos to <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> for Top Ranks in Reservoir Raid — Keep pushing team!",
+        "ar": "🏆 Kudos to <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> for Top Ranks in Reservoir Raid — Keep pushing team!"
+      },
+      {
+        "en": "📢 Alliance Event Planner Live — Prepare for upcoming events",
+        "ru": "📢 Alliance Event Planner Live — Prepare for upcoming events",
+        "ar": "📢 Alliance Event Planner Live — Prepare for upcoming events"
+      },
+      {
+        "en": "📦 Save resources today — Upcoming <b>Alliance Duel</b> tasks require prep",
+        "ru": "📦 Save resources today — Upcoming <b>Alliance Duel</b> tasks require prep",
+        "ar": "📦 Save resources today — Upcoming <b>Alliance Duel</b> tasks require prep"
+      },
+      {
+        "en": "⏳ Ghoulion Hunt soon — Be ready with stamina and rallies",
+        "ru": "⏳ Ghoulion Hunt soon — Be ready with stamina and rallies",
+        "ar": "⏳ Ghoulion Hunt soon — Be ready with stamina and rallies"
+      },
+      {
+        "en": "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>",
+        "ru": "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>",
+        "ar": "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>"
+      }
+    ]
   }
 }
