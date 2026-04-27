@@ -37,9 +37,9 @@
   },
   {
     "task": "A-Class Truck",
-    "itemPrep": false,
+    "itemPrep": true,
     "activityPrep": false,
-    "allianceHelp": false,
+    "allianceHelp": true,
     "saveItemType": "Supply refresh Vouchers",
     "prepComment": "",
     "tip": "Obtain supply refresh vouchers from daily task chests\r\n- Use vouchers to get better tasks\r\nDispatch during event window for maximum value"
