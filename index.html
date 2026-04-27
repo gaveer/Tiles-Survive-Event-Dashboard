@@ -255,27 +255,33 @@ margin-bottom:16px;
   flex:1 1 180px;
 }
 
-/*
 .promoAdCard{
   margin-top:10px;
   padding:0;
   overflow:hidden;
   border:1px solid rgba(255,255,255,0.08);
   background:#101010;
+  max-width:420px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .promoAdLink{
-  display:block;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-decoration:none;
+  min-height:140px;
+  padding:8px;
 }
 
 .promoAdImage{
   display:block;
   width:100%;
+  max-height:124px;
   aspect-ratio: 16 / 6;
-  object-fit:cover;
+  object-fit:contain;
 }
-*/
 
 .card h2{
   margin:0 0 4px 0;   /* tighter than before */
@@ -2245,22 +2251,22 @@ html[dir="rtl"] .goldmineSoundToggle .soundToggleVisual{
   2. Replace images/ads/your-ad-image.jpg with your real image path
   3. Replace https://discord.gg/YOUR_LINK with your real Discord link
 -->
-<!--
+
 <div class="card promoAdCard">
   <a
     class="promoAdLink"
-    href="https://discord.gg/YOUR_LINK"
+    href="https://discord.gg/xvX5Yc4FgJ"
     target="_blank"
     rel="noopener noreferrer"
   >
     <img
       class="promoAdImage"
-      src="images/ads/your-ad-image.jpg"
+      src="images/ads/ads.png"
       alt="Discord promotion"
     >
   </a>
 </div>
--->
+
 
 <div id="mobileAlertCard" class="card mobileAlertCard">
   <div id="mobileAlertTitle" class="mobileAlertTitle">Mobile Alerts</div>
@@ -4340,31 +4346,6 @@ function trGoldmineSoundState(enabled){
   return enabled ? tr("goldmineSoundOn") : tr("goldmineSoundOff");
 }
 
-function setCookie(name, value, days = 365){
-  const expires = new Date(Date.now() + (days * 86400000)).toUTCString();
-  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
-}
-
-function getCookie(name){
-  const prefix = `${name}=`;
-  const cookies = document.cookie ? document.cookie.split("; ") : [];
-
-  for(const cookie of cookies){
-    if(cookie.startsWith(prefix)){
-      return decodeURIComponent(cookie.slice(prefix.length));
-    }
-  }
-
-  return null;
-}
-
-const savedGoldmineSound = getCookie("goldmineSoundEnabled");
-if(savedGoldmineSound === "true"){
-  goldmineSoundEnabled = true;
-}else if(savedGoldmineSound === "false"){
-  goldmineSoundEnabled = false;
-}
-
 function getSoundToggleMeta(enabled){
   if(!enabled){
     return {
@@ -4570,7 +4551,6 @@ function playGoldmineSoundNow(){
 function toggleGoldmineSound(){
   unlockGoldmineAudio();
   goldmineSoundEnabled = !goldmineSoundEnabled;
-  setCookie("goldmineSoundEnabled", String(goldmineSoundEnabled));
   updateGoldmineSoundToggle();
   updateMobileAlertUI();
 
