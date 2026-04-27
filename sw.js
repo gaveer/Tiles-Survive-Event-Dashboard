@@ -5,7 +5,7 @@ const APP_SHELL = [
   "./manifest.webmanifest",
   "./gaver.png",
   "./tiles-bg.jpg",
-  "./sounds/goldmine-alert.mp3",
+  "./sounds/Xylophone.ogg",
   "./data/announcement.json",
   "./data/maintenance.json",
   "./data/prep.json",
