@@ -109,7 +109,7 @@
   },
   {
     "task": "Research Power",
-    "itemPrep": false,
+    "itemPrep": true,
     "activityPrep": true,
     "allianceHelp": true,
     "saveItemType": "Speed ups",

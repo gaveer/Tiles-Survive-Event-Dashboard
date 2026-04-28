@@ -10,12 +10,12 @@
   "icons": [
     {
       "src": "gaver.png",
-      "sizes": "192x192",
+      "sizes": "112x113",
       "type": "image/png"
     },
     {
       "src": "gaver.png",
-      "sizes": "512x512",
+      "sizes": "112x113",
       "type": "image/png"
     }
   ]
