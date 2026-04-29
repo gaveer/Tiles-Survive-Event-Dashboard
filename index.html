@@ -681,6 +681,34 @@ padding:4px 8px;
 font-size:12px;
 }
 
+.langRowSoundBtn{
+background:#ffd54a;
+color:black;
+border:none;
+border-radius:8px;
+padding:6px 12px;
+font-size:12px;
+font-weight:bold;
+cursor:pointer;
+white-space:nowrap;
+flex-shrink:0;
+transition:0.2s;
+}
+
+.langRowSoundBtn:hover{
+background:#ffed76;
+}
+
+.langRowSoundBtn.enabled{
+background:#4cff88;
+color:black;
+}
+
+.langRowSoundBtn:disabled{
+opacity:0.6;
+cursor:not-allowed;
+}
+
 .ghoulionBar{
 display:flex;
 align-items:center;
@@ -1912,6 +1940,12 @@ html[dir="rtl"] #shortEventsRow .seTime{
   color: #e8f5e9;
 }
 
+.langRowSoundBtn.enabled{
+background:#1f7f24;
+border-color:rgba(76,175,80,0.6);
+color:#e8f5e9;
+}
+
 html[dir="rtl"] .goldmineBannerMain{
   align-items:flex-end;
 text-align:right;
@@ -2151,6 +2185,7 @@ html[dir="rtl"] .goldmineDismissBtn{
     <option value="ru">Russian</option>
     <option value="ar">Arabic</option>
   </select>
+  <button id="goldmineArmSoundBtn" class="langRowSoundBtn" type="button">Enable Sound</button>
 </div>
 
 <!--
@@ -2218,7 +2253,6 @@ html[dir="rtl"] .goldmineDismissBtn{
         <span id="goldmineBannerCountdown" class="goldmineBannerCountdown"></span>
       </div>
       <div style="display:flex; gap:8px; align-items:center;">
-        <button id="goldmineArmSoundBtn" class="goldmineDismissBtn" type="button">Enable Sound</button>
         <button id="goldmineDismissBtn" class="goldmineDismissBtn" type="button">Skip Alert</button>
       </div>
     </div>
@@ -2519,6 +2553,17 @@ function applyLanguage(lang){
   setText("goldmineBannerText", tr("goldmineBanner"));
   setText("goldmineBannerCountdown", "");
   setText("goldmineDismissBtn", getGoldmineDismissLabel());
+  
+  // Update sound button text based on current state
+  const soundBtn = document.getElementById("goldmineArmSoundBtn");
+  if(soundBtn){
+    if(soundBtn.classList.contains("enabled")){
+      soundBtn.textContent = tr("goldmineSoundEnabled");
+    } else {
+      soundBtn.textContent = tr("goldmineEnableSound");
+    }
+  }
+  
   setText("hunterTitle", tr("hunterTitle"));
   setText("tripleLabel", tr("tripleChain"));
   setText("doubleLabel", tr("doubleChain"));

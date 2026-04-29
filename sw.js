@@ -1,4 +1,4 @@
-const CACHE_NAME = "tiles-survive-dashboard-v1";
+const CACHE_NAME = "tiles-survive-dashboard-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -52,14 +52,29 @@ self.addEventListener("fetch", event => {
   }
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if(cached) return cached;
-      return fetch(event.request).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)).catch(() => {});
-        return response;
-      });
-    }).catch(() => fetch(event.request))
+    (() => {
+      const url = new URL(event.request.url);
+      const isHtmlRequest = url.pathname.endsWith('.html');
+      
+      if(isHtmlRequest){
+        // Network-first strategy for HTML files
+        return fetch(event.request).then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)).catch(() => {});
+          return response;
+        }).catch(() => caches.match(event.request));
+      }
+      
+      // Cache-first strategy for other assets
+      return caches.match(event.request).then(cached => {
+        if(cached) return cached;
+        return fetch(event.request).then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)).catch(() => {});
+          return response;
+        });
+      }).catch(() => fetch(event.request));
+    })()
   );
 });
 
