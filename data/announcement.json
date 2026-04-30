@@ -1,49 +1,79 @@
 ﻿{
-    "_instructions": {
-        "usage": "Edit 'message' for current display. Use 'templates' below as backup messages.",
-        "enabled": "true = show ticker, false = hide ticker",
-        "emergency": "Set active true/false. Use startTime and endTime in UTC format.",
-        "time_format": "Use ISO format: YYYY-MM-DDTHH:MM:SSZ (UTC time)",
-        "examples": {
-            "startTime": "2026-03-22T17:30:00Z",
-            "endTime": "2026-03-27T18:30:00Z"
-        },
-        "notes": [
-            "If both startTime and endTime are set → runs between those times",
-            "If only endTime is set → runs immediately until that time",
-            "If only startTime is set → starts at that time and stays active",
-            "If both are empty → emergency runs as long as active = true"
-        ]
+  "_instructions": {
+    "usage": "Edit 'message' for current display. Use 'templates' below as backup messages.",
+    "enabled": "true = show ticker, false = hide ticker",
+    "emergency": "Set active true/false. Use startTime and endTime in UTC format.",
+    "time_format": "Use ISO format: YYYY-MM-DDTHH:MM:SSZ (UTC time)",
+    "examples": {
+      "startTime": "2026-03-22T17:30:00Z",
+      "endTime": "2026-03-27T18:30:00Z"
     },
-    "enabled": true,
-    "emergency": {
-        "active": false,
-        "startTime": "2026-03-22T08:30:00Z",
-        "endTime": "2026-04-12T13:00:00Z"
-    },
-    "message": {
-        "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
-        "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
-        "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>"
-    },
-    "normalMessage": {
-        "en": "",
-        "ru": "",
-        "ar": ""
-    },
-    "templates": [
-        "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>",
-        "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#7DF9FF'>Shield up</b> for defense, its <span class='highlight'>Alliance Duel </span><b style='color:#ff4d4d'> Kill Event</b>",
-        "<b style='color:#ff4d4d'>WAR ALERT</b> — Gather for defense at  <span class='highlight'>Metropolis 4</span>",
-        "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online",
-        "⚔️ Alliance War in 30 mins — Activate shields and prepare troops",
-        "📢 Power Play live — Focus on <b>Research Speed</b> and <b>Hero Fragments</b>",
-        "📢 <b style='color:#FFD700'>Good try Everyone </b>,<b> Better luck next time for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
-        "🏆 Congrats <b>Ranjan</b> for Top Rank — Keep pushing team!",
-        "🏆 Kudos to <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> for Top Ranks in Reservoir Raid — Keep pushing team!",
-        "📢 Alliance Event Planner Live — Prepare for upcoming events",
-        "📦 Save resources today — Upcoming <b>Alliance Duel</b> tasks require prep",
-        "⏳ Ghoulion Hunt soon — Be ready with stamina and rallies",
-        "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>"
+    "notes": [
+      "If both startTime and endTime are set → runs between those times",
+      "If only endTime is set → runs immediately until that time",
+      "If only startTime is set → starts at that time and stays active",
+      "If both are empty → emergency runs as long as active = true"
     ]
+  },
+  "enabled": true,
+  "emergency": {
+    "active": false,
+    "startTime": "2026-03-22T08:30:00Z",
+    "endTime": "2026-04-12T13:00:00Z"
+  },
+  "message": {
+    "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
+    "ru": "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — <b style='color:#abc32f'>Обновите ваши </b> <b style='color:#FFD700'>ЗОЛОТЫЕ ШАХТЫ </b> & <b> Подготовьтесь к </b> <b style='color:#7DF9FF'>РЕЙДУ НА РЕЗЕРВУАР </b>",
+    "ar": "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> — <b style='color:#abc32f'>قم بتحديث </b> <b style='color:#FFD700'>مناجم الذهب </b> & <b> استعد لـ </b> <b style='color:#7DF9FF'>هجوم الخزان </b>"
+  },
+  "normalMessage": {
+    "en": "",
+    "ru": "",
+    "ar": ""
+  },
+  "templatesEN": [
+    "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>",
+    "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#7DF9FF'>Shield up</b> for defense, its <span class='highlight'>Alliance Duel </span><b style='color:#ff4d4d'> Kill Event</b>",
+    "<b style='color:#ff4d4d'>WAR ALERT</b> — Gather for defense at  <span class='highlight'>Metropolis 4</span>",
+    "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online",
+    "⚔️ Alliance War in 30 mins — Activate shields and prepare troops",
+    "📢 Power Play live — Focus on <b>Research Speed</b> and <b>Hero Fragments</b>",
+    "📢 <b style='color:#FFD700'>Good try Everyone </b>,<b> Better luck next time for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
+    "🏆 Congrats <b>Ranjan</b> for Top Rank — Keep pushing team!",
+    "🏆 Kudos to <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> for Top Ranks in Reservoir Raid — Keep pushing team!",
+    "📢 Alliance Event Planner Live — Prepare for upcoming events",
+    "📦 Save resources today — Upcoming <b>Alliance Duel</b> tasks require prep",
+    "⏳ Ghoulion Hunt soon — Be ready with stamina and rallies",
+    "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>"
+  ],
+  "templatesRU": [
+    "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> —  <b style='color:#FFD700'>🏆 ПОЗДРАВЛЯЕМ</b> всех с <b> победой </b> в <b style='color:#7DF9FF'>РЕЙДЕ НА РЕЗЕРВУАР </b> Особая благодарность лидерам <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>",
+    "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — <b style='color:#7DF9FF'>Поднимите щиты</b> для защиты, это <span class='highlight'>Дуэль Альянсов </span><b style='color:#ff4d4d'> Событие убийств</b>",
+    "<b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — Собираемся для защиты в <span class='highlight'>Метрополис 4</span>",
+    "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — Всем участникам собраться в <span class='highlight'>Arcadia</span> • Будьте онлайн",
+    "⚔️ Война Альянсов через 30 минут — Активируйте щиты и подготовьте войска",
+    "📢 Power Play начался — Сосредоточьтесь на <b>скорости исследований</b> и <b>фрагментах героев</b>",
+    "📢 <b style='color:#FFD700'>Хорошая попытка, все молодцы </b>,<b> в следующий раз повезёт в </b> <b style='color:#7DF9FF'>РЕЙДЕ НА РЕЗЕРВУАР </b>",
+    "🏆 Поздравляем <b>Ranjan</b> с первым местом — Продолжаем в том же духе!",
+    "🏆 Особая благодарность <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> за топовые места в Рейде на резервуар — Продолжаем!",
+    "📢 Планировщик событий Альянса запущен — Готовьтесь к предстоящим событиям",
+    "📦 Сохраняйте ресурсы сегодня — Предстоящие задачи <b>Дуэли Альянсов</b> требуют подготовки",
+    "⏳ Охота на Гулиона скоро — Подготовьте выносливость и ралли",
+    "🏆 <b style='color:#FFD700'> ПОЗДРАВЛЯЕМ</b> ТОП <b> бойцов по урону </b> в <b style='color:#ff4d4d'>ПРЕСЛЕДОВАНИИ ГУЛИОНА </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>"
+  ],
+  "templatesAR": [
+    "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> —  <b style='color:#FFD700'>🏆 تهانينا</b> للجميع على <b> الفوز </b> في <b style='color:#7DF9FF'>هجوم الخزان </b> تحية لأصحاب المراكز الأولى <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>",
+    "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> — <b style='color:#7DF9FF'>فعّلوا الدروع</b> للدفاع، إنه <span class='highlight'>نزال التحالف </span><b style='color:#ff4d4d'> حدث القتل</b>",
+    "<b style='color:#ff4d4d'>إنذار حرب</b> — التجمع للدفاع في <span class='highlight'>Metropolis 4</span>",
+    "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> — على جميع الأعضاء التجمع في <span class='highlight'>Arcadia</span> • كونوا متصلين",
+    "⚔️ حرب التحالف بعد 30 دقيقة — فعّلوا الدروع واستعدوا بالقوات",
+    "📢 Power Play بدأ — ركّزوا على <b>سرعة البحث</b> و <b>شظايا الأبطال</b>",
+    "📢 <b style='color:#FFD700'>محاولة جيدة للجميع </b>,<b> حظ أوفر في المرة القادمة في </b> <b style='color:#7DF9FF'>هجوم الخزان </b>",
+    "🏆 تهانينا <b>Ranjan</b> على المركز الأول — استمروا يا فريق!",
+    "🏆 تحية لـ <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> على المراكز المتقدمة في هجوم الخزان — واصلوا التقدم!",
+    "📢 مخطط فعاليات التحالف مباشر — استعدوا للأحداث القادمة",
+    "📦 وفّروا الموارد اليوم — مهام <b>نزال التحالف</b> القادمة تتطلب تجهيز",
+    "⏳ صيد Ghoulion قريبًا — استعدوا بالطاقة والتجمعات",
+    "🏆 <b style='color:#FFD700'> تهانينا</b> لأفضل <b> مسببين للضرر </b> في <b style='color:#ff4d4d'>مطاردة Ghoulion </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>"
+  ]
 }

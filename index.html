@@ -673,6 +673,28 @@ margin:8px 0 10px;
 font-size:12px;
 }
 
+.langSelector {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.langSelector label {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.langSelector select {
+  background:#1a1a1a;
+  color:#fff;
+  border:1px solid #3a3a3a;
+  border-radius:6px;
+  padding: 4px 6px;
+  font-size: 12px;
+}
+
 #langSelect{
 background:#1a1a1a;
 color:#fff;
@@ -744,6 +766,44 @@ opacity:0.5;
 cursor:not-allowed;
 transform:none;
 box-shadow: none;
+}
+
+/* Live User Counter */
+.userCounterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  background: rgba(77, 166, 255, 0.15);
+  border: 1px solid rgba(77, 166, 255, 0.4);
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.userCounterLabel {
+  font-size: 10px;
+  opacity: 0.8;
+  text-align: center;
+  margin-bottom: 1px;
+}
+
+.userCounterIcon {
+  font-size: 14px;
+  animation: counterPulse 2s ease-in-out infinite;
+}
+
+.userCounterText {
+  color: #6fb6ff;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+@keyframes counterPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
 .ghoulionBar{
@@ -2222,12 +2282,19 @@ html[dir="rtl"] .goldmineDismissBtn{
 </div>
 
 <div class="langRow">
-  <label id="langLabel" for="langSelect">Language</label>
-  <select id="langSelect">
-    <option value="en">English</option>
-    <option value="ru">Russian</option>
-    <option value="ar">العربية</option>
-  </select>
+  <div class="langSelector">
+    <label id="langLabel" for="langSelect">Language</label>
+    <select id="langSelect">
+      <option value="en">English</option>
+      <option value="ru">Russian</option>
+      <option value="ar">العربية</option>
+    </select>
+  </div>
+  <div class="userCounterContainer">
+    <label id="userCounterLabel" class="userCounterLabel">Active Users</label>
+    <span class="userCounterIcon">👥</span>
+    <span id="userCounterText" class="userCounterText">--</span>
+  </div>
   <button id="goldmineArmSoundBtn" class="langRowSoundBtn" type="button">Enable Sound</button>
 </div>
 
@@ -2379,7 +2446,7 @@ html[dir="rtl"] .goldmineDismissBtn{
     src="https://discord.com/widget?id=1491009847464951850&theme=dark"
     allowtransparency="true"
     sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-  >
+  ></iframe>
 </div>-->
 
 
@@ -2398,6 +2465,94 @@ let taskNameTranslations = {};
 let prepTranslations = {};
 let announcementTranslations = {};
 let translationsLoadedPromise = null;
+
+/* === Live User Counter System === */
+let userSessionId = null;
+const USER_COUNTER_STORAGE_PREFIX = "dashboardUser_";
+const USER_HEARTBEAT_INTERVAL = 3000; // 3 seconds
+const USER_TIMEOUT = 10000; // 10 seconds - mark as inactive after this
+
+function initializeUserCounter() {
+  // Generate unique session ID if not exists
+  userSessionId = "user_" + Math.random().toString(36).substr(2, 9) + "_" + Date.now();
+  
+  // Start heartbeat
+  startUserHeartbeat();
+  
+  // Update counter on visibility change
+  document.addEventListener("visibilitychange", updateUserCounter);
+  
+  // Clean up on page unload
+  window.addEventListener("beforeunload", () => {
+    removeUserSession();
+  });
+  
+  // Initial counter display
+  updateUserCounter();
+}
+
+function startUserHeartbeat() {
+  // Update this session's timestamp
+  const key = USER_COUNTER_STORAGE_PREFIX + userSessionId;
+  localStorage.setItem(key, Date.now().toString());
+  
+  // Update counter display
+  updateUserCounter();
+  
+  // Repeat periodically
+  setInterval(() => {
+    if (!document.hidden) {
+      const key = USER_COUNTER_STORAGE_PREFIX + userSessionId;
+      localStorage.setItem(key, Date.now().toString());
+      updateUserCounter();
+    }
+  }, USER_HEARTBEAT_INTERVAL);
+}
+
+function updateUserCounter() {
+  const now = Date.now();
+  let activeCount = 0;
+  const keysToRemove = [];
+  
+  // Count active users and clean up stale entries
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(USER_COUNTER_STORAGE_PREFIX)) {
+      try {
+        const timestamp = parseInt(localStorage.getItem(key));
+        if (now - timestamp < USER_TIMEOUT) {
+          activeCount++;
+        } else {
+          keysToRemove.push(key);
+        }
+      } catch (e) {
+        keysToRemove.push(key);
+      }
+    }
+  }
+  
+  // Clean up stale entries
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+  
+  // Update UI
+  const counterElement = document.getElementById("userCounterText");
+  if (counterElement) {
+    counterElement.textContent = activeCount > 0 ? activeCount : "--";
+  }
+}
+
+function removeUserSession() {
+  const key = USER_COUNTER_STORAGE_PREFIX + userSessionId;
+  localStorage.removeItem(key);
+}
+
+// Listen for storage changes from other tabs
+window.addEventListener("storage", (e) => {
+  if (e.key && e.key.startsWith(USER_COUNTER_STORAGE_PREFIX)) {
+    // Another tab updated, refresh our counter
+    updateUserCounter();
+  }
+});
 
 async function loadTranslations(){
   try{
@@ -2622,6 +2777,7 @@ function applyLanguage(lang){
   setText("maintenanceTitle", tr("scheduledMaintenance"));
   setText("supportBtn", tr("supportMe"));
   setText("copyBtn", tr("copyId"));
+  setText("userCounterLabel", tr("activeUsers"));
 
   const supportTitle = document.querySelector(".supportTitle");
   if(supportTitle) supportTitle.innerText = tr("supportTitle");
@@ -2699,6 +2855,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
   document.addEventListener("visibilitychange", updateMobileAlertUI);
   updateMobileAlertUI();
+  
+  // Initialize live user counter
+  initializeUserCounter();
 });
 
 function getMaintenanceState(){
@@ -4938,7 +5097,7 @@ document.addEventListener("DOMContentLoaded", function(){
         <div class="supportTitle">${tr("supportTitle")}</div>
 
         <div class="supportId" id="gameIdText">
-          #####
+          24284911
         </div>
 
         <button id="copyBtn">${tr("copyId")}</button>

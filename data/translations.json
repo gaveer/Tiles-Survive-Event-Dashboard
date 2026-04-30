@@ -70,7 +70,8 @@
       "supportTitle": "Support me with a top up 🎁",
       "copyId": "Copy ID",
       "copied": "Copied!",
-      "noData": "No Data"
+      "noData": "No Data",
+      "activeUsers": "Active Users"
     },
     "ru": {
       "language": "Язык",
@@ -127,7 +128,8 @@
       "supportTitle": "Поддержите меня донатом 🎁",
       "copyId": "Копировать ID",
       "copied": "Скопировано!",
-      "noData": "Нет данных"
+      "noData": "Нет данных",
+      "activeUsers": "Активные пользователи"
     },
     "ar": {
       "language": "اللغة",
@@ -184,7 +186,8 @@
       "supportTitle": "ادعمني بشحن هدية 🎁",
       "copyId": "نسخ المعرف",
       "copied": "تم النسخ!",
-      "noData": "لا توجد بيانات"
+      "noData": "لا توجد بيانات",
+      "activeUsers": "المستخدمون النشطون"
     }
   },
   "eventNames": {
@@ -275,7 +278,7 @@
   },
   "taskNames": {
     "Hero Fragments": {
-      "ru": "Осколки Героя",
+      "ru": "Фрагменты героев",
       "ar": "شظايا البطل"
     },
     "Train Speed": {
@@ -303,52 +306,52 @@
     "S Tier Dispatch": {
       "task": {
         "en": "S Tier Dispatch",
-        "ru": "S Tier Dispatch",
-        "ar": "S Tier Dispatch"
+        "ru": "S-уровень отправки",
+        "ar": "إرسال فئة S"
       },
       "prepComment": {
         "en": "Obtain refresh items from truck raids and daily task chests.",
-        "ru": "Obtain refresh items from truck raids and daily task chests.",
-        "ar": "Obtain refresh items from truck raids and daily task chests."
+        "ru": "Получайте предметы обновления из налётов на грузовики и ежедневных сундуков заданий.",
+        "ar": "احصل على عناصر التحديث من غارات الشاحنات وصناديق المهام اليومية."
       },
       "tip": {
         "en": "Obtain refresh items from truck raids and daily task chests\r\n- Use them during event to improve task quality\r\nRequest alliance assistance and share in alliance chat\r\n- Each member can assist once per task and uses limited assist chances to improve task speed",
-        "ru": "Obtain refresh items from truck raids and daily task chests\r\n- Use them during event to improve task quality\r\nRequest alliance assistance and share in alliance chat\r\n- Each member can assist once per task and uses limited assist chances to improve task speed",
-        "ar": "Obtain refresh items from truck raids and daily task chests\r\n- Use them during event to improve task quality\r\nRequest alliance assistance and share in alliance chat\r\n- Each member can assist once per task and uses limited assist chances to improve task speed"
+        "ru": "Получайте предметы обновления из налётов на грузовики и ежедневных сундуков заданий\r\n- Используйте их во время события для улучшения качества заданий\r\nЗапрашивайте помощь альянса и делитесь в чате альянса\r\n- Каждый участник может помочь один раз за задание и тратит ограниченные попытки помощи для ускорения выполнения",
+        "ar": "احصل على عناصر التحديث من غارات الشاحنات وصناديق المهام اليومية\r\n- استخدمها أثناء الحدث لتحسين جودة المهام\r\nاطلب مساعدة التحالف وشارك في الدردشة\r\n- يمكن لكل عضو المساعدة مرة واحدة لكل مهمة باستخدام محاولات محدودة لتسريع التنفيذ"
       },
       "saveItemType": {
         "en": "Refresh Hourglass",
-        "ru": "Refresh Hourglass",
-        "ar": "Refresh Hourglass"
+        "ru": "Песочные часы обновления",
+        "ar": "ساعة إعادة التحديث"
       }
     },
     "Hero Fragments": {
       "task": {
         "en": "Hero Fragments",
-        "ru": "Hero Fragments",
-        "ar": "Hero Fragments"
+        "ru": "Скорость тренировки",
+        "ar": "شظايا الأبطال"
       },
       "prepComment": {
         "en": "Obtain fragments from recruitment, events, and stores.\r\ncomplete free recruitments.",
-        "ru": "Obtain fragments from recruitment, events, and stores.\r\ncomplete free recruitments.",
-        "ar": "Obtain fragments from recruitment, events, and stores.\r\ncomplete free recruitments."
+        "ru": "Получайте фрагменты из найма, событий и магазинов.\r\nвыполняйте бесплатные наймы.",
+        "ar": "احصل على الشظايا من التجنيد والأحداث والمتاجر.\r\nقم بعمليات التجنيد المجانية."
       },
       "tip": {
         "en": "Obtain fragments from recruitment, events, and stores\r\n- Check stores regularly for discounted fragments\r\nUse free recruitment daily\r\n- Save fragments for event usage",
-        "ru": "Obtain fragments from recruitment, events, and stores\r\n- Check stores regularly for discounted fragments\r\nUse free recruitment daily\r\n- Save fragments for event usage",
-        "ar": "Obtain fragments from recruitment, events, and stores\r\n- Check stores regularly for discounted fragments\r\nUse free recruitment daily\r\n- Save fragments for event usage"
+        "ru": "Получайте фрагменты из найма, событий и магазинов\r\n- Регулярно проверяйте магазины на скидки\r\nИспользуйте бесплатный найм ежедневно\r\n- Сохраняйте фрагменты для события",
+        "ar": "احصل على الشظايا من التجنيد والأحداث والمتاجر\r\n- تحقق من المتاجر بانتظام للعروض\r\nاستخدم التجنيد المجاني يوميًا\r\n- احتفظ بالشظايا للحدث"
       },
       "saveItemType": {
         "en": "Hero Fragments",
-        "ru": "Hero Fragments",
-        "ar": "Hero Fragments"
+        "ru": "Фрагменты героев",
+        "ar": "شظايا الأبطال"
       }
     },
     "Train Speed": {
       "task": {
         "en": "Train Speed",
-        "ru": "Train Speed",
-        "ar": "Train Speed"
+        "ru": "Осколки Героя",
+        "ar": "سرعة التدريب"
       },
       "prepComment": {
         "en": "",
@@ -358,41 +361,41 @@
       "tip": {
         "en": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nUse power plant training boost when multiple queues are active\r\n- Maximizes total time reduction\r\nKeep barracks running continuously\r\n- Maintain steady troop production",
         "ru": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nUse power plant training boost when multiple queues are active\r\n- Maximizes total time reduction\r\nKeep barracks running continuously\r\n- Maintain steady troop production",
-        "ar": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nUse power plant training boost when multiple queues are active\r\n- Maximizes total time reduction\r\nKeep barracks running continuously\r\n- Maintain steady troop production"
+        "ar": "فعّل تعزيز سعة التدريب قبل بدء تدريب القوات\r\n- ينطبق على جميع الثكنات\r\nاستخدم تعزيز محطة الطاقة عند تعدد الصفوف\r\n- لتحقيق أقصى تقليل للوقت\r\nحافظ على تشغيل الثكنات دائمًا\r\n- إنتاج مستمر للقوات"
       },
       "saveItemType": {
         "en": "Speed ups",
-        "ru": "Speed ups",
-        "ar": "Speed ups"
+        "ru": "Ускорения",
+        "ar": "تسريعات"
       }
     },
     "Train Power": {
       "task": {
         "en": "Train Power",
-        "ru": "Train Power",
-        "ar": "Train Power"
+        "ru": "Сила тренировки",
+        "ar": "قوة التدريب"
       },
       "prepComment": {
         "en": "Queue troop training in advance\r\n- Activate training capacity boost before queueing troops.",
-        "ru": "Queue troop training in advance\r\n- Activate training capacity boost before queueing troops.",
-        "ar": "Queue troop training in advance\r\n- Activate training capacity boost before queueing troops."
+        "ru": "Запланируйте обучение войск заранее\r\n- Активируйте бонус вместимости перед началом.",
+        "ar": "قم بجدولة تدريب القوات مسبقًا\r\n- فعّل تعزيز السعة قبل البدء."
       },
       "tip": {
         "en": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nQueue troop training in advance\r\n- Complete during event for maximum points\r\nUse power plant boost after queues are active\r\n- Improves efficiency across all queues",
-        "ru": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nQueue troop training in advance\r\n- Complete during event for maximum points\r\nUse power plant boost after queues are active\r\n- Improves efficiency across all queues",
-        "ar": "Activate training capacity boost before queueing troops\r\n- Applies to all barracks\r\nQueue troop training in advance\r\n- Complete during event for maximum points\r\nUse power plant boost after queues are active\r\n- Improves efficiency across all queues"
+        "ru": "Активируйте бонус вместимости перед обучением войск\r\n- Применяется ко всем казармам\r\nИспользуйте бонус электростанции при нескольких очередях\r\n- Максимальное сокращение времени\r\nДержите казармы постоянно занятыми\r\n- Поддерживайте стабильное производство войск",
+        "ar": "فعّل تعزيز السعة قبل التدريب\r\n- ينطبق على جميع الثكنات\r\nقم بجدولة التدريب مسبقًا\r\n- أكمل أثناء الحدث للحصول على أعلى نقاط\r\nاستخدم تعزيز محطة الطاقة بعد بدء الصفوف\r\n- يزيد الكفاءة"
       },
       "saveItemType": {
         "en": "Speed ups",
-        "ru": "Speed ups",
-        "ar": "Speed ups"
+        "ru": "Ускорения",
+        "ar": "تسريعات"
       }
     },
     "A-Class Truck": {
       "task": {
         "en": "A-Class Truck",
-        "ru": "A-Class Truck",
-        "ar": "A-Class Truck"
+        "ru": "Грузовик класса A",
+        "ar": "شاحنة فئة A"
       },
       "prepComment": {
         "en": "",
@@ -401,20 +404,20 @@
       },
       "tip": {
         "en": "Obtain supply refresh vouchers from daily task chests\r\n- Use vouchers to get better tasks\r\nDispatch during event window for maximum value",
-        "ru": "Obtain supply refresh vouchers from daily task chests\r\n- Use vouchers to get better tasks\r\nDispatch during event window for maximum value",
-        "ar": "Obtain supply refresh vouchers from daily task chests\r\n- Use vouchers to get better tasks\r\nDispatch during event window for maximum value"
+        "ru": "Получайте ваучеры обновления из ежедневных сундуков\r\n- Используйте их для лучших заданий\r\nОтправляйте во время события",
+        "ar": "احصل على قسائم التحديث من الصناديق اليومية\r\n- استخدمها للحصول على مهام أفضل\r\nأرسل أثناء الحدث لتحقيق أفضل قيمة"
       },
       "saveItemType": {
         "en": "Supply refresh Vouchers",
-        "ru": "Supply refresh Vouchers",
-        "ar": "Supply refresh Vouchers"
+        "ru": "Купоны обновления снабжения",
+        "ar": "قسائم تحديث الإمدادات"
       }
     },
     "Kill Infected": {
       "task": {
         "en": "Kill Infected",
-        "ru": "Kill Infected",
-        "ar": "Kill Infected"
+        "ru": "Убить заражённых",
+        "ar": "قتل المصابين"
       },
       "prepComment": {
         "en": "",
@@ -423,8 +426,8 @@
       },
       "tip": {
         "en": "Participate in rallies and enable auto-join\r\n- Ensures consistent participation rewards\r\nFocus on efficient participation rather than individual kills",
-        "ru": "Participate in rallies and enable auto-join\r\n- Ensures consistent participation rewards\r\nFocus on efficient participation rather than individual kills",
-        "ar": "Participate in rallies and enable auto-join\r\n- Ensures consistent participation rewards\r\nFocus on efficient participation rather than individual kills"
+        "ru": "Участвуйте в ралли и включите авто-вступление\r\n- Обеспечивает стабильные награды\r\nСосредоточьтесь на эффективности, а не на личных убийствах",
+        "ar": "شارك في التجمعات وفعل الانضمام التلقائي\r\n- يضمن مكافآت مستمرة\r\nركز على الكفاءة بدل عدد القتلات الفردية"
       },
       "saveItemType": {
         "en": "NA",
@@ -435,29 +438,29 @@
     "Hero Gear": {
       "task": {
         "en": "Hero Gear",
-        "ru": "Hero Gear",
-        "ar": "Hero Gear"
+        "ru": "Снаряжение героя",
+        "ar": "عتاد الأبطال"
       },
       "prepComment": {
         "en": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events.",
-        "ru": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events.",
-        "ar": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events."
+        "ru": "Получайте части снаряжения из Dire Dispatch, Ghoulion, ежедневных сундуков и событий.",
+        "ar": "احصل على قطع العتاد من Dire Dispatch وGhoulion والصناديق اليومية والأحداث."
       },
       "tip": {
         "en": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events\r\nSave materials for event usage",
-        "ru": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events\r\nSave materials for event usage",
-        "ar": "Obtain gear scraps from Dire Dispatch, Ghoulion, daily task chests and events\r\nSave materials for event usage"
+        "ru": "Получайте материалы из Dire Dispatch, Ghoulion, ежедневных сундуков и событий\r\nСохраняйте для события",
+        "ar": "احصل على المواد من Dire Dispatch وGhoulion والأحداث\r\nاحتفظ بها للحدث"
       },
       "saveItemType": {
         "en": "Gear Scraps",
-        "ru": "Gear Scraps",
-        "ar": "Gear Scraps"
+        "ru": "Материалы снаряжения",
+        "ar": "مواد العتاد"
       }
     },
     "Build Speed": {
       "task": {
         "en": "Build Speed",
-        "ru": "Build Speed",
+        "ru": "Скорость строительства",
         "ar": "تسريع البناء"
       },
       "prepComment": {
@@ -467,13 +470,13 @@
       },
       "tip": {
         "en": "Activate power plant construction boost after starting builds\r\n- Use when multiple constructions are active\r\n- Use for longer timers\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups",
-        "ru": "Activate power plant construction boost after starting builds\r\n- Use when multiple constructions are active\r\n- Use for longer timers\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups",
-        "ar": "Activate power plant construction boost after starting builds\r\n- Use when multiple constructions are active\r\n- Use for longer timers\r\nRequest alliance help after starting construction\r\n- Reduce time before using speedups"
+        "ru": "Активируйте бонус строительства после начала\r\n- Используйте при нескольких стройках\r\n- Для долгих таймеров\r\nЗапрашивайте помощь альянса\r\n- Снижайте время перед ускорениями",
+        "ar": "فعّل تعزيز البناء بعد بدء الإنشاء\r\n- استخدمه مع عدة مباني\r\n- للمشاريع الطويلة\r\nاطلب مساعدة التحالف\r\n- تقليل الوقت قبل استخدام التسريعات"
       },
       "saveItemType": {
         "en": "Speed ups",
-        "ru": "Speed ups",
-        "ar": "Speed ups"
+        "ru": "Ускорения",
+        "ar": "تسريعات"
       }
     },
     "Build Power": {
@@ -494,8 +497,8 @@
       },
       "saveItemType": {
         "en": "Speed ups",
-        "ru": "Speed ups",
-        "ar": "Speed ups"
+        "ru": "Ускорения",
+        "ar": "تسريعات"
       }
     },
     "Hero Skill": {
@@ -545,8 +548,8 @@
     "Research Speed": {
       "task": {
         "en": "Research Speed",
-        "ru": "Research Speed",
-        "ar": "Research Speed"
+        "ru": "Скорость исследований",
+        "ar": "سرعة الابحاث"
       },
       "prepComment": {
         "en": "",
@@ -555,13 +558,13 @@
       },
       "tip": {
         "en": "Start research before applying boosts\r\nActivate power plant research boost after research starts\r\n- Use for longer timers\r\nRequest alliance help after starting research\r\n- Reduce time before using speedups",
-        "ru": "Start research before applying boosts\r\nActivate power plant research boost after research starts\r\n- Use for longer timers\r\nRequest alliance help after starting research\r\n- Reduce time before using speedups",
-        "ar": "Start research before applying boosts\r\nActivate power plant research boost after research starts\r\n- Use for longer timers\r\nRequest alliance help after starting research\r\n- Reduce time before using speedups"
+        "ru": "Начните исследование перед бустами\r\nАктивируйте бонус после начала\r\n- Для долгих таймеров\r\nЗапрашивайте помощь альянса\r\n- Снижайте время перед ускорениями",
+        "ar": "ابدأ البحث قبل التفعيلات\r\nفعّل تعزيز البحث بعد البدء\r\n- للمشاريع الطويلة\r\nاطلب مساعدة التحالف\r\n- تقليل الوقت قبل استخدام التسريعات"
       },
       "saveItemType": {
         "en": "Speed ups",
-        "ru": "Speed ups",
-        "ar": "Speed ups"
+        "ru": "Ускорения",
+        "ar": "تسريعات"
       }
     },
     "Research Power": {
@@ -582,8 +585,8 @@
       },
       "saveItemType": {
         "en": "Speed ups",
-        "ru": "Speed ups",
-        "ar": "Speed ups"
+        "ru": "Ускорения",
+        "ar": "تسريعات"
       }
     },
     "Clash Medals": {
@@ -611,8 +614,8 @@
     "Kill Troops": {
       "task": {
         "en": "Kill Troops",
-        "ru": "Kill Troops",
-        "ar": "Kill Troops"
+        "ru": "Убивать войска",
+        "ar": "قتل القوات"
       },
       "prepComment": {
         "en": "",
@@ -621,8 +624,8 @@
       },
       "tip": {
         "en": "Engage in burrows, cities, Arcadia, or settlements\r\n- Both attacking and defending count\r\nCoordinate with alliance for safer execution",
-        "ru": "Engage in burrows, cities, Arcadia, or settlements\r\n- Both attacking and defending count\r\nCoordinate with alliance for safer execution",
-        "ar": "Engage in burrows, cities, Arcadia, or settlements\r\n- Both attacking and defending count\r\nCoordinate with alliance for safer execution"
+        "ru": "Сражайтесь в норах, городах, Arcadia или поселениях\r\n- Засчитываются атака и защита\r\nКоординируйтесь с альянсом",
+        "ar": "قاتل في الجحور أو المدن أو Arcadia\r\n- الهجوم والدفاع محسوبان\r\nنسّق مع التحالف"
       },
       "saveItemType": {
         "en": "NA",
@@ -633,8 +636,8 @@
     "Heal Speed": {
       "task": {
         "en": "Heal Speed",
-        "ru": "Heal Speed",
-        "ar": "Heal Speed"
+        "ru": "Скорость лечения",
+        "ar": "سرعة العلاج"
       },
       "prepComment": {
         "en": "",
@@ -643,20 +646,20 @@
       },
       "tip": {
         "en": "Obtain speedups from Dire Dispatch assists\r\nHeal troops in batches of 800-1000 troops using alliance help\r\n- Reduces speedup usage & save for RR",
-        "ru": "Obtain speedups from Dire Dispatch assists\r\nHeal troops in batches of 800-1000 troops using alliance help\r\n- Reduces speedup usage & save for RR",
-        "ar": "Obtain speedups from Dire Dispatch assists\r\nHeal troops in batches of 800-1000 troops using alliance help\r\n- Reduces speedup usage & save for RR"
+        "ru": "Получайте ускорения через помощь Dire Dispatch\r\nЛечите войска партиями по 800-1000\r\n- Экономит ускорения и сохраняет для RR",
+        "ar": "احصل على التسريعات من مساعدات Dire Dispatch\r\nعالج القوات على دفعات 800-1000\r\n- يوفر التسريعات ويحفظها للـ RR"
       },
       "saveItemType": {
         "en": "Speed ups",
-        "ru": "Speed ups",
-        "ar": "Speed ups"
+        "ru": "Ускорения",
+        "ar": "تسريعات"
       }
     },
     "Use Stamina": {
       "task": {
         "en": "Use Stamina",
-        "ru": "Use Stamina",
-        "ar": "Use Stamina"
+        "ru": "Использовать выносливость",
+        "ar": "حزم الطاقة"
       },
       "prepComment": {
         "en": "",
@@ -665,35 +668,35 @@
       },
       "tip": {
         "en": "Obtain stamina packs from daily chests and stores\r\nSave stamina packs for event usage\r\n- Avoid unnecessary usage outside event",
-        "ru": "Obtain stamina packs from daily chests and stores\r\nSave stamina packs for event usage\r\n- Avoid unnecessary usage outside event",
-        "ar": "Obtain stamina packs from daily chests and stores\r\nSave stamina packs for event usage\r\n- Avoid unnecessary usage outside event"
+        "ru": "Получайте паки выносливости\r\nСохраняйте их для события\r\n- Не тратьте вне события",
+        "ar": "احصل على حزم الطاقة\r\nاحتفظ بها للحدث\r\n- تجنب الاستخدام خارج الحدث"
       },
       "saveItemType": {
         "en": "Stamina packs",
-        "ru": "Stamina packs",
-        "ar": "Stamina packs"
+        "ru": "Паки выносливости",
+        "ar": "حزم الطاقة"
       }
     },
     "Intel": {
       "task": {
         "en": "Intel",
-        "ru": "Intel",
+        "ru": "Разведка",
         "ar": "مركز المعلومات"
       },
       "prepComment": {
         "en": "Complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
-        "ru": "Complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
-        "ar": "Complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time."
+        "ru": "Выполняйте только миссии типа Venture/Maddie и позволяйте остальным накапливаться автоматически.\r\nЧтобы избежать переполнения (например 40/40), завершайте часть миссий перед обновлением.",
+        "ar": "أكمل فقط مهام Venture/Maddie واترك الباقي يتخزن تلقائيًا.\r\nلتجنب الامتلاء (مثل 40/40)، أنجز بعض المهام قبل وقت التحديث."
       },
       "tip": {
         "en": "Complete stored missions on event day\r\nOn non-event days complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
-        "ru": "Complete stored missions on event day\r\nOn non-event days complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time.",
-        "ar": "Complete stored missions on event day\r\nOn non-event days complete only Venture/Maddie type missions and let others get stored automatically. \r\nTo avoid overflow after reaching max limit eg. 40/40 , complete some missions just before Intel refresh time."
+        "ru": "Выполняйте только миссии типа Venture/Maddie и позволяйте остальным накапливаться автоматически.\r\nЧтобы избежать переполнения (например 40/40), завершайте часть миссий перед обновлением.",
+        "ar": "أكمل المهام المخزنة يوم الحدث\r\nفي الأيام العادية نفذ فقط مهام Venture/Maddie\r\nلتجنب الامتلاء قم بإنهاء بعض المهام قبل التحديث"
       },
       "saveItemType": {
         "en": "To auto store missions, don not touch any other missions except venture/maddie quest",
         "ru": "To auto store missions, don not touch any other missions except venture/maddie quest",
-        "ar": "To auto store missions, don not touch any other missions except venture/maddie quest"
+        "ar": "للتخزين التلقائي لا تلمس أي مهام غير Venture/Maddie"
       }
     },
     "Collect Eggs": {
@@ -814,8 +817,8 @@
       },
       {
         "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online",
-        "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online",
-        "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online"
+        "ru": "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — Всем участникам собраться в <span class='highlight'>Arcadia</span> • Будьте онлайн",
+        "ar": "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> — على جميع الأعضاء التجمع في <span class='highlight'>Arcadia</span> • كونوا متصلين"
       },
       {
         "en": "⚔️ Alliance War in 30 mins — Activate shields and prepare troops",
