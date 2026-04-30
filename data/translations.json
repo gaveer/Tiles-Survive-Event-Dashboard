@@ -791,8 +791,8 @@
   "announcement": {
     "message": {
       "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
-      "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
-      "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>"
+      "ru": "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — <b style='color:#abc32f'>Обновите </b> <b style='color:#FFD700'>ЗОЛОТЫЕ ШАХТЫ </b> & <b> Подготовьтесь к </b> <b style='color:#7DF9FF'>РЕЙДУ НА РЕЗЕРВУАР </b>",
+      "ar": "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> — <b style='color:#abc32f'>قم بتحديث </b> <b style='color:#FFD700'>مناجم الذهب </b> & <b> استعد لـ </b> <b style='color:#7DF9FF'>هجوم الخزان </b>"
     },
     "normalMessage": {
       "en": "",
@@ -801,69 +801,69 @@
     },
     "templates": [
       {
-        "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>",
-        "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>",
-        "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>[CHI]kreon</b> | <b style='color:#7DF9FF'>[CHI]DontJoinMyRally</b>  |  <b style='color:#CD7F32'>[CHI]Milo</b>"
+        "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> —  <b style='color:#FFD700'>🏆 CONGRATULATIONS</b> everyone for <b> Winning </b> <b style='color:#7DF9FF'>Reservoir Raid </b> Kudos to top rankers <b style='color:#FFD700'>1</b> | <b style='color:#7DF9FF'>2</b>  |  <b style='color:#CD7F32'>3</b>",
+        "ru": "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> —  <b style='color:#FFD700'>🏆 ПОЗДРАВЛЯЕМ</b> всех с <b> победой </b> в <b style='color:#7DF9FF'>РЕЙДЕ НА РЕЗЕРВУАР </b> Особая благодарность лидерам <b style='color:#FFD700'>1</b> | <b style='color:#7DF9FF'>2</b>  |  <b style='color:#CD7F32'>3</b>",
+        "ar": "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> —  <b style='color:#FFD700'>🏆 تهانينا</b> للجميع على <b> الفوز </b> في <b style='color:#7DF9FF'>هجوم الخزان </b> تحية لأصحاب المراكز الأولى <b style='color:#FFD700'>1</b> | <b style='color:#7DF9FF'>2</b>  |  <b style='color:#CD7F32'>3</b>"
       },
       {
         "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#7DF9FF'>Shield up</b> for defense, its <span class='highlight'>Alliance Duel </span><b style='color:#ff4d4d'> Kill Event</b>",
-        "ru": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#7DF9FF'>Shield up</b> for defense, its <span class='highlight'>Alliance Duel </span><b style='color:#ff4d4d'> Kill Event</b>",
-        "ar": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#7DF9FF'>Shield up</b> for defense, its <span class='highlight'>Alliance Duel </span><b style='color:#ff4d4d'> Kill Event</b>"
+        "ru": "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — <b style='color:#7DF9FF'>Поднимите щиты</b> для защиты, это <span class='highlight'>Дуэль Альянсов </span><b style='color:#ff4d4d'> Событие убийств</b>",
+        "ar": "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> — <b style='color:#7DF9FF'>فعّلوا الدروع</b> للدفاع، إنه <span class='highlight'>نزال التحالف </span><b style='color:#ff4d4d'> حدث القتل</b>"
       },
       {
         "en": "<b style='color:#ff4d4d'>WAR ALERT</b> — Gather for defense at  <span class='highlight'>Metropolis 4</span>",
-        "ru": "<b style='color:#ff4d4d'>WAR ALERT</b> — Gather for defense at  <span class='highlight'>Metropolis 4</span>",
-        "ar": "<b style='color:#ff4d4d'>WAR ALERT</b> — Gather for defense at  <span class='highlight'>Metropolis 4</span>"
+        "ru": "<b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — Сбор для защиты в <span class='highlight'>Metropolis 4</span>",
+        "ar": "<b style='color:#ff4d4d'>إنذار حرب</b> — التجمع للدفاع في <span class='highlight'>Metropolis 4</span>"
       },
       {
         "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — All members rally at <span class='highlight'>Arcadia</span> • Be online",
-        "ru": "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — Всем участникам собраться в <span class='highlight'>Arcadia</span> • Будьте онлайн",
+        "ru": "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — جميع участники собраться в <span class='highlight'>Arcadia</span> • Будьте онлайн",
         "ar": "🚨 <b style='color:#ff4d4d'>إنذار حرب</b> — على جميع الأعضاء التجمع في <span class='highlight'>Arcadia</span> • كونوا متصلين"
       },
       {
         "en": "⚔️ Alliance War in 30 mins — Activate shields and prepare troops",
-        "ru": "⚔️ Alliance War in 30 mins — Activate shields and prepare troops",
-        "ar": "⚔️ Alliance War in 30 mins — Activate shields and prepare troops"
+        "ru": "⚔️ Война Альянсов через 30 минут — Активируйте щиты и подготовьте войска",
+        "ar": "⚔️ حرب التحالف خلال 30 دقيقة — فعّلوا الدروع واستعدوا بالقوات"
       },
       {
         "en": "📢 Power Play live — Focus on <b>Research Speed</b> and <b>Hero Fragments</b>",
-        "ru": "📢 Power Play live — Focus on <b>Research Speed</b> and <b>Hero Fragments</b>",
-        "ar": "📢 Power Play live — Focus on <b>Research Speed</b> and <b>Hero Fragments</b>"
+        "ru": "📢 Power Play начался — Сосредоточьтесь на <b>скорости исследований</b> и <b>фрагментах героев</b>",
+        "ar": "📢 Power Play بدأ — ركّزوا على <b>سرعة البحث</b> و <b>شظايا الأبطال</b>"
       },
       {
         "en": "📢 <b style='color:#FFD700'>Good try Everyone </b>,<b> Better luck next time for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
-        "ru": "📢 <b style='color:#FFD700'>Good try Everyone </b>,<b> Better luck next time for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
-        "ar": "📢 <b style='color:#FFD700'>Good try Everyone </b>,<b> Better luck next time for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>"
+        "ru": "📢 <b style='color:#FFD700'>Хорошая попытка всем </b>,<b> удачи в следующий раз в </b> <b style='color:#7DF9FF'>РЕЙДЕ НА РЕЗЕРВУАР </b>",
+        "ar": "📢 <b style='color:#FFD700'>محاولة جيدة للجميع </b>,<b> حظ أوفر في المرة القادمة في </b> <b style='color:#7DF9FF'>هجوم الخزان </b>"
       },
       {
-        "en": "🏆 Congrats <b>Ranjan</b> for Top Rank — Keep pushing team!",
-        "ru": "🏆 Congrats <b>Ranjan</b> for Top Rank — Keep pushing team!",
-        "ar": "🏆 Congrats <b>Ranjan</b> for Top Rank — Keep pushing team!"
+        "en": "🏆 Congrats <b>Top</b> for Top Rank — Keep pushing team!",
+        "ru": "🏆 Поздравляем <b>Top</b> с первым местом — Вперёд команда!",
+        "ar": "🏆 تهانينا <b>TOP</b> على المركز الأول — استمروا يا فريق!"
       },
       {
-        "en": "🏆 Kudos to <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> for Top Ranks in Reservoir Raid — Keep pushing team!",
-        "ru": "🏆 Kudos to <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> for Top Ranks in Reservoir Raid — Keep pushing team!",
-        "ar": "🏆 Kudos to <b>DontJoinMyRally</b> <b>Sky</b> <b>kreon</b> for Top Ranks in Reservoir Raid — Keep pushing team!"
+        "en": "🏆 Kudos to <b>1</b> <b>2</b> <b>3</b> for Top Ranks in Reservoir Raid — Keep pushing team!",
+        "ru": "🏆 Спасибо <b>1</b> <b>2</b> <b>3</b> за топовые места — Продолжайте!",
+        "ar": "🏆 تحية لـ <b>1</b> <b>2</b> <b>3</b> على المراكز المتقدمة — واصلوا التقدم!"
       },
       {
         "en": "📢 Alliance Event Planner Live — Prepare for upcoming events",
-        "ru": "📢 Alliance Event Planner Live — Prepare for upcoming events",
-        "ar": "📢 Alliance Event Planner Live — Prepare for upcoming events"
+        "ru": "📢 Планировщик событий Альянса активен — Готовьтесь к предстоящим событиям",
+        "ar": "📢 مخطط فعاليات التحالف مباشر — استعدوا للأحداث القادمة"
       },
       {
         "en": "📦 Save resources today — Upcoming <b>Alliance Duel</b> tasks require prep",
-        "ru": "📦 Save resources today — Upcoming <b>Alliance Duel</b> tasks require prep",
-        "ar": "📦 Save resources today — Upcoming <b>Alliance Duel</b> tasks require prep"
+        "ru": "📦 Сохраняйте ресурсы сегодня — Задания <b>Дуэли Альянсов</b> требуют подготовки",
+        "ar": "📦 وفّروا الموارد اليوم — مهام <b>نزال التحالف</b> القادمة تحتاج تجهيز"
       },
       {
         "en": "⏳ Ghoulion Hunt soon — Be ready with stamina and rallies",
-        "ru": "⏳ Ghoulion Hunt soon — Be ready with stamina and rallies",
-        "ar": "⏳ Ghoulion Hunt soon — Be ready with stamina and rallies"
+        "ru": "⏳ Охота на Ghoulion скоро — Подготовьте выносливость и ралли",
+        "ar": "⏳ صيد Ghoulion قريبًا — استعدوا بالطاقة والتجمعات"
       },
       {
-        "en": "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>",
-        "ru": "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>",
-        "ar": "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>[CHI]Eruythyn</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>[CHI]SaphireJess</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>[CHI]Grunt</b> <b style='color:#7DF9FF'> 779M </b>"
+        "en": "🏆 <b style='color:#FFD700'> CONGRATULATIONS</b> to TOP <b> Damage Dealers </b> in <b style='color:#ff4d4d'>Ghoulion Pursuit </b> <b style='color:#FFD700'>1</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>2</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>3</b> <b style='color:#7DF9FF'> 779M </b>",
+        "ru": "🏆 <b style='color:#FFD700'> ПОЗДРАВЛЯЕМ</b> ТОП <b> бойцов по урону </b> в <b style='color:#ff4d4d'>ПРЕСЛЕДОВАНИИ GHOULION </b> <b style='color:#FFD700'>1</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>2</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>3</b> <b style='color:#7DF9FF'> 779M </b>",
+        "ar": "🏆 <b style='color:#FFD700'> تهانينا</b> لأفضل <b> مسببين للضرر </b> في <b style='color:#ff4d4d'>مطاردة GHOULION </b> <b style='color:#FFD700'>1</b> <b style='color:#7DF9FF'> 844M </b> | <b style='color:#bf77f6'>2</b> <b style='color:#7DF9FF'> 798M </b>  |  <b style='color:#CD7F32'>3</b> <b style='color:#7DF9FF'> 779M </b>"
       }
     ]
   }
