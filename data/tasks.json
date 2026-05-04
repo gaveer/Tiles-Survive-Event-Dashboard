@@ -21,7 +21,7 @@
     "d": "Mon",
     "e": "Alliance Duel",
     "t": "Gather RSS",
-    "category": "Exclusive",
+    "category": "Casual",
     "utc": "00:00",
     "duration": 24,
     "priority": 2
@@ -471,7 +471,7 @@
     "d": "Sat",
     "e": "Power Play",
     "t": "Build Speed",
-    "category": "Double",
+    "category": "Triple",
     "utc": "08:00",
     "duration": 4,
     "priority": 1
@@ -498,7 +498,7 @@
     "d": "Sat",
     "e": "Alliance Duel",
     "t": "Build Speed",
-    "category": "Double",
+    "category": "Triple",
     "utc": "00:00",
     "duration": 24,
     "priority": 2
@@ -553,6 +553,15 @@
     "e": "Turbo Turtle",
     "t": "Behemoth",
     "category": "Double",
+    "utc": "00:00",
+    "duration": 24,
+    "priority": 3
+  },
+  {
+    "d": "Sat",
+    "e": "Turbo Turtle",
+    "t": "Build Speed",
+    "category": "Triple",
     "utc": "00:00",
     "duration": 24,
     "priority": 3
