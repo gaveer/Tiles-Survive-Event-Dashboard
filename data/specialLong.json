@@ -2,17 +2,17 @@
   {
     "name": "Alliance Siege",
     "active": true,
-    "end": "2026-05-02T23:59:00Z"
+    "end": "2026-05-10T23:59:00Z"
   },
   {
     "name": "Future Tycoon",
     "active": false,
-    "end": "2026-03-19T23:59:00Z"
+    "end": "2026-05-03T23:59:00Z"
   },
   {
     "name": "Gourmet Rush",
-    "active": false,
-    "end": "2026-04-21T23:59:00Z"
+    "active": true,
+    "end": "2026-05-06T23:59:00Z"
   },
   {
     "name": "Leprechaun",
@@ -26,12 +26,12 @@
   },
   {
     "name": "Lost Frontier",
-    "active": false,
+    "active": true,
     "end": "2026-04-23T23:59:00Z"
   },
   {
     "name": "Partner Paradise",
-    "active": true,
+    "active": false,
     "end": "2026-05-03T23:59:00Z"
   },
   {
@@ -42,12 +42,12 @@
   {
     "name": "Sign In",
     "active": true,
-    "end": "2026-05-20T23:59:00Z"
+    "end": "2026-05-30T23:59:00Z"
   },
   {
     "name": "Underground Goldmine",
     "active": true,
-    "end": "2026-05-03T23:59:00Z"
+    "end": "2026-05-10T23:59:00Z"
   },
   {
     "name": "Wasteland Album",
@@ -66,7 +66,7 @@
   },
   {
     "name": "Pawsome Puzzle Party",
-    "active": true,
+    "active": false,
     "end": "2026-04-18T23:59:00Z"
   },
   {

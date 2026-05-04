@@ -2325,7 +2325,6 @@ html[dir="rtl"] .goldmineDismissBtn{
   <div id="mobileAlertTitle" class="mobileAlertTitle">Mobile Alerts</div>
   <div id="mobileAlertText" class="mobileAlertText"></div>
   <div class="mobileAlertActions">
-    <button id="mobileArmSoundBtn" class="mobileAlertBtn" type="button"></button>
     <button id="mobileNotifyBtn" class="mobileAlertBtn" type="button"></button>
   </div>
   <div id="mobileAlertStatus" class="mobileAlertStatus"></div>
@@ -2819,21 +2818,6 @@ document.addEventListener("DOMContentLoaded", function(){
     applyLanguage(currentLang);
   });
 
-  const mobileArmSoundBtn = document.getElementById("mobileArmSoundBtn");
-  if(mobileArmSoundBtn){
-    mobileArmSoundBtn.addEventListener("click", function(){
-      if(!goldmineSoundEnabled){
-        goldmineSoundEnabled = true;
-        mobileArmSoundBtn.textContent = tr("goldmineSoundEnabled");
-        mobileArmSoundBtn.classList.add("enabled");
-        mobileArmSoundBtn.disabled = true;
-      }
-      triggerGoldmineAlertNow(true);
-      goldmineAlertPending = false; // Prevent double triggering
-      updateMobileAlertUI();
-    });
-  }
-
   const mobileNotifyBtn = document.getElementById("mobileNotifyBtn");
   if(mobileNotifyBtn){
     mobileNotifyBtn.addEventListener("click", function(){
@@ -2850,6 +2834,7 @@ document.addEventListener("DOMContentLoaded", function(){
       goldmineArmSoundBtn.textContent = tr("goldmineSoundEnabled");
       goldmineArmSoundBtn.classList.add("enabled");
       goldmineArmSoundBtn.disabled = true;
+      updateMobileAlertUI();
     });
   }
 
@@ -3347,8 +3332,12 @@ function updateSpecialBar(){
   // 🔥 prevent negative values
   remaining = Math.max(0, remaining);
 
-  let h = Math.floor(remaining / 1000 / 60 / 60);
+  let d = Math.floor(remaining / 1000 / 60 / 60 / 24);
+  let h = Math.floor((remaining / 1000 / 60 / 60) % 24);
   let m = Math.floor((remaining / 1000 / 60) % 60);
+  let countdown = d > 0
+    ? `${d}d / ${h}h / ${m}m`
+    : `${h}h / ${m}m`;
 
   let localTime = timeRef.toLocaleTimeString([],{
     hour:'2-digit',
@@ -3369,11 +3358,11 @@ function updateSpecialBar(){
   if(data.state === "active") color = "#ff6b6b";     // red
   else if(data.state === "alert") color = "#4cff88"; // green
 
-  // 🔥 FINAL RENDER (OLD STYLE PRESERVED)
+  // 🔥 FINAL RENDER (NEW DAY/HOUR/MIN FORMAT)
   timerEl.innerHTML =
     `<div class="${barClass}">
       <span style="color:${color}">
-        ${label} ${h}h ${m}m
+        ${label} ${countdown}
       </span>
       <span class="ghTimer"> • ${localTime}</span>
     </div>`;
@@ -4541,10 +4530,9 @@ function updateMobileAlertUI(){
   const card = document.getElementById("mobileAlertCard");
   const text = document.getElementById("mobileAlertText");
   const status = document.getElementById("mobileAlertStatus");
-  const soundBtn = document.getElementById("mobileArmSoundBtn");
   const notifyBtn = document.getElementById("mobileNotifyBtn");
 
-  if(!card || !text || !status || !soundBtn || !notifyBtn) return;
+  if(!card || !text || !status || !notifyBtn) return;
 
   if(!isMobileBrowser){
     card.classList.remove("show");
@@ -4553,16 +4541,6 @@ function updateMobileAlertUI(){
 
   card.classList.add("show");
   text.textContent = tr("mobileAlertText");
-  
-  if(goldmineSoundEnabled){
-    soundBtn.textContent = tr("goldmineSoundEnabled");
-    soundBtn.classList.add("enabled");
-    soundBtn.disabled = true;
-  }else{
-    soundBtn.textContent = tr("goldmineEnableSound");
-    soundBtn.classList.remove("enabled");
-    soundBtn.disabled = false;
-  }
 
   const permission = getNotificationPermissionState();
   if(permission === "granted"){
@@ -4584,6 +4562,7 @@ function updateMobileAlertUI(){
     parts.push(tr("mobileStatusNotificationsPending"));
   }
 
+  parts.push(goldmineSoundEnabled ? tr("goldmineSoundEnabled") : tr("goldmineEnableSound"));
   parts.push(isStandaloneApp() ? tr("mobileStatusPwaInstalled") : tr("mobileStatusPwaNotInstalled"));
   status.textContent = `${tr("mobileLimitNote")} ${parts.join(" • ")}`;
 }
@@ -5008,8 +4987,12 @@ if(state === "active") timerColor = "#ff6b6b";  // red
       
       remaining = Math.max(0, remaining);
 
-      let h = Math.floor(remaining / 1000 / 60 / 60);
+      let d = Math.floor(remaining / 1000 / 60 / 60 / 24);
+      let h = Math.floor((remaining / 1000 / 60 / 60) % 24);
       let m = Math.floor((remaining / 1000 / 60) % 60);
+      let shortCountdown = d > 0
+        ? `${d}d / ${h}h / ${m}m`
+        : `${h}h / ${m}m`;
 
       let localTime = timeRef.toLocaleTimeString([],{
         hour:'2-digit',
@@ -5032,7 +5015,7 @@ if(state === "active") timerColor = "#ff6b6b";  // red
 
           <div class="seTimer">
   <span style="color:${timerColor}">
-    ${label} ${h}h ${m}m
+    ${label} ${shortCountdown}
   </span>
 </div>
 
