@@ -15,12 +15,15 @@
       "If both are empty → emergency runs as long as active = true"
     ]
   },
+
   "enabled": true,
+
   "emergency": {
     "active": false,
     "startTime": "2026-03-22T08:30:00Z",
-    "endTime": "2026-04-12T13:00:00Z"
+    "endTime": "2026-05-10T13:00:00Z"
   },
+
   "message": {
     "en": "🚨 <b style='color:#ff4d4d'>WAR ALERT</b> — <b style='color:#abc32f'>Refresh your </b> <b style='color:#FFD700'>GOLD MINES </b> & <b> Prepare for </b> <b style='color:#7DF9FF'>Reservoir Raid </b>",
     "ru": "🚨 <b style='color:#ff4d4d'>ТРЕВОГА ВОЙНЫ</b> — <b style='color:#abc32f'>Обновите ваши </b> <b style='color:#FFD700'>ЗОЛОТЫЕ ШАХТЫ </b> & <b> Подготовьтесь к </b> <b style='color:#7DF9FF'>РЕЙДУ НА РЕЗЕРВУАР </b>",

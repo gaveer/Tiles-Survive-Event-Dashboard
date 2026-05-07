@@ -2031,6 +2031,14 @@ html[dir="rtl"] #shortEventsRow .seTime{
   background:rgba(150,48,0,0.45);
 }
 
+#goldmineArmSoundBtn{
+  display:none;
+}
+
+#goldmineArmSoundBtn.show{
+  display:block;
+}
+
 #goldmineArmSoundBtn.enabled{
   background: #1f7f24;
   border-color: rgba(76,175,80,0.6);
@@ -2750,16 +2758,7 @@ function applyLanguage(lang){
   setText("goldmineBannerText", tr("goldmineBanner"));
   setText("goldmineBannerCountdown", "");
   setText("goldmineDismissBtn", getGoldmineDismissLabel());
-  
-  // Update sound button text based on current state
-  const soundBtn = document.getElementById("goldmineArmSoundBtn");
-  if(soundBtn){
-    if(soundBtn.classList.contains("enabled")){
-      soundBtn.textContent = tr("goldmineSoundEnabled");
-    } else {
-      soundBtn.textContent = tr("goldmineEnableSound");
-    }
-  }
+  updateGoldmineSoundButton();
   
   setText("hunterTitle", tr("hunterTitle"));
   setText("tripleLabel", tr("tripleChain"));
@@ -2831,9 +2830,7 @@ document.addEventListener("DOMContentLoaded", function(){
       goldmineSoundEnabled = true;
       triggerGoldmineAlertNow(true);
       goldmineAlertPending = false; // Prevent double triggering
-      goldmineArmSoundBtn.textContent = tr("goldmineSoundEnabled");
-      goldmineArmSoundBtn.classList.add("enabled");
-      goldmineArmSoundBtn.disabled = true;
+      updateGoldmineSoundButton();
       updateMobileAlertUI();
     });
   }
@@ -4393,12 +4390,14 @@ function updateTodayPanel(){
     return { status:"COMPLETED", time: base };
   }
 
-  function renderList(list, label, icon){
+  function renderList(list){
 
     list.forEach(x => {
 
       let t = x.task;
       let s = x.state;
+      let label = x.label;
+      let icon = x.icon;
       let p = prepMap[t.task];
 
       let start = s.time;
@@ -4424,7 +4423,7 @@ function updateTodayPanel(){
           s.status === "ACTIVE" ? "activeRow" :
           s.status === "UPCOMING" ? "nextRow" : ""
         }">
-          <span><b> ${label}</b> - ${trTask(t.task)}</span>
+          <span><b>◆ ${label}</b> - ${trTask(t.task)}</span>
           <span>${status}</span>
         </div>
         ${getLocalizedText(p?.tip, "") ? `<div class="prepTip saveItem">${getLocalizedText(p.tip, "")}</div>` : ""}
@@ -4432,34 +4431,31 @@ function updateTodayPanel(){
     });
   }
 
-  function prepare(list){
+  function prepare(list, label, icon){
 
     return list
       .filter(t => t.d === today)
       .map(t => {
         let s = getTodayState(t);
-        return {task:t, state:s};
-      })
-      .sort(sortTasks);
+        return {
+          task: t,
+          state: s,
+          label,
+          icon
+        };
+      });
   }
 
-  let todayTriple = prepare(triple);
-  let todayDouble = prepare(double);
-  let todayExclusive = prepare(dayExclusive);
+  let todayItems = [
+    ...prepare(triple, tr("tripleChain"), "⚡"),
+    ...prepare(double, tr("doubleChain"), "🔹"),
+    ...prepare(dayExclusive, tr("dayExclusive"), "📌")
+  ].sort(sortTasks);
 
-  if(todayTriple.length){
-    renderList(todayTriple, tr("tripleChain"), "⚡");
+  if(todayItems.length){
+    renderList(todayItems);
   }
-
-  if(todayDouble.length){
-    renderList(todayDouble, tr("doubleChain"), "🔹");
-  }
-
-  if(todayExclusive.length){
-    renderList(todayExclusive, tr("dayExclusive"), "📌");
-  }
-
-  if(!todayTriple.length && !todayDouble.length && !todayExclusive.length){
+  else{
     html = `<small>${tr("noPriorityTasks")}</small>`;
   }
 
@@ -4511,6 +4507,50 @@ function ensureGoldmineSound(){
   }
 
   return goldmineSound;
+}
+
+function getGoldmineLongEventState(date = new Date()){
+  const goldmineEvent = Array.isArray(longEvents)
+    ? longEvents.find(e => (e?.name || "").toLowerCase() === "underground goldmine")
+    : null;
+
+  if(!goldmineEvent){
+    return {
+      event: null,
+      start: null,
+      end: null,
+      isActiveByDate: false
+    };
+  }
+
+  const now = date instanceof Date ? date : new Date(date);
+  const start = goldmineEvent.start ? new Date(goldmineEvent.start) : null;
+  const end = goldmineEvent.end ? new Date(goldmineEvent.end) : null;
+
+  const hasValidStart = start instanceof Date && !Number.isNaN(start.getTime());
+  const hasValidEnd = end instanceof Date && !Number.isNaN(end.getTime());
+  const hasDateWindow = hasValidStart || hasValidEnd;
+  const started = !hasValidStart || now >= start;
+  const notEnded = !hasValidEnd || now < end;
+
+  return {
+    event: goldmineEvent,
+    start: hasValidStart ? start : null,
+    end: hasValidEnd ? end : null,
+    isActiveByDate: hasDateWindow ? (started && notEnded) : Boolean(goldmineEvent.active)
+  };
+}
+
+function updateGoldmineSoundButton(isGoldmineEventActive = getGoldmineLongEventState().isActiveByDate){
+  const soundBtn = document.getElementById("goldmineArmSoundBtn");
+  if(!soundBtn) return;
+
+  soundBtn.classList.toggle("show", Boolean(isGoldmineEventActive));
+  soundBtn.classList.toggle("enabled", goldmineSoundEnabled);
+  soundBtn.disabled = goldmineSoundEnabled;
+  soundBtn.textContent = goldmineSoundEnabled
+    ? tr("goldmineSoundEnabled")
+    : tr("goldmineEnableSound");
 }
 
 function isStandaloneApp(){
@@ -4800,6 +4840,7 @@ function playGoldmineFallbackBeep(){
 function updateGoldmineBanner(){
 
   if(!longEvents || !longEvents.length){
+    updateGoldmineSoundButton(false);
     updateGoldmineCountdownText("");
     return;
   }
@@ -4808,12 +4849,14 @@ function updateGoldmineBanner(){
   if(!banner) return;
 
   let now = new Date();
+  let goldmineState = getGoldmineLongEventState(now);
+  let goldmine = goldmineState.event;
+  let end = goldmineState.end;
+  let isGoldmineEventActive = goldmineState.isActiveByDate;
 
-  let goldmine = longEvents.find(e => 
-    e.name === "Underground Goldmine"
-  );
+  updateGoldmineSoundButton(isGoldmineEventActive);
 
-  if(!goldmine || !goldmine.active){
+  if(!goldmine || !isGoldmineEventActive){
     banner.classList.remove("active");
     updateGoldmineCountdownText("");
     goldBannerActive = false;   // 🔥 FIX
@@ -4825,8 +4868,7 @@ function updateGoldmineBanner(){
     return;
   }
 
-  let end = new Date(goldmine.end);
-  let isRunning = !Number.isNaN(end.getTime()) && now < end;
+  let isRunning = !end || now < end;
 
   let minuteOfDay = (now.getUTCHours() * 60) + now.getUTCMinutes();
   let minuteInCycle = minuteOfDay % GOLDMINE_BANNER_CONFIG.refreshIntervalMinutes;
