@@ -3199,7 +3199,58 @@ async function loadSpecialEvents(){
   }catch(e){
     console.log("Special events load error", e);
   }
-}  
+}
+
+function getLongEventRepeatMs(event){
+  if(Number.isFinite(event?.repeatMs) && event.repeatMs > 0) return event.repeatMs;
+  if(Number.isFinite(event?.repeatMinutes) && event.repeatMinutes > 0) return event.repeatMinutes * 60 * 1000;
+  if(Number.isFinite(event?.repeatHours) && event.repeatHours > 0) return event.repeatHours * 60 * 60 * 1000;
+  if(Number.isFinite(event?.repeatDays) && event.repeatDays > 0) return event.repeatDays * 24 * 60 * 60 * 1000;
+  if(Number.isFinite(event?.repeat) && event.repeat > 0) return event.repeat * 60 * 60 * 1000;
+  return 0;
+}
+
+function resolveLongEventWindow(event, date = new Date()){
+  const now = date instanceof Date ? date : new Date(date);
+  const baseStart = event?.start ? new Date(event.start) : null;
+  const baseEnd = event?.end ? new Date(event.end) : null;
+  const hasValidStart = baseStart instanceof Date && !Number.isNaN(baseStart.getTime());
+  const hasValidEnd = baseEnd instanceof Date && !Number.isNaN(baseEnd.getTime());
+  const repeatMs = getLongEventRepeatMs(event);
+
+  let start = hasValidStart ? new Date(baseStart.getTime()) : null;
+  let end = hasValidEnd ? new Date(baseEnd.getTime()) : null;
+
+  if(repeatMs > 0 && hasValidEnd){
+    const anchor = hasValidStart ? baseStart : baseEnd;
+    const diff = now - anchor;
+    const cycles = diff > 0 ? Math.floor(diff / repeatMs) : 0;
+
+    if(start){
+      start = new Date(start.getTime() + (cycles * repeatMs));
+    }
+
+    end = new Date(end.getTime() + (cycles * repeatMs));
+
+    if(now >= end){
+      if(start){
+        start = new Date(start.getTime() + repeatMs);
+      }
+      end = new Date(end.getTime() + repeatMs);
+    }
+  }
+
+  const hasDateWindow = Boolean(start || end);
+  const started = !start || now >= start;
+  const notEnded = !end || now < end;
+
+  return {
+    ...event,
+    start,
+    end,
+    isActiveByDate: hasDateWindow ? (started && notEnded) : Boolean(event?.active)
+  };
+}
 
 function getActiveShortEvent(){
 
@@ -3371,19 +3422,9 @@ let now = new Date();
 
 let events = longEvents
   .filter(e => e.active)
-  .sort((a,b) => new Date(a.end) - new Date(b.end))
-  .map(e => {
-
-    let end = new Date(e.end);
-
-    return {
-      ...e,
-      end
-    };
-
-  });
-
-events = events.filter(e => e.end > now);
+  .map(e => resolveLongEventWindow(e, now))
+  .filter(e => e.isActiveByDate && e.end instanceof Date && !Number.isNaN(e.end.getTime()) && e.end > now)
+  .sort((a,b) => a.end - b.end);
 
   
 // 🔥 PRIORITY LOGIC
@@ -4523,21 +4564,13 @@ function getGoldmineLongEventState(date = new Date()){
     };
   }
 
-  const now = date instanceof Date ? date : new Date(date);
-  const start = goldmineEvent.start ? new Date(goldmineEvent.start) : null;
-  const end = goldmineEvent.end ? new Date(goldmineEvent.end) : null;
-
-  const hasValidStart = start instanceof Date && !Number.isNaN(start.getTime());
-  const hasValidEnd = end instanceof Date && !Number.isNaN(end.getTime());
-  const hasDateWindow = hasValidStart || hasValidEnd;
-  const started = !hasValidStart || now >= start;
-  const notEnded = !hasValidEnd || now < end;
+  const resolvedEvent = resolveLongEventWindow(goldmineEvent, date);
 
   return {
-    event: goldmineEvent,
-    start: hasValidStart ? start : null,
-    end: hasValidEnd ? end : null,
-    isActiveByDate: hasDateWindow ? (started && notEnded) : Boolean(goldmineEvent.active)
+    event: resolvedEvent,
+    start: resolvedEvent.start,
+    end: resolvedEvent.end,
+    isActiveByDate: resolvedEvent.isActiveByDate
   };
 }
 
