@@ -695,6 +695,37 @@ font-size:12px;
   font-size: 12px;
 }
 
+.goldmineTimerControl{
+  display:none;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+}
+
+.goldmineTimerControl.show{
+  display:flex;
+}
+
+.goldmineTimerControl label{
+  font-size:11px;
+  opacity:0.8;
+  margin-bottom:2px;
+}
+
+.goldmineTimerInput{
+  width:118px;
+  background:#1a1a1a;
+  color:#fff;
+  border:1px solid #3a3a3a;
+  border-radius:6px;
+  padding:4px 6px;
+  font-size:12px;
+}
+
+.goldmineTimerInput::placeholder{
+  color:rgba(255,255,255,0.45);
+}
+
 #langSelect{
 background:#1a1a1a;
 color:#fff;
@@ -2195,6 +2226,16 @@ html[dir="rtl"] .goldmineDismissBtn{
     max-width:220px;
   }
 
+  .goldmineTimerControl{
+    width:100%;
+    max-width:220px;
+    align-items:stretch;
+  }
+
+  .goldmineTimerInput{
+    width:100%;
+  }
+
   .card{
     padding:7px;
     margin-top:6px;
@@ -2302,6 +2343,16 @@ html[dir="rtl"] .goldmineDismissBtn{
     <label id="userCounterLabel" class="userCounterLabel">Active Users</label>
     <span class="userCounterIcon">👥</span>
     <span id="userCounterText" class="userCounterText">--</span>
+  </div>
+  <div class="goldmineTimerControl">
+    <label id="goldmineTimerLabel" for="goldmineTimerInput">Goldmine Timer (min)</label>
+    <input
+      id="goldmineTimerInput"
+      class="goldmineTimerInput"
+      type="number"
+      inputmode="numeric"
+      placeholder="60"
+    >
   </div>
   <button id="goldmineArmSoundBtn" class="langRowSoundBtn" type="button">Enable Sound</button>
 </div>
@@ -2758,6 +2809,8 @@ function applyLanguage(lang){
   setText("goldmineBannerText", tr("goldmineBanner"));
   setText("goldmineBannerCountdown", "");
   setText("goldmineDismissBtn", getGoldmineDismissLabel());
+  setText("goldmineTimerLabel", tr("goldmineTimerLabel"));
+  updateGoldmineTimerInputUI();
   updateGoldmineSoundButton();
   
   setText("hunterTitle", tr("hunterTitle"));
@@ -2790,6 +2843,7 @@ function applyLanguage(lang){
 
 document.addEventListener("DOMContentLoaded", function(){
   isMobileBrowser = detectMobileBrowser();
+  loadGoldmineRefreshMinutes();
 
   const langSelect = document.getElementById("langSelect");
   if(langSelect){
@@ -2827,11 +2881,18 @@ document.addEventListener("DOMContentLoaded", function(){
   const goldmineArmSoundBtn = document.getElementById("goldmineArmSoundBtn");
   if(goldmineArmSoundBtn){
     goldmineArmSoundBtn.addEventListener("click", function(){
-      goldmineSoundEnabled = true;
-      triggerGoldmineAlertNow(true);
-      goldmineAlertPending = false; // Prevent double triggering
-      updateGoldmineSoundButton();
-      updateMobileAlertUI();
+      enableGoldmineSoundAlerts();
+    });
+  }
+
+  const goldmineTimerInput = document.getElementById("goldmineTimerInput");
+  if(goldmineTimerInput){
+    goldmineTimerInput.addEventListener("keydown", function(e){
+      if(e.key === "Enter"){
+        applyGoldmineRefreshMinutes(goldmineTimerInput.value);
+        e.preventDefault();
+        goldmineTimerInput.blur();
+      }
     });
   }
 
@@ -3202,6 +3263,10 @@ async function loadSpecialEvents(){
 }
 
 function getLongEventRepeatMs(event){
+  const eventType = String(event?.type || "").toLowerCase().trim();
+
+  if(eventType === "weekly") return 7 * 24 * 60 * 60 * 1000;
+  if(eventType === "biweekly" || eventType === "bi-weekly" || eventType === "bi weekly") return 14 * 24 * 60 * 60 * 1000;
   if(Number.isFinite(event?.repeatMs) && event.repeatMs > 0) return event.repeatMs;
   if(Number.isFinite(event?.repeatMinutes) && event.repeatMinutes > 0) return event.repeatMinutes * 60 * 1000;
   if(Number.isFinite(event?.repeatHours) && event.repeatHours > 0) return event.repeatHours * 60 * 60 * 1000;
@@ -3644,6 +3709,7 @@ const eventIcons = {
 "Alliance Duel": "Alliance_Duel.PNG",
 "Power Play": "Power_Play.PNG",
 "Turbo Turtle": "Turbo_Turtle.PNG",
+"Arena": "Arena.PNG",
 
 "Ghoulion Pursuit": "ghoulion.png",
 "Reservoir Raid": "Reservoir_Raid.PNG",
@@ -4514,9 +4580,11 @@ let goldmineDismissedCycleKey = "";
 let goldmineAlertSuppressed = false;
 let goldmineSoundMutedForCycle = false;
 let goldmineAudioSessionId = 0;
+const GOLDMINE_DEFAULT_REFRESH_MINUTES = 60;
+const GOLDMINE_REFRESH_STORAGE_KEY = "goldmineRefreshMinutes";
 
 const GOLDMINE_BANNER_CONFIG = {
-  refreshIntervalMinutes: 75,
+  refreshIntervalMinutes: GOLDMINE_DEFAULT_REFRESH_MINUTES,
   visibleWindowMinutes: 5,
   customSoundSrc: "sounds/Xylophone.ogg",
   soundLoopDelayMs: 15000
@@ -4524,6 +4592,73 @@ const GOLDMINE_BANNER_CONFIG = {
 
 let goldmineSound = null;
 let goldmineCustomSoundAvailable = true;
+let goldmineRefreshInputValue = "";
+
+function parseGoldmineRefreshMinutes(value){
+  const raw = String(value ?? "").trim();
+  if(!raw) return null;
+
+  const parsed = Number.parseInt(raw, 10);
+  if(!Number.isFinite(parsed) || parsed <= 0) return null;
+
+  return parsed;
+}
+
+function updateGoldmineTimerInputUI(rawValue = goldmineRefreshInputValue){
+  const input = document.getElementById("goldmineTimerInput");
+  if(!input) return;
+
+  const parsed = parseGoldmineRefreshMinutes(rawValue);
+  input.value = parsed ? String(parsed) : "";
+  input.placeholder = String(GOLDMINE_DEFAULT_REFRESH_MINUTES);
+}
+
+function enableGoldmineSoundAlerts(){
+  goldmineSoundEnabled = true;
+  triggerGoldmineAlertNow(true);
+  goldmineAlertPending = false;
+  updateGoldmineSoundButton();
+  updateMobileAlertUI();
+}
+
+function applyGoldmineRefreshMinutes(rawValue, persist = true){
+  const parsed = parseGoldmineRefreshMinutes(rawValue);
+  const nextMinutes = parsed || GOLDMINE_DEFAULT_REFRESH_MINUTES;
+
+  GOLDMINE_BANNER_CONFIG.refreshIntervalMinutes = nextMinutes;
+  goldmineRefreshInputValue = parsed ? String(parsed) : "";
+
+  if(persist){
+    try{
+      if(parsed){
+        localStorage.setItem(GOLDMINE_REFRESH_STORAGE_KEY, String(parsed));
+      }else{
+        localStorage.removeItem(GOLDMINE_REFRESH_STORAGE_KEY);
+      }
+    }catch(e){
+      console.log("Goldmine timer save failed", e);
+    }
+  }
+
+  updateGoldmineTimerInputUI();
+
+  goldmineDismissedCycleKey = "";
+  updateGoldmineSoundButton();
+  updateMobileAlertUI();
+  updateGoldmineBanner();
+}
+
+function loadGoldmineRefreshMinutes(){
+  let storedValue = "";
+
+  try{
+    storedValue = localStorage.getItem(GOLDMINE_REFRESH_STORAGE_KEY) || "";
+  }catch(e){
+    console.log("Goldmine timer load failed", e);
+  }
+
+  applyGoldmineRefreshMinutes(storedValue, false);
+}
 
 function getGoldmineDismissLabel(){
   if(currentLang === "ru") return "Пропустить сигнал";
@@ -4576,6 +4711,7 @@ function getGoldmineLongEventState(date = new Date()){
 
 function updateGoldmineSoundButton(isGoldmineEventActive = getGoldmineLongEventState().isActiveByDate){
   const soundBtn = document.getElementById("goldmineArmSoundBtn");
+  const timerControl = document.querySelector(".goldmineTimerControl");
   if(!soundBtn) return;
 
   soundBtn.classList.toggle("show", Boolean(isGoldmineEventActive));
@@ -4584,6 +4720,10 @@ function updateGoldmineSoundButton(isGoldmineEventActive = getGoldmineLongEventS
   soundBtn.textContent = goldmineSoundEnabled
     ? tr("goldmineSoundEnabled")
     : tr("goldmineEnableSound");
+
+  if(timerControl){
+    timerControl.classList.toggle("show", Boolean(isGoldmineEventActive));
+  }
 }
 
 function isStandaloneApp(){

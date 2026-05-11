@@ -475,7 +475,7 @@ color:#ffd700;
 }
 
 .doubleBox .hunterLabel{
-color:##9FF9FD;
+color:#9FF9FD;
 }
 
 .eventIcon{
@@ -2230,6 +2230,10 @@ async function loadSpecialEvents(){
 }
 
 function getLongEventRepeatMs(event){
+  const eventType = String(event?.type || "").toLowerCase().trim();
+
+  if(eventType === "weekly") return 7 * 24 * 60 * 60 * 1000;
+  if(eventType === "biweekly" || eventType === "bi-weekly" || eventType === "bi weekly") return 14 * 24 * 60 * 60 * 1000;
   if(Number.isFinite(event?.repeatMs) && event.repeatMs > 0) return event.repeatMs;
   if(Number.isFinite(event?.repeatMinutes) && event.repeatMinutes > 0) return event.repeatMinutes * 60 * 1000;
   if(Number.isFinite(event?.repeatHours) && event.repeatHours > 0) return event.repeatHours * 60 * 60 * 1000;
@@ -2659,6 +2663,7 @@ const eventIcons = {
 "Alliance Duel": "Alliance_Duel.PNG",
 "Power Play": "Power_Play.PNG",
 "Turbo Turtle": "Turbo_Turtle.PNG",
+"Arena": "Arena.PNG",
 
 "Ghoulion Pursuit": "ghoulion.png",
 "Reservoir Raid": "Reservoir_Raid.PNG",

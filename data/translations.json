@@ -26,6 +26,7 @@
       "goldmineSkipAlert": "Skip Alert",
       "goldmineEnableSound": "Enable Sound",
       "goldmineSoundEnabled": "Sound Enabled",
+      "goldmineTimerLabel": "Goldmine Alert (min)",
       "goldmineNotificationBody": "Refresh window is live now. Open the dashboard and refresh your gold mine.",
       "mobileAlertTitle": "Mobile Alerts",
       "mobileAlertText": "Mobile browsers can limit background alerts. Enable notifications and install the page to your home screen for the best goldmine alert behavior.",
@@ -84,6 +85,7 @@
       "goldmineSkipAlert": "Пропустить предупреждение",
       "goldmineEnableSound": "Включить звук",
       "goldmineSoundEnabled": "Звук включен",
+      "goldmineTimerLabel": "Предупреждение о золотой шахте (мин)",
       "goldmineNotificationBody": "Окно обновления активно. Откройте панель и обновите золотую шахту.",
       "mobileAlertTitle": "Мобильные оповещения",
       "mobileAlertText": "Мобильные браузеры могут ограничивать фоновые оповещения. Включите уведомления и установите страницу на главный экран для лучших оповещений о золотой шахте.",
@@ -142,6 +144,7 @@
       "goldmineSkipAlert": "تخطي",
       "goldmineEnableSound": "تفعيل الصوت",
       "goldmineSoundEnabled": "الصوت مفعّل",
+      "goldmineTimerLabel": "تنبيه منجم ذهب (دقيقة)",
       "goldmineNotificationBody": "نافذة التحديث نشطة الآن. افتح اللوحة وحدّث منجم الذهب.",
       "mobileAlertTitle": "تنبيهات الجوال",
       "mobileAlertText": "قد تحد متصفحات الجوال من التنبيهات في الخلفية. فعّل الإشعارات وثبّت الصفحة على الشاشة الرئيسية للحصول على أفضل تنبيهات منجم الذهب.",
@@ -226,6 +229,10 @@
     "Alliance Siege": {
       "ru": "Осада Альянса",
       "ar": "حصار التحالف"
+    },
+    "Arena": {
+      "ru": "Арена",
+      "ar": "الساحة"
     },
     "Future Tycoon": {
       "ru": "Будущий магнат",

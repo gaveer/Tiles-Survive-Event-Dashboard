@@ -2,7 +2,16 @@
   {
     "name": "Alliance Siege",
     "active": true,
-    "end": "2026-05-10T23:59:00Z"
+    "type": "weekly",
+    "start": "2026-05-11T00:00:00Z",
+    "end": "2026-05-16T00:00:00Z"
+  },
+  {
+    "name": "Arena",
+    "active": true,
+    "type": "biweekly",
+    "start": "2026-05-11T00:00:00Z",
+    "end": "2026-05-25T00:00:00Z"
   },
   {
     "name": "Future Tycoon",
@@ -47,9 +56,9 @@
   {
     "name": "Underground Goldmine",
     "active": true,
+    "type": "weekly",
     "start": "2026-05-11T00:00:00Z",
-    "end": "2026-05-18T00:00:00Z",
-    "repeatHours": 168
+    "end": "2026-05-18T00:00:00Z"
   },
   {
     "name": "Wasteland Album",
