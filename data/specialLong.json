@@ -20,13 +20,13 @@
   },
   {
     "name": "Gourmet Rush",
-    "active": true,
+    "active": false,
     "end": "2026-05-06T23:59:00Z"
   },
   {
     "name": "Leprechaun",
-    "active": false,
-    "end": "2026-03-22T23:59:00Z"
+    "active": true,
+    "end": "2026-05-23T23:59:00Z"
   },
   {
     "name": "Leprechaun Store",
